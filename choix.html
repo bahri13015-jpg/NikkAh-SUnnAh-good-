@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inscription – Nour Al Zawwaj</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --petrol:   #0F4C5C;
+      --petrol-d: #0a3543;
+      --petrol-l: #1a6070;
+      --gold:     #C9A227;
+      --gold-l:   #e0b93a;
+      --gold-d:   #a8851e;
+      --rose:     #c47a7a;
+      --rose-l:   #d99090;
+      --rose-d:   #a85f5f;
+      --white:    #FFFFFF;
+      --grey:     #F5F5F5;
+      --grey-mid: #e0e0e0;
+      --text:     #1a2e35;
+      --text-m:   #4a6570;
+      --ff-display: 'Cormorant Garamond', Georgia, serif;
+      --ff-body:    'Jost', system-ui, sans-serif;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--ff-body);
+      color: var(--text);
+      background: var(--petrol-d);
+      overflow-x: hidden;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAVBAR ── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,53,67,0.97);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 32px rgba(0,0,0,0.18);
+      padding: 14px 0;
+    }
+    .nav-inner {
+      width: min(1200px, 90vw); margin-inline: auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; flex-direction: column; line-height: 1; }
+    .nav-logo-name {
+      font-family: var(--ff-display); font-size: 1.5rem; font-weight: 700;
+      color: var(--gold); letter-spacing: 0.04em;
+    }
+    .nav-logo-tagline {
+      font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(201,162,39,0.7); margin-top: 2px;
+    }
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.65);
+      transition: color 0.25s;
+    }
+    .nav-back:hover { color: var(--gold); }
+    .nav-back svg { width: 15px; height: 15px; }
+
+    /* ── BACKGROUND ── */
+    .page-bg {
+      position: fixed; inset: 0; z-index: 0; overflow: hidden;
+    }
+    .page-bg::before {
+      content: '';
+      position: absolute; top: -20%; right: -15%;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,162,39,0.1) 0%, transparent 70%);
+    }
+    .page-bg::after {
+      content: '';
+      position: absolute; bottom: -15%; left: -10%;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,96,112,0.4) 0%, transparent 70%);
+    }
+    .page-lattice {
+      position: absolute; inset: 0; opacity: 0.035;
+      background-image:
+        repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%),
+        repeating-linear-gradient(-45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
+      background-size: 40px 40px;
+    }
+
+    /* ── MAIN ── */
+    main {
+      position: relative; z-index: 1;
+      flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 120px 24px 60px;
+      min-height: 100svh;
+    }
+
+    /* Arch ornament */
+    .hero-arch { width: 64px; opacity: 0.85; margin-bottom: 8px; }
+
+    .page-eyebrow {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.26em;
+      text-transform: uppercase; color: var(--gold);
+      display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+    }
+    .page-eyebrow::before, .page-eyebrow::after {
+      content: ''; height: 1px; width: 40px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .page-eyebrow::after { background: linear-gradient(90deg, var(--gold), transparent); }
+
+    .page-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 300; color: var(--white);
+      line-height: 1.1; text-align: center; margin-bottom: 12px;
+    }
+    .page-title em { font-style: italic; color: var(--gold); }
+
+    .page-sub {
+      font-size: 0.95rem; color: rgba(255,255,255,0.5);
+      max-width: 400px; text-align: center; line-height: 1.8; margin-bottom: 56px;
+    }
+
+    /* ── CARDS ── */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      width: min(820px, 100%);
+    }
+    @media (max-width: 600px) {
+      .choice-grid { grid-template-columns: 1fr; gap: 16px; }
+    }
+
+    .choice-card {
+      position: relative; overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      padding: 48px 36px 40px;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; gap: 20px;
+      transition: transform 0.4s var(--ease-out), border-color 0.3s, background 0.3s, box-shadow 0.4s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .choice-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .choice-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+    }
+
+    /* Frères card */
+    .card-homme {
+      border-color: rgba(201,162,39,0.2);
+    }
+    .card-homme::before {
+      background: radial-gradient(ellipse at top, rgba(201,162,39,0.12) 0%, transparent 70%);
+    }
+    .card-homme:hover {
+      border-color: rgba(201,162,39,0.5);
+      background: rgba(201,162,39,0.06);
+    }
+    .card-homme::before { opacity: 1; }
+
+    /* Sœurs card */
+    .card-femme {
+      border-color: rgba(196,122,122,0.2);
+    }
+    .card-femme::before {
+      background: radial-gradient(ellipse at top, rgba(196,122,122,0.12) 0%, transparent 70%);
+    }
+    .card-femme:hover {
+      border-color: rgba(196,122,122,0.45);
+      background: rgba(196,122,122,0.05);
+    }
+    .card-femme::before { opacity: 1; }
+
+    .card-avatar {
+      width: 88px; height: 88px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 1;
+      transition: transform 0.35s var(--ease-out);
+    }
+    .choice-card:hover .card-avatar { transform: scale(1.06); }
+
+    .card-avatar-homme {
+      background: linear-gradient(135deg, rgba(201,162,39,0.2), rgba(201,162,39,0.06));
+      border: 1.5px solid rgba(201,162,39,0.35);
+      color: var(--gold);
+    }
+    .card-avatar-femme {
+      background: linear-gradient(135deg, rgba(196,122,122,0.2), rgba(196,122,122,0.06));
+      border: 1.5px solid rgba(196,122,122,0.35);
+      color: var(--rose);
+    }
+    .card-avatar svg { width: 38px; height: 38px; }
+
+    .card-badge {
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; position: relative; z-index: 1;
+    }
+    .badge-homme { color: var(--gold); }
+    .badge-femme { color: var(--rose-l); }
+
+    .card-title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 300; color: var(--white);
+      line-height: 1.1; position: relative; z-index: 1;
+    }
+    .card-title em { font-style: italic; display: block; }
+    .card-title-homme em { color: var(--gold); }
+    .card-title-femme em { color: var(--rose-l); }
+
+    .card-desc {
+      font-size: 0.85rem; color: rgba(255,255,255,0.5);
+      line-height: 1.8; max-width: 240px;
+      position: relative; z-index: 1;
+    }
+
+    .card-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; border-radius: 3px;
+      position: relative; z-index: 1;
+      transition: transform 0.2s, box-shadow 0.25s, background 0.25s;
+    }
+    .card-btn svg { width: 14px; height: 14px; }
+
+    .btn-homme {
+      background: var(--gold); color: var(--petrol-d);
+      box-shadow: 0 4px 20px rgba(201,162,39,0.25);
+    }
+    .btn-homme:hover {
+      background: var(--gold-l);
+      box-shadow: 0 8px 32px rgba(201,162,39,0.4);
+      transform: translateY(-1px);
+    }
+    .btn-femme {
+      background: var(--rose); color: var(--white);
+      box-shadow: 0 4px 20px rgba(196,122,122,0.25);
+    }
+    .btn-femme:hover {
+      background: var(--rose-l);
+      box-shadow: 0 8px 32px rgba(196,122,122,0.35);
+      transform: translateY(-1px);
+    }
+
+    /* divider between cards on mobile */
+    .card-divider {
+      display: none;
+      align-items: center; gap: 16px;
+      color: rgba(255,255,255,0.2); font-size: 0.7rem; letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .card-divider::before, .card-divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+    @media (max-width: 600px) { .card-divider { display: flex; } }
+
+    /* ── Trust strip ── */
+    .trust-strip {
+      display: flex; align-items: center; justify-content: center;
+      gap: 28px; flex-wrap: wrap;
+      margin-top: 48px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      width: min(820px, 100%);
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.72rem; letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.35);
+    }
+    .trust-item svg { width: 13px; height: 13px; color: var(--gold); }
+
+    /* ── Scroll reveal ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+    /* Footer */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; padding: 24px;
+      font-size: 0.72rem; color: rgba(255,255,255,0.2);
+    }
+    footer a { color: rgba(201,162,39,0.5); transition: color 0.2s; }
+    footer a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-name">Nour Al Zawwaj</span>
+      <span class="nav-logo-tagline">La lumière du mariage</span>
+    </a>
+    <a href="index.html" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Retour à l'accueil
+    </a>
+  </div>
+</nav>
+
+<div class="page-bg"><div class="page-lattice"></div></div>
+
+<main>
+  <!-- Arch ornament -->
+  <svg class="hero-arch reveal" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40 4 C20 4 6 18 6 36 L6 56 L74 56 L74 36 C74 18 60 4 40 4Z" stroke="#C9A227" stroke-width="1.5" fill="none" stroke-opacity="0.6"/>
+    <path d="M40 12 C24 12 14 22 14 36 L14 50 L66 50 L66 36 C66 22 56 12 40 12Z" stroke="#C9A227" stroke-width="1" fill="none" stroke-opacity="0.3"/>
+    <circle cx="40" cy="8" r="2" fill="#C9A227" fill-opacity="0.5"/>
+    <circle cx="28" cy="6" r="1.2" fill="#C9A227" fill-opacity="0.3"/>
+    <circle cx="52" cy="6" r="1.2" fill="#C9A227" fill-opacity="0.3"/>
+  </svg>
+
+  <p class="page-eyebrow reveal reveal-delay-1">Première étape</p>
+
+  <h1 class="page-title reveal reveal-delay-2">
+    Choisissez votre <em>espace</em>
+  </h1>
+
+  <p class="page-sub reveal reveal-delay-3">
+    Chaque espace est pensé séparément, dans le respect et la pudeur, pour vous accompagner vers un mariage sérieux.
+  </p>
+
+  <div class="choice-grid">
+
+    <!-- Homme -->
+    <a href="inscription-homme.html" class="choice-card card-homme reveal reveal-delay-3">
+      <div class="card-avatar card-avatar-homme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+      </div>
+      <span class="card-badge badge-homme">✦ Espace Frères</span>
+      <h2 class="card-title card-title-homme">
+        Je suis un<em>homme</em>
+      </h2>
+      <p class="card-desc">
+        Créez votre profil et commencez votre démarche vers un mariage sérieux.
+      </p>
+      <span class="card-btn btn-homme">
+        Inscription Frères
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </span>
+    </a>
+
+    <div class="card-divider reveal reveal-delay-3">ou</div>
+
+    <!-- Femme -->
+    <a href="inscription-femme.html" class="choice-card card-femme reveal reveal-delay-4">
+      <div class="card-avatar card-avatar-femme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          <path d="M7 3.5 Q12 1 17 3.5" stroke-width="1.2" stroke-opacity="0.6"/>
+        </svg>
+      </div>
+      <span class="card-badge badge-femme">✦ Espace Sœurs</span>
+      <h2 class="card-title card-title-femme">
+        Je suis une<em>femme</em>
+      </h2>
+      <p class="card-desc">
+        Un espace confidentiel et sécurisé, où votre dignité est préservée à chaque étape.
+      </p>
+      <span class="card-btn btn-femme">
+        Inscription Sœurs
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </span>
+    </a>
+
+  </div>
+
+  <div class="trust-strip reveal reveal-delay-4">
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Données chiffrées
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Plateforme 100% halal
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+      Profils vérifiés
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Wali impliqué
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2025 Nour Al Zawwaj · <a href="#">Confidentialité</a> · <a href="#">Conditions</a>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

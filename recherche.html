@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recherche – Nour Al Zawwaj</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --petrol:   #0F4C5C;
+      --petrol-d: #0a3543;
+      --petrol-l: #1a6070;
+      --gold:     #C9A227;
+      --gold-l:   #e0b93a;
+      --gold-d:   #a8851e;
+      --white:    #FFFFFF;
+      --grey:     #F5F5F5;
+      --grey-mid: #e0e0e0;
+      --text:     #1a2e35;
+      --text-m:   #4a6570;
+      --error:    #c0392b;
+
+      --ff-display: 'Cormorant Garamond', Georgia, serif;
+      --ff-body:    'Jost', system-ui, sans-serif;
+      --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+
+      --sidebar-w: 300px;
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--ff-body);
+      color: var(--text);
+      background: var(--grey);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+
+    /* ─── NAVBAR ─────────────────────────────────────────────── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: rgba(10, 53, 67, 0.97);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 32px rgba(0,0,0,0.18);
+      padding: 14px 0;
+    }
+    .nav-wrap {
+      width: min(1400px, 96vw);
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .nav-logo { display: flex; flex-direction: column; line-height: 1; }
+    .nav-logo-name {
+      font-family: var(--ff-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+    .nav-logo-tagline {
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.7);
+      margin-top: 2px;
+    }
+
+    /* Search bar in navbar */
+    .nav-search {
+      flex: 1;
+      max-width: 480px;
+      position: relative;
+    }
+    .nav-search input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      background: rgba(255,255,255,0.07);
+      border: 1.5px solid rgba(201,162,39,0.25);
+      border-radius: 3px;
+      font-family: var(--ff-body);
+      font-size: 0.85rem;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .nav-search input::placeholder { color: rgba(255,255,255,0.35); }
+    .nav-search input:focus {
+      border-color: var(--gold);
+      background: rgba(255,255,255,0.1);
+    }
+    .nav-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255,255,255,0.4);
+      width: 16px; height: 16px;
+      pointer-events: none;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 2px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .nav-btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .nav-btn-ghost svg { width: 13px; height: 13px; }
+
+    /* ─── LAYOUT ─────────────────────────────────────────────── */
+    #app {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      min-height: 100vh;
+      padding-top: 60px;
+    }
+
+    /* ─── SIDEBAR ────────────────────────────────────────────── */
+    #sidebar {
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+      background: var(--white);
+      border-right: 1px solid var(--grey-mid);
+      display: flex;
+      flex-direction: column;
+      scrollbar-width: thin;
+      scrollbar-color: var(--grey-mid) transparent;
+    }
+    #sidebar::-webkit-scrollbar { width: 4px; }
+    #sidebar::-webkit-scrollbar-thumb { background: var(--grey-mid); border-radius: 2px; }
+
+    .sidebar-head {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid var(--grey-mid);
+      position: sticky;
+      top: 0;
+      background: var(--white);
+      z-index: 2;
+    }
+    .sidebar-head-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .sidebar-title {
+      font-family: var(--ff-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--petrol);
+    }
+    .sidebar-reset {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold-d);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 0;
+      transition: color 0.2s;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .sidebar-reset:hover { color: var(--gold); }
+    .sidebar-active-count {
+      font-size: 0.75rem;
+      color: var(--text-m);
+    }
+    .sidebar-active-count span {
+      font-weight: 600;
+      color: var(--gold-d);
+    }
+
+    /* Filter group */
+    .filter-group {
+      border-bottom: 1px solid var(--grey-mid);
+    }
+    .filter-group-head {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.2s;
+    }
+    .filter-group-head:hover { background: var(--grey); }
+    .filter-group-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--petrol);
+    }
+    .filter-group-toggle {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 1px solid var(--grey-mid);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-m);
+      transition: transform 0.25s, background 0.25s, border-color 0.25s;
+      flex-shrink: 0;
+    }
+    .filter-group-toggle svg { width: 10px; height: 10px; }
+    .filter-group.open .filter-group-toggle {
+      transform: rotate(45deg);
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--white);
+    }
+    .filter-group-body {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s var(--ease-out);
+      padding: 0 24px;
+    }
+    .filter-group.open .filter-group-body {
+      max-height: 600px;
+      padding-bottom: 20px;
+    }
+
+    /* Range slider */
+    .range-filter { padding-top: 8px; }
+    .range-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .range-label-val {
+      font-family: var(--ff-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--petrol);
+    }
+    .range-label-sep {
+      font-size: 0.75rem;
+      color: var(--text-m);
+      align-self: center;
+    }
+    /* Dual range track */
+    .dual-range {
+      position: relative;
+      height: 4px;
+      background: var(--grey-mid);
+      border-radius: 2px;
+      margin: 8px 0 16px;
+    }
+    .dual-range-fill {
+      position: absolute;
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-d), var(--gold-l));
+      border-radius: 2px;
+      pointer-events: none;
+    }
+    .dual-range input[type=range] {
+      position: absolute;
+      width: 100%;
+      height: 4px;
+      background: transparent;
+      -webkit-appearance: none;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+    }
+    .dual-range input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--white);
+      box-shadow: 0 2px 8px rgba(201,162,39,0.4);
+      cursor: pointer;
+      pointer-events: all;
+    }
+    .dual-range input[type=range]::-moz-range-thumb {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--white);
+      box-shadow: 0 2px 8px rgba(201,162,39,0.4);
+      cursor: pointer;
+      pointer-events: all;
+    }
+
+    /* Checkboxes */
+    .filter-checks {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-top: 8px;
+    }
+    .filter-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .filter-check:hover { background: var(--grey); }
+    .filter-check input { position: absolute; opacity: 0; }
+    .check-box {
+      width: 16px; height: 16px;
+      border-radius: 3px;
+      border: 1.5px solid var(--grey-mid);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .check-box svg { width: 9px; height: 9px; color: transparent; transition: color 0.15s; }
+    .filter-check input:checked ~ .check-box {
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+    .filter-check input:checked ~ .check-box svg { color: var(--white); }
+    .check-label {
+      font-size: 0.84rem;
+      color: var(--text-m);
+      flex: 1;
+    }
+    .filter-check input:checked ~ .check-label { color: var(--petrol); font-weight: 500; }
+    .check-count {
+      font-size: 0.7rem;
+      color: rgba(74,101,112,0.6);
+      background: var(--grey);
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+
+    /* Radio pills */
+    .filter-radios {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-top: 8px;
+    }
+    .filter-radio {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .filter-radio:hover { background: var(--grey); }
+    .filter-radio input { position: absolute; opacity: 0; }
+    .radio-dot {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      border: 1.5px solid var(--grey-mid);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s;
+    }
+    .radio-dot::after {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .filter-radio input:checked ~ .radio-dot {
+      border-color: var(--gold);
+    }
+    .filter-radio input:checked ~ .radio-dot::after { opacity: 1; }
+    .filter-radio input:checked ~ .radio-label { color: var(--petrol); font-weight: 500; }
+    .radio-label {
+      font-size: 0.84rem;
+      color: var(--text-m);
+    }
+
+    /* Sidebar apply button */
+    .sidebar-apply {
+      padding: 20px 24px;
+      margin-top: auto;
+      border-top: 1px solid var(--grey-mid);
+      position: sticky;
+      bottom: 0;
+      background: var(--white);
+    }
+    .btn-apply {
+      width: 100%;
+      padding: 13px;
+      background: var(--gold);
+      color: var(--petrol-d);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+      box-shadow: 0 4px 16px rgba(201,162,39,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-apply:hover {
+      background: var(--gold-l);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(201,162,39,0.35);
+    }
+    .btn-apply svg { width: 14px; height: 14px; }
+
+    /* ─── MAIN CONTENT ────────────────────────────────────────── */
+    #main {
+      min-height: calc(100vh - 60px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Results toolbar */
+    .results-bar {
+      padding: 20px 28px;
+      background: var(--white);
+      border-bottom: 1px solid var(--grey-mid);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .results-count {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .results-num {
+      font-family: var(--ff-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--petrol);
+      line-height: 1;
+    }
+    .results-label {
+      font-size: 0.82rem;
+      color: var(--text-m);
+      letter-spacing: 0.04em;
+    }
+
+    /* Active filter chips */
+    .active-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      flex: 1;
+    }
+    .active-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px 5px 12px;
+      background: rgba(15,76,92,0.07);
+      border: 1px solid rgba(15,76,92,0.18);
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--petrol);
+      animation: chipIn 0.2s var(--ease-out);
+    }
+    @keyframes chipIn {
+      from { opacity: 0; transform: scale(0.85); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .active-chip button {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: rgba(15,76,92,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem;
+      color: var(--petrol);
+      line-height: 1;
+      padding: 0;
+      transition: background 0.15s;
+    }
+    .active-chip button:hover { background: var(--error); color: var(--white); }
+
+    /* Sort + view controls */
+    .results-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sort-select {
+      padding: 8px 32px 8px 12px;
+      border: 1.5px solid var(--grey-mid);
+      border-radius: 3px;
+      font-family: var(--ff-body);
+      font-size: 0.8rem;
+      color: var(--text);
+      background: var(--white);
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%234a6570' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .sort-select:focus { border-color: var(--gold); }
+    .view-toggle {
+      display: flex;
+      border: 1.5px solid var(--grey-mid);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .view-btn {
+      padding: 7px 10px;
+      background: none;
+      border: none;
+      color: var(--text-m);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .view-btn.active { background: var(--petrol); color: var(--white); }
+    .view-btn:hover:not(.active) { background: var(--grey); }
+    .view-btn svg { width: 15px; height: 15px; display: block; }
+
+    /* Mobile filters toggle */
+    .mobile-filter-btn {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      background: var(--petrol);
+      color: var(--white);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+    }
+    .mobile-filter-btn svg { width: 14px; height: 14px; }
+    .mobile-filter-btn .badge {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--petrol-d);
+      font-size: 0.65rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ─── RESULTS GRID ───────────────────────────────────────── */
+    .results-content { padding: 28px; flex: 1; }
+
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 20px;
+    }
+    .profiles-grid.list-view {
+      grid-template-columns: 1fr;
+    }
+
+    /* Profile card */
+    .profile-card {
+      background: var(--white);
+      border: 1px solid var(--grey-mid);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s var(--ease-out), box-shadow 0.3s;
+      animation: cardIn 0.4s var(--ease-out) both;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .profile-card:hover {
+      border-color: rgba(201,162,39,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(15,76,92,0.1);
+    }
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold-d), var(--gold-l));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease-out);
+    }
+    .profile-card:hover::before { transform: scaleX(1); }
+
+    /* Card header band */
+    .card-band {
+      height: 56px;
+      background: linear-gradient(135deg, var(--petrol-d), var(--petrol-l));
+      position: relative;
+      overflow: hidden;
+    }
+    .card-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.06;
+      background-image:
+        repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%),
+        repeating-linear-gradient(-45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
+      background-size: 20px 20px;
+    }
+    .card-compat-badge {
+      position: absolute;
+      top: 10px; right: 12px;
+      background: rgba(201,162,39,0.9);
+      color: var(--petrol-d);
+      font-family: var(--ff-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 2px;
+    }
+
+    .card-avatar-wrap {
+      position: absolute;
+      bottom: -24px; left: 20px;
+    }
+    .card-avatar {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 3px solid var(--white);
+      background: linear-gradient(135deg, var(--gold-d), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--petrol-d);
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      overflow: hidden;
+    }
+    .card-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Verified badge */
+    .card-verified {
+      position: absolute;
+      bottom: -20px; left: 56px;
+      background: var(--white);
+      border: 1px solid rgba(15,76,92,0.15);
+      border-radius: 10px;
+      padding: 2px 8px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--petrol);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-verified svg { width: 8px; height: 8px; color: var(--gold); }
+
+    .card-body {
+      padding: 36px 20px 20px;
+    }
+    .card-name {
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--petrol);
+      margin-bottom: 2px;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-m);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .card-meta-sep { color: var(--grey-mid); }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 12px;
+    }
+    .card-tag {
+      padding: 3px 9px;
+      background: var(--grey);
+      border-radius: 2px;
+      font-size: 0.7rem;
+      color: var(--text-m);
+      letter-spacing: 0.04em;
+    }
+    .card-tag.gold {
+      background: rgba(201,162,39,0.1);
+      color: var(--gold-d);
+      border: 1px solid rgba(201,162,39,0.25);
+    }
+
+    .card-relig-bar {
+      display: flex;
+      gap: 3px;
+      margin-top: 10px;
+    }
+    .card-relig-bar span {
+      display: block;
+      height: 3px;
+      flex: 1;
+      border-radius: 1px;
+      background: var(--grey-mid);
+    }
+    .card-relig-bar span.on { background: var(--gold); }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-top: 1px solid var(--grey-mid);
+    }
+    .card-city {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.75rem;
+      color: var(--text-m);
+    }
+    .card-city svg { width: 11px; height: 11px; }
+    .btn-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--petrol);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-contact:hover { background: var(--petrol-l); }
+    .btn-contact svg { width: 12px; height: 12px; }
+
+    /* ── List view card ─── */
+    .profiles-grid.list-view .profile-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+    }
+    .profiles-grid.list-view .card-band {
+      width: 72px;
+      height: 100%;
+      border-radius: 0;
+    }
+    .profiles-grid.list-view .card-avatar-wrap {
+      position: static;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+    }
+    .profiles-grid.list-view .card-verified { display: none; }
+    .profiles-grid.list-view .card-body { padding: 16px 20px; }
+    .profiles-grid.list-view .card-footer {
+      border-top: none;
+      border-left: 1px solid var(--grey-mid);
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      padding: 16px 20px;
+    }
+
+    /* ─── EMPTY STATE ────────────────────────────────────────── */
+    .empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .empty-state.show { display: flex; }
+    .empty-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(201,162,39,0.08);
+      border: 1.5px solid rgba(201,162,39,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .empty-icon svg { width: 30px; height: 30px; }
+    .empty-title {
+      font-family: var(--ff-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--petrol);
+      margin-bottom: 8px;
+    }
+    .empty-sub { font-size: 0.88rem; color: var(--text-m); max-width: 320px; line-height: 1.7; }
+
+    /* ─── LOADING SKELETON ───────────────────────────────────── */
+    .skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 20px;
+    }
+    .skeleton-card {
+      background: var(--white);
+      border: 1px solid var(--grey-mid);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .skeleton-band {
+      height: 56px;
+      background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    .skeleton-body { padding: 36px 20px 20px; }
+    .skeleton-line {
+      height: 12px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      margin-bottom: 10px;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ─── PAGINATION ─────────────────────────────────────────── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 32px 28px;
+      border-top: 1px solid var(--grey-mid);
+    }
+    .page-btn {
+      width: 36px; height: 36px;
+      border-radius: 3px;
+      border: 1.5px solid var(--grey-mid);
+      font-size: 0.85rem;
+      color: var(--text-m);
+      background: var(--white);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+    .page-btn:hover { border-color: var(--petrol); color: var(--petrol); }
+    .page-btn.active {
+      background: var(--petrol);
+      border-color: var(--petrol);
+      color: var(--white);
+      font-weight: 600;
+    }
+    .page-btn:disabled { opacity: 0.35; cursor: default; }
+    .page-btn svg { width: 14px; height: 14px; }
+
+    /* ─── MOBILE OVERLAY SIDEBAR ─────────────────────────────── */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 150;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .sidebar-overlay.open { opacity: 1; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      #app { grid-template-columns: 1fr; }
+      #sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        height: 100vh;
+        width: min(var(--sidebar-w), 85vw);
+        z-index: 160;
+        transition: left 0.35s var(--ease-out);
+        padding-top: 60px;
+      }
+      #sidebar.mobile-open { left: 0; }
+      .sidebar-overlay { display: block; }
+      .mobile-filter-btn { display: flex; }
+    }
+    @media (max-width: 600px) {
+      .results-bar { padding: 14px 16px; }
+      .results-content { padding: 16px; }
+      .profiles-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .nav-search { display: none; }
+      .profiles-grid.list-view { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 400px) {
+      .profiles-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-wrap">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-name">Nour Al Zawwaj</span>
+      <span class="nav-logo-tagline">La lumière du mariage</span>
+    </a>
+
+    <div class="nav-search">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-keyword" placeholder="Rechercher par prénom, ville…" />
+    </div>
+
+    <div class="nav-actions">
+      <a href="index.html" class="nav-btn-ghost">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        Accueil
+      </a>
+      <a href="#" class="nav-btn-ghost">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Mon profil
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Sidebar overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- ════════════════════════════════════════════════════
+     APP LAYOUT
+════════════════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- ─── SIDEBAR FILTERS ──────────────────────────────── -->
+  <aside id="sidebar">
+
+    <div class="sidebar-head">
+      <div class="sidebar-head-row">
+        <span class="sidebar-title">Filtres avancés</span>
+        <button class="sidebar-reset" id="btn-reset">Tout effacer</button>
+      </div>
+      <p class="sidebar-active-count"><span id="active-count">0</span> filtre(s) actif(s)</p>
+    </div>
+
+    <!-- 1. Âge -->
+    <div class="filter-group open" id="fg-age">
+      <button class="filter-group-head" data-group="fg-age">
+        <span class="filter-group-label">Âge</span>
+        <span class="filter-group-toggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </button>
+      <div class="filter-group-body">
+        <div class="range-filter">
+          <div class="range-labels">
+            <span class="range-label-val" id="age-min-label">18</span>
+            <span class="range-label-sep">–</span>
+            <span class="range-label-val" id="age-max-label">60</span>
+            <span class="range-label-sep" style="font-size:0.75rem; color:var(--text-m);">ans</span>
+          </div>
+          <div class="dual-range" id="age-range">
+            <div class="dual-range-fill" id="age-fill"></div>
+            <input type="range" id="age-min" min="18" max="70" value="18" step="1" />
+            <input type="range" id="age-max" min="18" max="70" value="60" step="1" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Pays -->
+    <div class="filter-group open" id="fg-pays">
+      <button class="filter-group-head" data-group="fg-pays">
+        <span class="filter-group-label">Pays</span>
+        <span class="filter-group-toggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </button>
+      <div class="filter-group-body">
+        <div class="filter-checks" id="pays-checks">
+          <label class="filter-check">
+            <input type="checkbox" name="pays" value="France" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">France</span>
+            <span class="check-count">—</span>
+          </label>
+          <label class="filter-check">
+            <input type="checkbox" name="pays" value="Belgique" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">Belgique</span>
+            <span class="check-count">—</span>
+          </label>
+          <label class="filter-check">
+            <input type="checkbox" name="pays" value="Suisse" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">Suisse</span>
+            <span class="check-count">—</span>
+          </label>
+          <label class="filter-check">
+            <input type="checkbox" name="pays" value="Maroc" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">Maroc</span>
+            <span class="check-count">—</span>
+          </label>
+          <label class="filter-check">
+            <input type="checkbox" name="pays" value="Algérie" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">Algérie</span>
+            <span class="check-count">—</span>
+          </label>
+          <label class="filter-check">
+            <input type="checkbox" name="pays" value="Tunisie" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">Tunisie</span>
+            <span class="check-count">—</span>
+          </label>
+          <label class="filter-check">
+            <input type="checkbox" name="pays" value="Canada" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">Canada</span>
+            <span class="check-count">—</span>
+          </label>
+          <label class="filter-check">
+            <input type="checkbox" name="pays" value="Autre" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">Autre</span>
+            <span class="check-count">—</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Ville -->
+    <div class="filter-group" id="fg-ville">
+      <button class="filter-group-head" data-group="fg-ville">
+        <span class="filter-group-label">Ville</span>
+        <span class="filter-group-toggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </button>
+      <div class="filter-group-body">
+        <div style="padding-top: 8px; position: relative;">
+          <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text-m);pointer-events:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input id="ville-input" type="text" placeholder="Rechercher une ville…"
+            style="width:100%;padding:9px 12px 9px 32px;border:1.5px solid var(--grey-mid);border-radius:3px;font-family:var(--ff-body);font-size:0.84rem;color:var(--text);outline:none;transition:border-color 0.2s;" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Situation matrimoniale -->
+    <div class="filter-group open" id="fg-situation">
+      <button class="filter-group-head" data-group="fg-situation">
+        <span class="filter-group-label">Situation matrimoniale</span>
+        <span class="filter-group-toggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </button>
+      <div class="filter-group-body">
+        <div class="filter-checks">
+          <label class="filter-check">
+            <input type="checkbox" name="situation" value="celibataire" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">Célibataire</span>
+          </label>
+          <label class="filter-check">
+            <input type="checkbox" name="situation" value="divorce" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">Divorcé(e)</span>
+          </label>
+          <label class="filter-check">
+            <input type="checkbox" name="situation" value="veuf" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">Veuf/Veuve</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Enfants -->
+    <div class="filter-group" id="fg-enfants">
+      <button class="filter-group-head" data-group="fg-enfants">
+        <span class="filter-group-label">Enfants</span>
+        <span class="filter-group-toggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </button>
+      <div class="filter-group-body">
+        <div class="filter-radios">
+          <label class="filter-radio">
+            <input type="radio" name="enfants" value="" checked />
+            <span class="radio-dot"></span>
+            <span class="radio-label">Tous</span>
+          </label>
+          <label class="filter-radio">
+            <input type="radio" name="enfants" value="0" />
+            <span class="radio-dot"></span>
+            <span class="radio-label">Sans enfants</span>
+          </label>
+          <label class="filter-radio">
+            <input type="radio" name="enfants" value="avec" />
+            <span class="radio-dot"></span>
+            <span class="radio-label">Avec enfant(s)</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Niveau religieux -->
+    <div class="filter-group open" id="fg-religion">
+      <button class="filter-group-head" data-group="fg-religion">
+        <span class="filter-group-label">Niveau religieux</span>
+        <span class="filter-group-toggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </span>
+      </button>
+      <div class="filter-group-body">
+        <div class="filter-checks">
+          <label class="filter-check">
+            <input type="checkbox" name="religion" value="debutant" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">En cheminement</span>
+          </label>
+          <label class="filter-check">
+            <input type="checkbox" name="religion" value="pratiquant" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">Pratiquant(e) régulier</span>
+          </label>
+          <label class="filter-check">
+            <input type="checkbox" name="religion" value="pratiquant-assidu" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">Pratiquant(e) assidu(e)</span>
+          </label>
+          <label class="filter-check">
+            <input type="checkbox" name="religion" value="tres-pratiquant" />
+            <span class="check-box"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 5 4.5 8.5 11 1"/></svg></span>
+            <span class="check-label">Très pratiquant(e) (sounnah)</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-apply">
+      <button class="btn-apply" id="btn-apply">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Appliquer les filtres
+      </button>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ──────────────────────────────────────────── -->
+  <main id="main">
+
+    <!-- Toolbar -->
+    <div class="results-bar">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <!-- Mobile filters button -->
+        <button class="mobile-filter-btn" id="mobile-filter-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+          Filtres
+          <span class="badge" id="mobile-badge" style="display:none;">0</span>
+        </button>
+
+        <div class="results-count">
+          <span class="results-num" id="results-num">—</span>
+          <span class="results-label">profil(s) trouvé(s)</span>
+        </div>
+
+        <!-- Active filter chips -->
+        <div class="active-filters" id="active-filters"></div>
+      </div>
+
+      <div class="results-controls">
+        <select class="sort-select" id="sort-select">
+          <option value="compat">Compatibilité</option>
+          <option value="recent">Les plus récents</option>
+          <option value="age_asc">Âge croissant</option>
+          <option value="age_desc">Âge décroissant</option>
+        </select>
+        <div class="view-toggle">
+          <button class="view-btn active" id="view-grid" title="Vue grille">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          </button>
+          <button class="view-btn" id="view-list" title="Vue liste">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="results-content">
+      <!-- Skeleton loader -->
+      <div class="skeleton-grid" id="skeleton">
+        <div class="skeleton-card"><div class="skeleton-band"></div><div class="skeleton-body"><div class="skeleton-line" style="width:60%;"></div><div class="skeleton-line" style="width:40%;"></div><div class="skeleton-line" style="width:80%;margin-top:16px;"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-band"></div><div class="skeleton-body"><div class="skeleton-line" style="width:55%;"></div><div class="skeleton-line" style="width:35%;"></div><div class="skeleton-line" style="width:70%;margin-top:16px;"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-band"></div><div class="skeleton-body"><div class="skeleton-line" style="width:65%;"></div><div class="skeleton-line" style="width:45%;"></div><div class="skeleton-line" style="width:75%;margin-top:16px;"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-band"></div><div class="skeleton-body"><div class="skeleton-line" style="width:50%;"></div><div class="skeleton-line" style="width:38%;"></div><div class="skeleton-line" style="width:65%;margin-top:16px;"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-band"></div><div class="skeleton-body"><div class="skeleton-line" style="width:70%;"></div><div class="skeleton-line" style="width:42%;"></div><div class="skeleton-line" style="width:80%;margin-top:16px;"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-band"></div><div class="skeleton-body"><div class="skeleton-line" style="width:58%;"></div><div class="skeleton-line" style="width:36%;"></div><div class="skeleton-line" style="width:72%;margin-top:16px;"></div></div></div>
+      </div>
+
+      <!-- Profiles grid -->
+      <div class="profiles-grid" id="profiles-grid" style="display:none;"></div>
+
+      <!-- Empty state -->
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </div>
+        <h3 class="empty-title">Aucun profil trouvé</h3>
+        <p class="empty-sub">Essayez d'élargir vos critères de recherche pour découvrir plus de profils compatibles.</p>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination" style="display:none;"></div>
+  </main>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CONFIGURATION SUPABASE
+   ─────────────────────────────────────────────────────────────
+   Remplacer les valeurs ci-dessous par vos clés Supabase.
+   Ces variables peuvent aussi être injectées via process.env
+   dans un contexte Next.js / Vite.
+═══════════════════════════════════════════════════════════════ */
+const SUPABASE_URL  = 'https://VOTRE_PROJECT.supabase.co';
+const SUPABASE_KEY  = 'VOTRE_ANON_KEY';
+const TABLE_NAME    = 'profiles';          // nom de votre table Supabase
+const PAGE_SIZE     = 12;                  // profils par page
+
+/* Colonnes attendues dans la table `profiles` :
+   id, prenom, age, pays, ville, situation, enfants (int),
+   religion (enum), compat_score (int 0-100), created_at,
+   tags (text[]), photo_url (text|null), verified (bool)
+*/
+
+/* ─── Init Supabase (désactivé en mode démo) ────────────── */
+let supabase = null;
+const IS_DEMO = true; // ← passer à false pour activer Supabase
+
+if (!IS_DEMO) {
+  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ÉTAT GLOBAL
+═══════════════════════════════════════════════════════════════ */
+const state = {
+  filters: {
+    age_min:   18,
+    age_max:   60,
+    pays:      [],
+    ville:     '',
+    situation: [],
+    enfants:   '',     // '' | '0' | 'avec'
+    religion:  [],
+    keyword:   ''
+  },
+  sort:        'compat',
+  page:        1,
+  totalCount:  0,
+  results:     [],
+  viewMode:    'grid',  // 'grid' | 'list'
+  loading:     false
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   DONNÉES DÉMO
+   Simulées pour illustrer la compatibilité Supabase
+═══════════════════════════════════════════════════════════════ */
+const DEMO_DATA = [
+  { id:1,  prenom:'Amina',    age:27, pays:'France',   ville:'Lyon',         situation:'celibataire',  enfants:0, religion:'tres-pratiquant',   compat_score:94, tags:['Pratiquante','Hijab','Doctorat'],    verified:true  },
+  { id:2,  prenom:'Fatima',   age:24, pays:'France',   ville:'Paris',        situation:'celibataire',  enfants:0, religion:'pratiquant-assidu',  compat_score:88, tags:['Pratiquante','Jilbab','Infirmière'], verified:true  },
+  { id:3,  prenom:'Khadija',  age:31, pays:'Maroc',    ville:'Casablanca',   situation:'divorce',       enfants:1, religion:'pratiquant',         compat_score:82, tags:['Divorcée','Ingénieure'],             verified:true  },
+  { id:4,  prenom:'Zaynab',   age:22, pays:'Belgique', ville:'Bruxelles',    situation:'celibataire',  enfants:0, religion:'tres-pratiquant',   compat_score:91, tags:['Étudiante','Niqab'],                 verified:false },
+  { id:5,  prenom:'Maryam',   age:29, pays:'France',   ville:'Marseille',    situation:'celibataire',  enfants:0, religion:'pratiquant-assidu',  compat_score:86, tags:['Médecin','Hijab'],                   verified:true  },
+  { id:6,  prenom:'Houda',    age:35, pays:'Algérie',  ville:'Alger',        situation:'divorce',       enfants:2, religion:'pratiquant',         compat_score:74, tags:['Enseignante','2 enfants'],           verified:true  },
+  { id:7,  prenom:'Nour',     age:26, pays:'France',   ville:'Bordeaux',     situation:'celibataire',  enfants:0, religion:'tres-pratiquant',   compat_score:89, tags:['Pratiquante','Architecte'],          verified:true  },
+  { id:8,  prenom:'Imane',    age:23, pays:'Suisse',   ville:'Genève',       situation:'celibataire',  enfants:0, religion:'pratiquant',         compat_score:79, tags:['Étudiante'],                         verified:false },
+  { id:9,  prenom:'Safia',    age:33, pays:'Tunisie',  ville:'Tunis',        situation:'veuf',          enfants:0, religion:'pratiquant-assidu',  compat_score:77, tags:['Veuve','Avocate'],                   verified:true  },
+  { id:10, prenom:'Lina',     age:28, pays:'Canada',   ville:'Montréal',     situation:'celibataire',  enfants:0, religion:'debutant',           compat_score:71, tags:['En progrès','Canadienne'],           verified:false },
+  { id:11, prenom:'Rania',    age:30, pays:'France',   ville:'Toulouse',     situation:'celibataire',  enfants:0, religion:'tres-pratiquant',   compat_score:93, tags:['Pharmacienne','Hijab'],              verified:true  },
+  { id:12, prenom:'Selma',    age:25, pays:'Maroc',    ville:'Marrakech',    situation:'celibataire',  enfants:0, religion:'pratiquant',         compat_score:80, tags:['Styliste','Hijab'],                  verified:true  },
+  { id:13, prenom:'Yasmine',  age:21, pays:'France',   ville:'Lille',        situation:'celibataire',  enfants:0, religion:'pratiquant-assidu',  compat_score:83, tags:['Étudiante Droit','Hijab'],           verified:true  },
+  { id:14, prenom:'Samira',   age:38, pays:'France',   ville:'Nantes',       situation:'divorce',       enfants:3, religion:'pratiquant',         compat_score:68, tags:['3 enfants','Prof'],                  verified:true  },
+  { id:15, prenom:'Hafsa',    age:27, pays:'Belgique', ville:'Liège',        situation:'celibataire',  enfants:0, religion:'tres-pratiquant',   compat_score:90, tags:['Niqab','Sage-femme'],                verified:false },
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   SUPABASE QUERY BUILDER
+═══════════════════════════════════════════════════════════════ */
+async function fetchProfiles() {
+  state.loading = true;
+  showSkeleton(true);
+
+  if (IS_DEMO) {
+    // ── MODE DÉMO : filtrage JavaScript ─────────────────────
+    await new Promise(r => setTimeout(r, 600)); // simulate latency
+    let data = [...DEMO_DATA];
+
+    /* Keyword */
+    if (state.filters.keyword) {
+      const kw = state.filters.keyword.toLowerCase();
+      data = data.filter(p =>
+        p.prenom.toLowerCase().includes(kw) ||
+        p.ville.toLowerCase().includes(kw) ||
+        p.pays.toLowerCase().includes(kw) ||
+        (p.tags || []).some(t => t.toLowerCase().includes(kw))
+      );
+    }
+    /* Âge */
+    data = data.filter(p => p.age >= state.filters.age_min && p.age <= state.filters.age_max);
+    /* Pays */
+    if (state.filters.pays.length) {
+      data = data.filter(p => state.filters.pays.includes(p.pays));
+    }
+    /* Ville */
+    if (state.filters.ville) {
+      const v = state.filters.ville.toLowerCase();
+      data = data.filter(p => p.ville.toLowerCase().includes(v));
+    }
+    /* Situation */
+    if (state.filters.situation.length) {
+      data = data.filter(p => state.filters.situation.includes(p.situation));
+    }
+    /* Enfants */
+    if (state.filters.enfants === '0') {
+      data = data.filter(p => p.enfants === 0);
+    } else if (state.filters.enfants === 'avec') {
+      data = data.filter(p => p.enfants > 0);
+    }
+    /* Religion */
+    if (state.filters.religion.length) {
+      data = data.filter(p => state.filters.religion.includes(p.religion));
+    }
+    /* Tri */
+    data = sortData(data, state.sort);
+
+    state.totalCount = data.length;
+    const from = (state.page - 1) * PAGE_SIZE;
+    state.results = data.slice(from, from + PAGE_SIZE);
+
+  } else {
+    // ── MODE SUPABASE ────────────────────────────────────────
+    try {
+      let query = supabase
+        .from(TABLE_NAME)
+        .select('*', { count: 'exact' });
+
+      /* Keyword (recherche prénom ou ville) */
+      if (state.filters.keyword) {
+        query = query.or(
+          `prenom.ilike.%${state.filters.keyword}%,ville.ilike.%${state.filters.keyword}%`
+        );
+      }
+
+      /* Âge */
+      query = query
+        .gte('age', state.filters.age_min)
+        .lte('age', state.filters.age_max);
+
+      /* Pays (IN) */
+      if (state.filters.pays.length) {
+        query = query.in('pays', state.filters.pays);
+      }
+
+      /* Ville (ilike) */
+      if (state.filters.ville) {
+        query = query.ilike('ville', `%${state.filters.ville}%`);
+      }
+
+      /* Situation (IN) */
+      if (state.filters.situation.length) {
+        query = query.in('situation', state.filters.situation);
+      }
+
+      /* Enfants */
+      if (state.filters.enfants === '0') {
+        query = query.eq('enfants', 0);
+      } else if (state.filters.enfants === 'avec') {
+        query = query.gt('enfants', 0);
+      }
+
+      /* Niveau religieux (IN) */
+      if (state.filters.religion.length) {
+        query = query.in('religion', state.filters.religion);
+      }
+
+      /* Tri */
+      query = applySortToQuery(query, state.sort);
+
+      /* Pagination */
+      const from = (state.page - 1) * PAGE_SIZE;
+      query = query.range(from, from + PAGE_SIZE - 1);
+
+      const { data, error, count } = await query;
+      if (error) throw error;
+
+      state.results    = data || [];
+      state.totalCount = count || 0;
+
+    } catch (err) {
+      console.error('Supabase error:', err);
+      state.results    = [];
+      state.totalCount = 0;
+    }
+  }
+
+  state.loading = false;
+  render();
+}
+
+/* ─── Tri helper ─────────────────────────────────────────── */
+function sortData(data, sort) {
+  switch (sort) {
+    case 'compat':    return data.sort((a,b) => b.compat_score - a.compat_score);
+    case 'recent':    return data.sort((a,b) => b.id - a.id);
+    case 'age_asc':   return data.sort((a,b) => a.age - b.age);
+    case 'age_desc':  return data.sort((a,b) => b.age - a.age);
+    default:          return data;
+  }
+}
+function applySortToQuery(query, sort) {
+  switch (sort) {
+    case 'compat':   return query.order('compat_score', { ascending: false });
+    case 'recent':   return query.order('created_at',   { ascending: false });
+    case 'age_asc':  return query.order('age',          { ascending: true });
+    case 'age_desc': return query.order('age',          { ascending: false });
+    default:         return query;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RENDER
+═══════════════════════════════════════════════════════════════ */
+const religLabels = {
+  'debutant':          'En cheminement',
+  'pratiquant':        'Pratiquant(e)',
+  'pratiquant-assidu': 'Pratiquant(e) assidu(e)',
+  'tres-pratiquant':   'Très pratiquant(e)'
+};
+const religBars = {
+  'debutant':          1,
+  'pratiquant':        2,
+  'pratiquant-assidu': 3,
+  'tres-pratiquant':   4
+};
+const situLabels = {
+  'celibataire': 'Célibataire',
+  'divorce':     'Divorcé(e)',
+  'veuf':        'Veuf/Veuve'
+};
+
+function buildReligBar(level) {
+  const count = religBars[level] || 0;
+  return [1,2,3,4].map(i => `<span class="${i <= count ? 'on' : ''}"></span>`).join('');
+}
+
+function buildCard(p) {
+  const initial = (p.prenom || '?')[0].toUpperCase();
+  const compatBadge = p.compat_score
+    ? `<div class="card-compat-badge">${p.compat_score}%</div>` : '';
+  const verifiedBadge = p.verified
+    ? `<div class="card-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Vérifié</div>` : '';
+  const tags = (p.tags || []).slice(0, 3).map(t =>
+    `<span class="card-tag">${t}</span>`
+  ).join('');
+  const enfantsLabel = p.enfants === 0 ? 'Sans enfants'
+    : p.enfants === 1 ? '1 enfant' : `${p.enfants} enfants`;
+
+  return `
+    <div class="profile-card">
+      <div class="card-band">
+        ${compatBadge}
+        <div class="card-avatar-wrap">
+          <div class="card-avatar">${initial}</div>
+        </div>
+        ${verifiedBadge}
+      </div>
+      <div class="card-body">
+        <div class="card-name">${p.prenom}, ${p.age} ans</div>
+        <div class="card-meta">
+          <span>${situLabels[p.situation] || p.situation}</span>
+          <span class="card-meta-sep">·</span>
+          <span>${enfantsLabel}</span>
+        </div>
+        <div class="card-tags">${tags}
+          <span class="card-tag gold">${religLabels[p.religion] || p.religion}</span>
+        </div>
+        <div class="card-relig-bar">${buildReligBar(p.religion)}</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-city">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          ${p.ville}, ${p.pays}
+        </div>
+        <button class="btn-contact" onclick="openProfile(${p.id})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Contacter
+        </button>
+      </div>
+    </div>`;
+}
+
+function render() {
+  showSkeleton(false);
+  const grid = document.getElementById('profiles-grid');
+  const empty = document.getElementById('empty-state');
+  const pag = document.getElementById('pagination');
+
+  if (!state.results.length) {
+    grid.style.display = 'none';
+    grid.innerHTML = '';
+    empty.classList.add('show');
+    pag.style.display = 'none';
+  } else {
+    empty.classList.remove('show');
+    grid.style.display = '';
+    grid.className = 'profiles-grid' + (state.viewMode === 'list' ? ' list-view' : '');
+    grid.innerHTML = state.results.map((p, i) => {
+      const card = buildCard(p);
+      // stagger animation
+      return card.replace('<div class="profile-card">', `<div class="profile-card" style="animation-delay:${i * 0.04}s">`);
+    }).join('');
+    renderPagination();
+  }
+
+  document.getElementById('results-num').textContent = state.totalCount;
+  renderActiveChips();
+  updateActiveCount();
+}
+
+function showSkeleton(show) {
+  document.getElementById('skeleton').style.display = show ? '' : 'none';
+  if (!show) {
+    document.getElementById('profiles-grid').style.display = '';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGINATION
+═══════════════════════════════════════════════════════════════ */
+function renderPagination() {
+  const totalPages = Math.ceil(state.totalCount / PAGE_SIZE);
+  const pag = document.getElementById('pagination');
+  if (totalPages <= 1) { pag.style.display = 'none'; return; }
+  pag.style.display = 'flex';
+
+  let html = `
+    <button class="page-btn" onclick="goPage(${state.page - 1})" ${state.page === 1 ? 'disabled' : ''}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>`;
+
+  const delta = 2;
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || (i >= state.page - delta && i <= state.page + delta)) {
+      html += `<button class="page-btn ${i === state.page ? 'active' : ''}" onclick="goPage(${i})">${i}</button>`;
+    } else if (i === state.page - delta - 1 || i === state.page + delta + 1) {
+      html += `<span style="color:var(--text-m);padding:0 4px;align-self:center;">…</span>`;
+    }
+  }
+
+  html += `
+    <button class="page-btn" onclick="goPage(${state.page + 1})" ${state.page === totalPages ? 'disabled' : ''}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>`;
+
+  pag.innerHTML = html;
+}
+
+function goPage(n) {
+  const totalPages = Math.ceil(state.totalCount / PAGE_SIZE);
+  if (n < 1 || n > totalPages) return;
+  state.page = n;
+  fetchProfiles();
+  document.getElementById('main').scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ACTIVE FILTER CHIPS
+═══════════════════════════════════════════════════════════════ */
+const filterLabels = {
+  pays:      v => v,
+  situation: v => ({ celibataire:'Célibataire', divorce:'Divorcé(e)', veuf:'Veuf/Veuve' }[v] || v),
+  religion:  v => ({ debutant:'En cheminement', pratiquant:'Pratiquant', 'pratiquant-assidu':'Pratiquant assidu', 'tres-pratiquant':'Très pratiquant' }[v] || v),
+};
+
+function renderActiveChips() {
+  const wrap = document.getElementById('active-filters');
+  wrap.innerHTML = '';
+  const chips = [];
+
+  const f = state.filters;
+  if (f.age_min > 18 || f.age_max < 60) {
+    chips.push({ label: `${f.age_min} – ${f.age_max} ans`, remove: () => { f.age_min = 18; f.age_max = 60; syncAgeSliders(); applyFilters(); }});
+  }
+  f.pays.forEach(v => chips.push({ label: v, remove: () => { f.pays = f.pays.filter(x => x !== v); uncheckInput('pays', v); applyFilters(); }}));
+  if (f.ville) chips.push({ label: f.ville, remove: () => { f.ville = ''; document.getElementById('ville-input').value = ''; applyFilters(); }});
+  f.situation.forEach(v => chips.push({ label: filterLabels.situation(v), remove: () => { f.situation = f.situation.filter(x => x !== v); uncheckInput('situation', v); applyFilters(); }}));
+  if (f.enfants === '0') chips.push({ label: 'Sans enfants', remove: () => { f.enfants = ''; document.querySelector('input[name="enfants"][value=""]').checked = true; applyFilters(); }});
+  if (f.enfants === 'avec') chips.push({ label: 'Avec enfants', remove: () => { f.enfants = ''; document.querySelector('input[name="enfants"][value=""]').checked = true; applyFilters(); }});
+  f.religion.forEach(v => chips.push({ label: filterLabels.religion(v), remove: () => { f.religion = f.religion.filter(x => x !== v); uncheckInput('religion', v); applyFilters(); }}));
+  if (f.keyword) chips.push({ label: `"${f.keyword}"`, remove: () => { f.keyword = ''; document.getElementById('search-keyword').value = ''; applyFilters(); }});
+
+  chips.forEach(chip => {
+    const el = document.createElement('div');
+    el.className = 'active-chip';
+    el.innerHTML = `${chip.label}<button type="button" aria-label="Retirer">✕</button>`;
+    el.querySelector('button').addEventListener('click', chip.remove);
+    wrap.appendChild(el);
+  });
+}
+
+function uncheckInput(name, value) {
+  const inp = document.querySelector(`input[name="${name}"][value="${value}"]`);
+  if (inp) inp.checked = false;
+}
+
+function updateActiveCount() {
+  const f = state.filters;
+  let count = 0;
+  if (f.age_min > 18 || f.age_max < 60) count++;
+  count += f.pays.length;
+  if (f.ville) count++;
+  count += f.situation.length;
+  if (f.enfants) count++;
+  count += f.religion.length;
+  if (f.keyword) count++;
+
+  document.getElementById('active-count').textContent = count;
+  const badge = document.getElementById('mobile-badge');
+  if (count > 0) {
+    badge.textContent = count;
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DUAL RANGE SLIDER
+═══════════════════════════════════════════════════════════════ */
+function updateAgeRange() {
+  const min = +document.getElementById('age-min').value;
+  const max = +document.getElementById('age-max').value;
+  const minVal = Math.min(min, max - 1);
+  const maxVal = Math.max(max, min + 1);
+  document.getElementById('age-min').value = minVal;
+  document.getElementById('age-max').value = maxVal;
+  document.getElementById('age-min-label').textContent = minVal;
+  document.getElementById('age-max-label').textContent = maxVal;
+  state.filters.age_min = minVal;
+  state.filters.age_max = maxVal;
+
+  const pct1 = ((minVal - 18) / (70 - 18)) * 100;
+  const pct2 = ((maxVal - 18) / (70 - 18)) * 100;
+  const fill = document.getElementById('age-fill');
+  fill.style.left  = pct1 + '%';
+  fill.style.width = (pct2 - pct1) + '%';
+}
+
+function syncAgeSliders() {
+  document.getElementById('age-min').value = state.filters.age_min;
+  document.getElementById('age-max').value = state.filters.age_max;
+  updateAgeRange();
+}
+
+document.getElementById('age-min').addEventListener('input', () => { updateAgeRange(); });
+document.getElementById('age-max').addEventListener('input', () => { updateAgeRange(); });
+updateAgeRange();
+
+/* ═══════════════════════════════════════════════════════════════
+   COLLECT FILTERS FROM DOM
+═══════════════════════════════════════════════════════════════ */
+function collectFilters() {
+  state.filters.pays = [...document.querySelectorAll('input[name="pays"]:checked')].map(i => i.value);
+  state.filters.ville = document.getElementById('ville-input').value.trim();
+  state.filters.situation = [...document.querySelectorAll('input[name="situation"]:checked')].map(i => i.value);
+  state.filters.enfants = document.querySelector('input[name="enfants"]:checked')?.value || '';
+  state.filters.religion = [...document.querySelectorAll('input[name="religion"]:checked')].map(i => i.value);
+  state.filters.keyword = document.getElementById('search-keyword').value.trim();
+}
+
+function applyFilters() {
+  collectFilters();
+  state.page = 1;
+  fetchProfiles();
+}
+
+/* ─── Apply button ────────────────────────────────────────── */
+document.getElementById('btn-apply').addEventListener('click', applyFilters);
+
+/* ─── Live filter on checkboxes / radios ─────────────────── */
+document.querySelectorAll('input[name="pays"], input[name="situation"], input[name="enfants"], input[name="religion"]')
+  .forEach(inp => inp.addEventListener('change', () => {
+    applyFilters();
+    // close mobile sidebar after selection on small screens
+    if (window.innerWidth < 900) closeMobileSidebar();
+  }));
+
+/* ─── Age range debounced ────────────────────────────────── */
+let ageTimer;
+['age-min','age-max'].forEach(id => {
+  document.getElementById(id).addEventListener('input', () => {
+    clearTimeout(ageTimer);
+    ageTimer = setTimeout(applyFilters, 500);
+  });
+});
+
+/* ─── Ville debounced ─────────────────────────────────────── */
+let villeTimer;
+document.getElementById('ville-input').addEventListener('input', () => {
+  clearTimeout(villeTimer);
+  villeTimer = setTimeout(applyFilters, 600);
+});
+
+/* ─── Keyword search debounced ───────────────────────────── */
+let kwTimer;
+document.getElementById('search-keyword').addEventListener('input', () => {
+  clearTimeout(kwTimer);
+  kwTimer = setTimeout(applyFilters, 500);
+});
+
+/* ─── Sort ────────────────────────────────────────────────── */
+document.getElementById('sort-select').addEventListener('change', e => {
+  state.sort = e.target.value;
+  state.page = 1;
+  fetchProfiles();
+});
+
+/* ─── View toggle ─────────────────────────────────────────── */
+document.getElementById('view-grid').addEventListener('click', () => {
+  state.viewMode = 'grid';
+  document.getElementById('view-grid').classList.add('active');
+  document.getElementById('view-list').classList.remove('active');
+  document.getElementById('profiles-grid').className = 'profiles-grid';
+});
+document.getElementById('view-list').addEventListener('click', () => {
+  state.viewMode = 'list';
+  document.getElementById('view-list').classList.add('active');
+  document.getElementById('view-grid').classList.remove('active');
+  document.getElementById('profiles-grid').className = 'profiles-grid list-view';
+});
+
+/* ─── Reset ───────────────────────────────────────────────── */
+document.getElementById('btn-reset').addEventListener('click', () => {
+  state.filters = { age_min:18, age_max:60, pays:[], ville:'', situation:[], enfants:'', religion:[], keyword:'' };
+  document.querySelectorAll('#sidebar input[type=checkbox], #sidebar input[type=radio]').forEach(i => {
+    i.checked = i.name === 'enfants' && i.value === '';
+  });
+  document.getElementById('ville-input').value = '';
+  document.getElementById('search-keyword').value = '';
+  syncAgeSliders();
+  state.page = 1;
+  fetchProfiles();
+});
+
+/* ─── Filter group accordion ──────────────────────────────── */
+document.querySelectorAll('.filter-group-head').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const group = btn.closest('.filter-group');
+    group.classList.toggle('open');
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE SIDEBAR
+═══════════════════════════════════════════════════════════════ */
+function openMobileSidebar() {
+  document.getElementById('sidebar').classList.add('mobile-open');
+  document.getElementById('sidebar-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobileSidebar() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('mobile-filter-btn').addEventListener('click', openMobileSidebar);
+document.getElementById('sidebar-overlay').addEventListener('click', closeMobileSidebar);
+
+/* ═══════════════════════════════════════════════════════════════
+   PROFILE CLICK
+═══════════════════════════════════════════════════════════════ */
+function openProfile(id) {
+  // Naviguer vers la page profil ou ouvrir un modal
+  console.log('Ouvrir profil:', id);
+  alert(`Profil #${id} — Intégrez ici votre page de détail ou modal.`);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════════ */
+fetchProfiles();
+</script>
+</body>
+</html>

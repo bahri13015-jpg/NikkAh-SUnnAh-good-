@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion – Nour Al Zawwaj</title>
+  <meta name="description" content="Connectez-vous à votre espace Nour Al Zawwaj et continuez votre démarche vers un mariage halal sérieux.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://nour-al-zawwaj.com/connexion">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Sécurité -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500;600;700&family=Amiri&display=swap">
+  <link rel="stylesheet" href="tokens.css">
+
+  <style>
+    .auth-layout {
+      min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    }
+    /* ── Left panel ── */
+    .auth-panel {
+      background: linear-gradient(180deg, var(--c-emerald) 0%, var(--c-bg) 100%);
+      border-right: 1px solid var(--c-border);
+      padding: var(--sp-12); display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; overflow: hidden;
+    }
+    .auth-panel__bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 30% 40%, rgba(201,168,76,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 70% 80%, rgba(46,139,110,0.1) 0%, transparent 50%);
+    }
+    .auth-panel__grid {
+      position: absolute; inset: 0; opacity: 0.03;
+      background-image: linear-gradient(var(--c-gold) 1px, transparent 1px), linear-gradient(90deg, var(--c-gold) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .auth-panel__content { position: relative; z-index: 1; }
+    .auth-panel__logo { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-16); }
+    .auth-panel__logo-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.05));
+      border: 1px solid rgba(201,168,76,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: var(--c-gold);
+    }
+    .auth-panel__logo-name { font-family: var(--ff-display); font-size: 1.1rem; font-weight: 700; color: var(--c-text); }
+    .auth-panel__logo-tagline { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-gold); }
+    .auth-panel__verse {
+      font-family: var(--ff-arabic); font-size: 1.8rem; color: var(--c-gold-light);
+      direction: rtl; text-align: right; line-height: 1.6;
+      margin-bottom: var(--sp-4); opacity: 0.9;
+    }
+    .auth-panel__verse-ref { font-size: var(--fs-xs); color: var(--c-text-muted); margin-bottom: var(--sp-8); }
+    .auth-panel__stats { display: flex; gap: var(--sp-6); }
+    .auth-panel__stat { }
+    .auth-panel__stat-num { font-family: var(--ff-display); font-size: var(--fs-2xl); font-weight: 700; color: var(--c-gold); }
+    .auth-panel__stat-label { font-size: var(--fs-xs); color: var(--c-text-muted); }
+    .auth-panel__guarantees { margin-top: var(--sp-10); display: flex; flex-direction: column; gap: var(--sp-3); }
+    .auth-panel__guarantee { display: flex; align-items: center; gap: var(--sp-3); font-size: var(--fs-sm); color: var(--c-text-muted); }
+    .auth-panel__guarantee-icon {
+      width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0;
+      background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
+      display: flex; align-items: center; justify-content: center; color: var(--c-gold); font-size: 12px;
+    }
+    .auth-panel__footer { position: relative; z-index: 1; font-size: var(--fs-xs); color: var(--c-text-dim); }
+
+    /* ── Right panel (form) ── */
+    .auth-form-panel {
+      display: flex; align-items: center; justify-content: center;
+      padding: var(--sp-12) var(--sp-10); background: var(--c-bg);
+    }
+    .auth-form-wrap { width: 100%; max-width: 420px; }
+    .auth-form__header { margin-bottom: var(--sp-8); }
+    .auth-form__back {
+      display: inline-flex; align-items: center; gap: var(--sp-2);
+      font-size: var(--fs-sm); color: var(--c-text-muted); margin-bottom: var(--sp-6);
+      transition: color var(--t-fast);
+    }
+    .auth-form__back:hover { color: var(--c-gold); }
+    .auth-form__title { font-family: var(--ff-display); font-size: var(--fs-2xl); color: var(--c-text); margin-bottom: var(--sp-2); }
+    .auth-form__title em { font-style: italic; color: var(--c-gold); }
+    .auth-form__subtitle { font-size: var(--fs-sm); color: var(--c-text-muted); }
+
+    /* Error alert */
+    .alert {
+      display: none; padding: var(--sp-4); border-radius: var(--r-md);
+      font-size: var(--fs-sm); margin-bottom: var(--sp-5);
+      align-items: flex-start; gap: var(--sp-3);
+    }
+    .alert.show { display: flex; }
+    .alert--error { background: var(--c-error-bg); border: 1px solid rgba(192,57,43,0.3); color: #E57373; }
+    .alert--success { background: var(--c-success-bg); border: 1px solid rgba(39,174,96,0.3); color: #81C784; }
+    .alert--warning { background: var(--c-warning-bg); border: 1px solid rgba(230,126,34,0.3); color: #FFB74D; }
+
+    /* Password toggle */
+    .input-wrap { position: relative; }
+    .input-toggle {
+      position: absolute; right: var(--sp-3); top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--c-text-muted);
+      font-size: 16px; padding: 4px; transition: color var(--t-fast);
+    }
+    .input-toggle:hover { color: var(--c-gold); }
+
+    /* 2FA panel */
+    .panel-2fa { display: none; }
+    .panel-2fa.show { display: block; }
+    .panel-main { display: block; }
+    .panel-main.hide { display: none; }
+    .otp-inputs { display: flex; gap: var(--sp-3); margin-bottom: var(--sp-6); justify-content: center; }
+    .otp-input {
+      width: 52px; height: 56px; text-align: center; font-size: var(--fs-xl); font-weight: 700;
+      background: var(--c-surface-2); border: 1px solid var(--c-border); border-radius: var(--r-lg);
+      color: var(--c-text); transition: border-color var(--t-fast), box-shadow var(--t-fast);
+    }
+    .otp-input:focus { outline: none; border-color: var(--c-gold); box-shadow: 0 0 0 3px var(--c-gold-glow); }
+
+    /* Forgot password panel */
+    .panel-forgot { display: none; }
+    .panel-forgot.show { display: block; }
+    .panel-main.hide, .panel-2fa.show { }
+
+    /* Divider */
+    .or-divider {
+      display: flex; align-items: center; gap: var(--sp-4);
+      font-size: var(--fs-xs); color: var(--c-text-dim; margin-block: var(--sp-5);
+    }
+    .or-divider::before, .or-divider::after { content:''; flex:1; height:1px; background:var(--c-border); }
+
+    /* Rate limit info */
+    .attempts-warning {
+      font-size: var(--fs-xs); color: var(--c-text-dim); text-align: center; margin-top: var(--sp-4);
+    }
+
+    /* Submit loading */
+    .btn-loading { position: relative; pointer-events: none; opacity: 0.8; }
+    .btn-loading::after {
+      content: ''; position: absolute; right: 14px; top: 50%; margin-top: -8px;
+      width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .auth-layout { grid-template-columns: 1fr; }
+      .auth-panel { display: none; }
+      .auth-form-panel { padding: var(--sp-8) var(--sp-5); align-items: flex-start; padding-top: var(--sp-12); }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#login-form">Aller au formulaire de connexion</a>
+
+  <div class="auth-layout">
+    <!-- ── Left: brand panel ── -->
+    <aside class="auth-panel" aria-label="Présentation de Nour Al Zawwaj">
+      <div class="auth-panel__bg" aria-hidden="true"></div>
+      <div class="auth-panel__grid" aria-hidden="true"></div>
+
+      <div class="auth-panel__content">
+        <div class="auth-panel__logo">
+          <div class="auth-panel__logo-icon" aria-hidden="true">✦</div>
+          <div>
+            <div class="auth-panel__logo-name">Nour Al Zawwaj</div>
+            <div class="auth-panel__logo-tagline">La lumière du mariage</div>
+          </div>
+        </div>
+
+        <div class="auth-panel__verse arabic" aria-label="Verset du Coran en arabe">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا</div>
+        <p class="auth-panel__verse-ref">«&nbsp;Et parmi Ses signes, Il a créé pour vous, de vous-mêmes, des épouses afin que vous trouviez en elles la <strong>quiétude.</strong>&nbsp;» — Sourate Ar-Rûm, 21</p>
+
+        <div class="auth-panel__stats" role="list" aria-label="Statistiques">
+          <div class="auth-panel__stat" role="listitem">
+            <div class="auth-panel__stat-num">12k+</div>
+            <div class="auth-panel__stat-label">Membres</div>
+          </div>
+          <div class="auth-panel__stat" role="listitem">
+            <div class="auth-panel__stat-num">934</div>
+            <div class="auth-panel__stat-label">Mariages</div>
+          </div>
+          <div class="auth-panel__stat" role="listitem">
+            <div class="auth-panel__stat-num">100%</div>
+            <div class="auth-panel__stat-label">Halal</div>
+          </div>
+        </div>
+
+        <div class="auth-panel__guarantees" role="list" aria-label="Garanties">
+          <div class="auth-panel__guarantee" role="listitem">
+            <div class="auth-panel__guarantee-icon" aria-hidden="true">☽</div>
+            <span>Environnement 100% halal · Charte islamique signée</span>
+          </div>
+          <div class="auth-panel__guarantee" role="listitem">
+            <div class="auth-panel__guarantee-icon" aria-hidden="true">⊛</div>
+            <span>Données chiffrées AES-256 · Jamais vendues</span>
+          </div>
+          <div class="auth-panel__guarantee" role="listitem">
+            <div class="auth-panel__guarantee-icon" aria-hidden="true">✦</div>
+            <span>Profils vérifiés · Identité confirmée</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-panel__footer">
+        <a href="/" style="color:var(--c-text-dim);transition:color var(--t-fast);">← Retour à l'accueil</a>
+      </div>
+    </aside>
+
+    <!-- ── Right: form panel ── -->
+    <main class="auth-form-panel" id="login-form">
+      <div class="auth-form-wrap">
+
+        <!-- Mobile back link -->
+        <a href="/" class="auth-form__back" aria-label="Retour à l'accueil" style="display:none" id="mobile-back">← Accueil</a>
+
+        <!-- PANEL: Login -->
+        <div class="panel-main" id="panel-main">
+          <div class="auth-form__header">
+            <h1 class="auth-form__title">Content de vous <em>revoir</em></h1>
+            <p class="auth-form__subtitle">Connectez-vous pour accéder à votre espace et continuer votre démarche.</p>
+          </div>
+
+          <!-- Error alert -->
+          <div class="alert alert--error" id="login-error" role="alert" aria-live="polite">
+            <span aria-hidden="true">⚠</span>
+            <span id="login-error-msg">E-mail ou mot de passe incorrect. Veuillez réessayer.</span>
+          </div>
+          <div class="alert alert--warning" id="rate-limit-alert" role="alert" aria-live="polite">
+            <span aria-hidden="true">⚠</span>
+            <span>Trop de tentatives. Veuillez patienter <strong id="cooldown-timer">5:00</strong> avant de réessayer.</span>
+          </div>
+
+          <form id="login-form-el" novalidate autocomplete="on" aria-label="Formulaire de connexion">
+            <!-- CSRF token (simulé) -->
+            <input type="hidden" name="_csrf" value="CSRF_TOKEN_PLACEHOLDER">
+            <input type="hidden" name="honeypot" value="" aria-hidden="true" tabindex="-1" style="display:none">
+
+            <div class="field">
+              <label for="email">Adresse e-mail</label>
+              <input class="input" type="email" id="email" name="email"
+                autocomplete="email" autocapitalize="off" spellcheck="false"
+                required aria-required="true" aria-describedby="email-error"
+                placeholder="vous@exemple.com">
+              <span class="field-error" id="email-error" role="alert" aria-live="polite"></span>
+            </div>
+
+            <div class="field">
+              <label for="password" style="display:flex;justify-content:space-between;align-items:center">
+                <span>Mot de passe</span>
+                <button type="button" class="auth-form__back" style="font-size:var(--fs-xs);color:var(--c-gold);background:none;border:none;cursor:pointer;padding:0" id="forgot-btn" aria-controls="panel-forgot">
+                  Mot de passe oublié ?
+                </button>
+              </label>
+              <div class="input-wrap">
+                <input class="input" type="password" id="password" name="password"
+                  autocomplete="current-password" required aria-required="true"
+                  aria-describedby="password-error" placeholder="••••••••"
+                  style="padding-right:44px">
+                <button type="button" class="input-toggle" id="toggle-pw" aria-label="Afficher le mot de passe" aria-pressed="false">👁</button>
+              </div>
+              <span class="field-error" id="password-error" role="alert" aria-live="polite"></span>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--sp-6)">
+              <label class="checkbox-field">
+                <input type="checkbox" id="remember-me" name="remember" autocomplete="on">
+                <span>Se souvenir de moi</span>
+              </label>
+              <span id="attempts-left" class="attempts-warning" aria-live="polite"></span>
+            </div>
+
+            <button type="submit" class="btn btn--primary" id="login-btn" style="width:100%;justify-content:center;padding:var(--sp-4)">
+              Se connecter
+            </button>
+
+            <div class="or-divider" aria-hidden="true">ou</div>
+
+            <a href="choix.html" class="btn btn--outline" style="width:100%;justify-content:center">
+              Créer mon compte gratuitement
+            </a>
+
+            <p style="text-align:center;font-size:var(--fs-xs);color:var(--c-text-dim);margin-top:var(--sp-6)">
+              Connexion sécurisée — données chiffrées TLS 1.3
+            </p>
+          </form>
+        </div>
+
+        <!-- PANEL: 2FA -->
+        <div class="panel-2fa" id="panel-2fa" role="region" aria-label="Vérification en deux étapes" aria-live="polite">
+          <div class="auth-form__header">
+            <button type="button" class="auth-form__back" id="back-from-2fa">← Retour</button>
+            <h2 class="auth-form__title">Vérification <em>2FA</em></h2>
+            <p class="auth-form__subtitle">Saisissez le code à 6 chiffres envoyé à votre e-mail (valable 10 minutes).</p>
+          </div>
+
+          <div class="alert alert--error" id="otp-error" role="alert" aria-live="assertive">
+            <span aria-hidden="true">⚠</span>
+            <span>Code incorrect ou expiré. Veuillez réessayer.</span>
+          </div>
+
+          <form id="otp-form" novalidate aria-label="Formulaire code OTP">
+            <div class="otp-inputs" role="group" aria-label="Code à 6 chiffres">
+              <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" autocomplete="one-time-code" aria-label="Chiffre 1">
+              <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" aria-label="Chiffre 2">
+              <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" aria-label="Chiffre 3">
+              <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" aria-label="Chiffre 4">
+              <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" aria-label="Chiffre 5">
+              <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" aria-label="Chiffre 6">
+            </div>
+
+            <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;margin-bottom:var(--sp-4)">
+              Vérifier le code
+            </button>
+            <button type="button" id="resend-otp" class="btn btn--ghost" style="width:100%;justify-content:center" disabled>
+              Renvoyer le code (<span id="resend-timer">60</span>s)
+            </button>
+          </form>
+        </div>
+
+        <!-- PANEL: Forgot password -->
+        <div class="panel-forgot" id="panel-forgot" role="region" aria-label="Réinitialisation du mot de passe" aria-live="polite">
+          <div class="auth-form__header">
+            <button type="button" class="auth-form__back" id="back-from-forgot">← Retour à la connexion</button>
+            <h2 class="auth-form__title">Mot de passe <em>oublié</em>&nbsp;?</h2>
+            <p class="auth-form__subtitle">Saisissez votre adresse e-mail. Nous vous enverrons un lien de réinitialisation valable 30 minutes.</p>
+          </div>
+
+          <div class="alert alert--success" id="forgot-success" role="alert" aria-live="polite">
+            <span aria-hidden="true">✓</span>
+            <span>E-mail envoyé ! Vérifiez votre boîte de réception et vos spams. Le lien est valable 30 minutes.</span>
+          </div>
+
+          <form id="forgot-form" novalidate aria-label="Formulaire de réinitialisation du mot de passe">
+            <div class="field">
+              <label for="forgot-email">Adresse e-mail</label>
+              <input class="input" type="email" id="forgot-email" name="forgot-email"
+                autocomplete="email" required aria-required="true" placeholder="vous@exemple.com">
+              <span class="field-error" id="forgot-error" role="alert" aria-live="polite"></span>
+            </div>
+            <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center">
+              Envoyer le lien de réinitialisation
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // ── Rate limiting (anti-brute force côté client) ──
+    const MAX_ATTEMPTS = 5;
+    const LOCKOUT_MS = 5 * 60 * 1000;
+    let attempts = parseInt(sessionStorage.getItem('naz-login-attempts') || '0');
+    let lockUntil = parseInt(sessionStorage.getItem('naz-login-lock') || '0');
+
+    function isLocked() { return Date.now() < lockUntil; }
+
+    function updateAttemptsUI() {
+      const left = MAX_ATTEMPTS - attempts;
+      const el = document.getElementById('attempts-left');
+      if (attempts > 2 && !isLocked()) {
+        el.textContent = `${left} tentative${left > 1 ? 's' : ''} restante${left > 1 ? 's' : ''}`;
+      } else {
+        el.textContent = '';
+      }
+    }
+
+    function showLockUI() {
+      const alert = document.getElementById('rate-limit-alert');
+      document.getElementById('login-error').classList.remove('show');
+      alert.classList.add('show');
+      document.getElementById('login-btn').disabled = true;
+      const tick = setInterval(() => {
+        const remaining = Math.max(0, lockUntil - Date.now());
+        if (remaining === 0) {
+          clearInterval(tick);
+          alert.classList.remove('show');
+          document.getElementById('login-btn').disabled = false;
+          attempts = 0;
+          sessionStorage.removeItem('naz-login-attempts');
+          sessionStorage.removeItem('naz-login-lock');
+          updateAttemptsUI();
+          return;
+        }
+        const m = Math.floor(remaining / 60000);
+        const s = Math.floor((remaining % 60000) / 1000);
+        document.getElementById('cooldown-timer').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+      }, 1000);
+    }
+
+    if (isLocked()) showLockUI();
+    updateAttemptsUI();
+
+    // ── Password toggle ──
+    const togglePw = document.getElementById('toggle-pw');
+    const pwInput = document.getElementById('password');
+    togglePw.addEventListener('click', () => {
+      const shown = pwInput.type === 'text';
+      pwInput.type = shown ? 'password' : 'text';
+      togglePw.setAttribute('aria-pressed', !shown);
+      togglePw.setAttribute('aria-label', shown ? 'Afficher le mot de passe' : 'Masquer le mot de passe');
+      togglePw.textContent = shown ? '👁' : '🙈';
+    });
+
+    // ── Form validation ──
+    function validateEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+    function showError(inputId, errorId, msg) {
+      document.getElementById(inputId).classList.add('input--error');
+      document.getElementById(inputId).setAttribute('aria-invalid', 'true');
+      document.getElementById(errorId).textContent = msg;
+    }
+    function clearError(inputId, errorId) {
+      document.getElementById(inputId).classList.remove('input--error');
+      document.getElementById(inputId).setAttribute('aria-invalid', 'false');
+      document.getElementById(errorId).textContent = '';
+    }
+
+    // Real-time validation
+    document.getElementById('email').addEventListener('blur', function() {
+      if (this.value && !validateEmail(this.value))
+        showError('email','email-error','Adresse e-mail invalide.');
+      else clearError('email','email-error');
+    });
+
+    document.getElementById('password').addEventListener('input', function() {
+      if (this.value.length > 0) clearError('password','password-error');
+    });
+
+    // ── Login form submit ──
+    document.getElementById('login-form-el').addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (isLocked()) return;
+
+      let valid = true;
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !validateEmail(email)) { showError('email','email-error','Veuillez saisir une adresse e-mail valide.'); valid = false; }
+      else clearError('email','email-error');
+
+      if (!password) { showError('password','password-error','Veuillez saisir votre mot de passe.'); valid = false; }
+      else clearError('password','password-error');
+
+      if (!valid) return;
+
+      // Simulate loading
+      const btn = document.getElementById('login-btn');
+      btn.classList.add('btn-loading');
+      btn.textContent = 'Connexion en cours…';
+
+      setTimeout(() => {
+        btn.classList.remove('btn-loading');
+        btn.textContent = 'Se connecter';
+        // Simulate failed login → increment attempts
+        attempts++;
+        sessionStorage.setItem('naz-login-attempts', attempts);
+        if (attempts >= MAX_ATTEMPTS) {
+          lockUntil = Date.now() + LOCKOUT_MS;
+          sessionStorage.setItem('naz-login-lock', lockUntil);
+          showLockUI();
+        } else {
+          document.getElementById('login-error').classList.add('show');
+          document.getElementById('login-error-msg').textContent =
+            attempts >= 3 ? `E-mail ou mot de passe incorrect. ${MAX_ATTEMPTS - attempts} tentative(s) restante(s).`
+                          : 'E-mail ou mot de passe incorrect. Veuillez réessayer.';
+          updateAttemptsUI();
+        }
+        // On real success → show 2FA: showPanel('panel-2fa'); start2FA();
+      }, 1200);
+    });
+
+    // ── Panel switching ──
+    function showPanel(id) {
+      ['panel-main','panel-2fa','panel-forgot'].forEach(p => {
+        document.getElementById(p).classList.remove('show');
+        document.getElementById(p).style.display = 'none';
+      });
+      const el = document.getElementById(id);
+      el.style.display = 'block';
+      el.classList.add('show');
+      el.focus?.();
+    }
+    // init
+    document.getElementById('panel-main').style.display = 'block';
+    document.getElementById('panel-2fa').style.display = 'none';
+    document.getElementById('panel-forgot').style.display = 'none';
+
+    document.getElementById('forgot-btn').addEventListener('click', () => showPanel('panel-forgot'));
+    document.getElementById('back-from-forgot').addEventListener('click', () => showPanel('panel-main'));
+    document.getElementById('back-from-2fa').addEventListener('click', () => showPanel('panel-main'));
+
+    // ── OTP inputs ──
+    const otpInputs = document.querySelectorAll('.otp-input');
+    otpInputs.forEach((inp, i) => {
+      inp.addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g,'').slice(0,1);
+        if (this.value && i < otpInputs.length - 1) otpInputs[i+1].focus();
+      });
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Backspace' && !this.value && i > 0) otpInputs[i-1].focus();
+        if (e.key === 'ArrowLeft' && i > 0) otpInputs[i-1].focus();
+        if (e.key === 'ArrowRight' && i < otpInputs.length-1) otpInputs[i+1].focus();
+      });
+      inp.addEventListener('paste', function(e) {
+        const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g,'');
+        if (pasted.length >= 6) {
+          otpInputs.forEach((inp,j) => { inp.value = pasted[j] || ''; });
+          e.preventDefault();
+        }
+      });
+    });
+
+    // ── Resend OTP timer ──
+    function start2FA() {
+      let t = 60;
+      const timerEl = document.getElementById('resend-timer');
+      const resendBtn = document.getElementById('resend-otp');
+      resendBtn.disabled = true;
+      const tick = setInterval(() => {
+        t--;
+        timerEl.textContent = t;
+        if (t <= 0) {
+          clearInterval(tick);
+          resendBtn.disabled = false;
+          resendBtn.textContent = 'Renvoyer le code';
+        }
+      }, 1000);
+    }
+
+    // ── Forgot password ──
+    document.getElementById('forgot-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('forgot-email').value.trim();
+      if (!validateEmail(email)) {
+        document.getElementById('forgot-error').textContent = 'Veuillez saisir une adresse e-mail valide.';
+        return;
+      }
+      document.getElementById('forgot-error').textContent = '';
+      document.getElementById('forgot-success').classList.add('show');
+      this.style.display = 'none';
+    });
+
+    // ── Mobile back ──
+    if (window.innerWidth <= 768) document.getElementById('mobile-back').style.display = 'inline-flex';
+  </script>
+</body>
+</html>

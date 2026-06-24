@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ─── TOKENS ─────────────────────────────────────────────── */
     :root {
       --petrol:   #0F4C5C;
       --petrol-d: #0a3543;
@@ -22,14 +21,11 @@
       --grey-mid: #e0e0e0;
       --text:     #1a2e35;
       --text-m:   #4a6570;
-
       --ff-display: 'Cormorant Garamond', Georgia, serif;
       --ff-body:    'Jost', system-ui, sans-serif;
-
       --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* ─── RESET ──────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
@@ -44,30 +40,7 @@
     ul { list-style: none; }
     button { cursor: pointer; border: none; background: none; font: inherit; }
 
-    /* ─── UTILITIES ───────────────────────────────────────────── */
-    .container {
-      width: min(1200px, 90vw);
-      margin-inline: auto;
-    }
-    .gold-line {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      justify-content: center;
-      color: var(--gold);
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-family: var(--ff-body);
-      font-weight: 500;
-    }
-    .gold-line::before, .gold-line::after {
-      content: '';
-      height: 1px;
-      width: 60px;
-      background: linear-gradient(90deg, transparent, var(--gold));
-    }
-    .gold-line::after { background: linear-gradient(90deg, var(--gold), transparent); }
+    .container { width: min(1200px, 90vw); margin-inline: auto; }
 
     .section-label {
       font-family: var(--ff-body);
@@ -85,10 +58,7 @@
       line-height: 1.15;
       color: var(--petrol);
     }
-    .section-title em {
-      font-style: italic;
-      color: var(--gold);
-    }
+    .section-title em { font-style: italic; color: var(--gold); }
     .section-sub {
       font-size: 1rem;
       color: var(--text-m);
@@ -97,28 +67,21 @@
       line-height: 1.8;
     }
 
-    /* ─── SCROLL REVEAL ──────────────────────────────────────── */
     .reveal {
       opacity: 0;
       transform: translateY(32px);
       transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
-
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1; transform: none; transition: none; }
     }
 
-    /* ══════════════════════════════════════════════════════════
-       NAVBAR
-    ══════════════════════════════════════════════════════════ */
+    /* ══ NAVBAR ══ */
     #navbar {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -132,16 +95,8 @@
       box-shadow: 0 2px 32px rgba(0,0,0,0.18);
       padding: 14px 0;
     }
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      display: flex;
-      flex-direction: column;
-      line-height: 1;
-    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; flex-direction: column; line-height: 1; }
     .nav-logo-name {
       font-family: var(--ff-display);
       font-size: 1.5rem;
@@ -156,11 +111,7 @@
       color: rgba(201,162,39,0.7);
       margin-top: 2px;
     }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 36px;
-    }
+    .nav-links { display: flex; align-items: center; gap: 36px; }
     .nav-links a {
       font-size: 0.8rem;
       font-weight: 500;
@@ -180,6 +131,33 @@
     }
     .nav-links a:hover { color: var(--gold); }
     .nav-links a:hover::after { right: 0; }
+
+    /* ─── Groupe droite navbar : connexion + CTA ─── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-login {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 20px;
+      border: 1px solid rgba(201,162,39,0.5);
+      color: rgba(255,255,255,0.85);
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: border-color 0.25s, color 0.25s, background 0.25s;
+    }
+    .nav-login svg { width: 13px; height: 13px; }
+    .nav-login:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201,162,39,0.06);
+    }
     .nav-cta {
       display: inline-flex;
       align-items: center;
@@ -194,10 +172,7 @@
       border-radius: 2px;
       transition: background 0.25s, transform 0.2s;
     }
-    .nav-cta:hover {
-      background: var(--gold-l);
-      transform: translateY(-1px);
-    }
+    .nav-cta:hover { background: var(--gold-l); transform: translateY(-1px); }
 
     /* Hamburger */
     .nav-burger {
@@ -217,7 +192,7 @@
     .nav-burger.open span:nth-child(2) { opacity: 0; }
     .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* Mobile menu */
+    /* Menu mobile */
     .nav-mobile {
       display: none;
       position: fixed;
@@ -227,15 +202,12 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 40px;
+      gap: 36px;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s;
     }
-    .nav-mobile.open {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .nav-mobile.open { opacity: 1; pointer-events: all; }
     .nav-mobile a {
       font-family: var(--ff-display);
       font-size: 2rem;
@@ -245,6 +217,33 @@
       transition: color 0.2s;
     }
     .nav-mobile a:hover { color: var(--gold); }
+
+    /* Séparateur menu mobile */
+    .nav-mobile-sep {
+      width: 40px;
+      height: 1px;
+      background: rgba(201,162,39,0.25);
+    }
+
+    /* Bouton connexion dans le menu mobile */
+    .nav-mobile-login {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 40px;
+      border: 1.5px solid rgba(201,162,39,0.5);
+      color: var(--gold);
+      font-family: var(--ff-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .nav-mobile-login:hover { background: rgba(201,162,39,0.08); border-color: var(--gold); }
+    .nav-mobile-login svg { width: 16px; height: 16px; }
+
     .nav-mobile .nav-cta {
       font-family: var(--ff-body);
       font-size: 0.85rem;
@@ -253,14 +252,12 @@
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .nav-cta { display: none; }
+      .nav-right { display: none; }
       .nav-burger { display: flex; }
       .nav-mobile { display: flex; }
     }
 
-    /* ══════════════════════════════════════════════════════════
-       HERO
-    ══════════════════════════════════════════════════════════ */
+    /* ══ HERO ══ */
     #hero {
       min-height: 100svh;
       background: var(--petrol-d);
@@ -271,18 +268,11 @@
       overflow: hidden;
       padding: 120px 0 80px;
     }
-
-    /* Geometric arabesque background */
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-    }
+    .hero-bg { position: absolute; inset: 0; overflow: hidden; }
     .hero-bg::before {
       content: '';
       position: absolute;
-      top: -20%;
-      right: -15%;
+      top: -20%; right: -15%;
       width: 700px; height: 700px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(201,162,39,0.12) 0%, transparent 70%);
@@ -290,8 +280,7 @@
     .hero-bg::after {
       content: '';
       position: absolute;
-      bottom: -15%;
-      left: -10%;
+      bottom: -15%; left: -10%;
       width: 500px; height: 500px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(26,96,112,0.4) 0%, transparent 70%);
@@ -305,7 +294,6 @@
         repeating-linear-gradient(-45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
       background-size: 40px 40px;
     }
-
     .hero-inner {
       position: relative;
       z-index: 2;
@@ -315,13 +303,7 @@
       align-items: center;
       gap: 28px;
     }
-
-    /* Ornamental arch above headline */
-    .hero-arch {
-      width: 80px;
-      opacity: 0.9;
-    }
-
+    .hero-arch { width: 80px; opacity: 0.9; }
     .hero-eyebrow {
       font-size: 0.72rem;
       font-weight: 500;
@@ -329,7 +311,6 @@
       text-transform: uppercase;
       color: var(--gold);
     }
-
     .hero-title {
       font-family: var(--ff-display);
       font-size: clamp(3rem, 8vw, 6rem);
@@ -338,12 +319,7 @@
       line-height: 1.05;
       letter-spacing: -0.01em;
     }
-    .hero-title strong {
-      font-weight: 700;
-      color: var(--gold);
-      display: block;
-    }
-
+    .hero-title strong { font-weight: 700; color: var(--gold); display: block; }
     .hero-subtitle {
       font-size: clamp(0.9rem, 2vw, 1.1rem);
       color: rgba(255,255,255,0.65);
@@ -351,27 +327,13 @@
       line-height: 1.85;
       font-weight: 300;
     }
-
-    .hero-divider {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .hero-divider-line {
-      width: 56px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold));
-    }
-    .hero-divider-line:last-child {
-      background: linear-gradient(90deg, var(--gold), transparent);
-    }
+    .hero-divider { display: flex; align-items: center; gap: 14px; }
+    .hero-divider-line { width: 56px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+    .hero-divider-line:last-child { background: linear-gradient(90deg, var(--gold), transparent); }
     .hero-divider svg { color: var(--gold); }
 
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+
     .btn-primary {
       display: inline-flex;
       align-items: center;
@@ -392,37 +354,32 @@
       transform: translateY(-2px);
       box-shadow: 0 8px 32px rgba(201,162,39,0.4);
     }
-    .btn-ghost {
+
+    /* ─── Bouton connexion hero ─── */
+    .btn-login {
       display: inline-flex;
       align-items: center;
       gap: 10px;
       padding: 15px 36px;
-      border: 1px solid rgba(201,162,39,0.45);
-      color: rgba(255,255,255,0.85);
+      border: 1.5px solid rgba(201,162,39,0.55);
+      color: rgba(255,255,255,0.9);
       font-size: 0.82rem;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       border-radius: 2px;
-      transition: border-color 0.25s, color 0.25s, transform 0.2s;
+      transition: border-color 0.25s, color 0.25s, background 0.25s, transform 0.2s;
     }
-    .btn-ghost:hover {
+    .btn-login:hover {
       border-color: var(--gold);
       color: var(--gold);
+      background: rgba(201,162,39,0.07);
       transform: translateY(-2px);
     }
+    .btn-login svg { width: 16px; height: 16px; }
 
-    /* Floating stat pills */
-    .hero-stats {
-      display: flex;
-      gap: 32px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 16px;
-    }
-    .hero-stat {
-      text-align: center;
-    }
+    .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+    .hero-stat { text-align: center; }
     .hero-stat-num {
       font-family: var(--ff-display);
       font-size: 2.2rem;
@@ -437,14 +394,8 @@
       color: rgba(255,255,255,0.5);
       margin-top: 4px;
     }
-    .hero-stat-sep {
-      width: 1px;
-      height: 48px;
-      background: rgba(201,162,39,0.25);
-      align-self: center;
-    }
+    .hero-stat-sep { width: 1px; height: 48px; background: rgba(201,162,39,0.25); align-self: center; }
 
-    /* Scroll indicator */
     .scroll-indicator {
       position: absolute;
       bottom: 36px;
@@ -459,41 +410,17 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
     }
-    .scroll-mouse {
-      width: 22px; height: 34px;
-      border: 1.5px solid rgba(255,255,255,0.25);
-      border-radius: 11px;
-      display: flex;
-      justify-content: center;
-      padding-top: 6px;
-    }
-    .scroll-dot {
-      width: 3px; height: 3px;
-      border-radius: 50%;
-      background: var(--gold);
-      animation: scrollBounce 2s infinite;
-    }
+    .scroll-mouse { width: 22px; height: 34px; border: 1.5px solid rgba(255,255,255,0.25); border-radius: 11px; display: flex; justify-content: center; padding-top: 6px; }
+    .scroll-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gold); animation: scrollBounce 2s infinite; }
     @keyframes scrollBounce {
       0%,100% { transform: translateY(0); opacity:1; }
       50%      { transform: translateY(8px); opacity:0.3; }
     }
 
-    /* ══════════════════════════════════════════════════════════
-       POURQUOI NOUS CHOISIR
-    ══════════════════════════════════════════════════════════ */
-    #pourquoi {
-      padding: 120px 0;
-      background: var(--white);
-    }
-    .pourquoi-header {
-      text-align: center;
-      margin-bottom: 80px;
-    }
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-    }
+    /* ══ POURQUOI ══ */
+    #pourquoi { padding: 120px 0; background: var(--white); }
+    .pourquoi-header { text-align: center; margin-bottom: 80px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; }
     .card {
       padding: 44px 36px;
       border: 1px solid var(--grey-mid);
@@ -513,48 +440,23 @@
       transform-origin: left;
       transition: transform 0.4s var(--ease-out);
     }
-    .card:hover {
-      border-color: rgba(201,162,39,0.3);
-      transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(15,76,92,0.1);
-    }
+    .card:hover { border-color: rgba(201,162,39,0.3); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(15,76,92,0.1); }
     .card:hover::before { transform: scaleX(1); }
-
     .card-icon {
       width: 52px; height: 52px;
       background: linear-gradient(135deg, rgba(201,162,39,0.12), rgba(201,162,39,0.04));
       border: 1px solid rgba(201,162,39,0.25);
       border-radius: 3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       margin-bottom: 24px;
       color: var(--gold);
     }
     .card-icon svg { width: 24px; height: 24px; }
-    .card-title {
-      font-family: var(--ff-display);
-      font-size: 1.35rem;
-      font-weight: 600;
-      color: var(--petrol);
-      margin-bottom: 12px;
-      line-height: 1.25;
-    }
-    .card-body {
-      font-size: 0.9rem;
-      color: var(--text-m);
-      line-height: 1.85;
-    }
+    .card-title { font-family: var(--ff-display); font-size: 1.35rem; font-weight: 600; color: var(--petrol); margin-bottom: 12px; line-height: 1.25; }
+    .card-body { font-size: 0.9rem; color: var(--text-m); line-height: 1.85; }
 
-    /* ══════════════════════════════════════════════════════════
-       COMMENT ÇA FONCTIONNE
-    ══════════════════════════════════════════════════════════ */
-    #comment {
-      padding: 120px 0;
-      background: var(--grey);
-      position: relative;
-      overflow: hidden;
-    }
+    /* ══ COMMENT ══ */
+    #comment { padding: 120px 0; background: var(--grey); position: relative; overflow: hidden; }
     #comment::before {
       content: '';
       position: absolute;
@@ -564,32 +466,13 @@
       background: radial-gradient(circle, rgba(201,162,39,0.07) 0%, transparent 70%);
       pointer-events: none;
     }
-
-    .comment-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-    .comment-left { }
+    .comment-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
     .comment-left .section-sub { max-width: 420px; }
-
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-top: 48px;
-    }
-    .step {
-      display: flex;
-      gap: 24px;
-      position: relative;
-    }
+    .steps { display: flex; flex-direction: column; gap: 0; margin-top: 48px; }
+    .step { display: flex; gap: 24px; position: relative; }
     .step:not(:last-child) .step-connector {
       position: absolute;
-      left: 20px;
-      top: 44px;
-      bottom: -12px;
+      left: 20px; top: 44px; bottom: -12px;
       width: 1px;
       background: linear-gradient(180deg, var(--gold), transparent);
     }
@@ -598,38 +481,19 @@
       width: 40px; height: 40px;
       border: 1.5px solid var(--gold);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-family: var(--ff-display);
       font-size: 1rem;
       font-weight: 700;
       color: var(--gold);
       background: var(--white);
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
     }
-    .step-content {
-      padding-bottom: 40px;
-    }
+    .step-content { padding-bottom: 40px; }
     .step-content:last-child { padding-bottom: 0; }
-    .step-title {
-      font-family: var(--ff-display);
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--petrol);
-      margin-bottom: 6px;
-    }
-    .step-desc {
-      font-size: 0.88rem;
-      color: var(--text-m);
-      line-height: 1.8;
-    }
-
-    /* Right side visual */
-    .comment-visual {
-      position: relative;
-    }
+    .step-title { font-family: var(--ff-display); font-size: 1.2rem; font-weight: 600; color: var(--petrol); margin-bottom: 6px; }
+    .step-desc { font-size: 0.88rem; color: var(--text-m); line-height: 1.8; }
+    .comment-visual { position: relative; }
     .comment-card-mock {
       background: var(--petrol);
       border-radius: 12px;
@@ -659,39 +523,18 @@
       border-radius: 2px;
       margin-bottom: 24px;
     }
-    .mock-profile {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 28px;
-    }
+    .mock-profile { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
     .mock-avatar {
       width: 52px; height: 52px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--gold-d), var(--gold));
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       color: var(--petrol-d);
     }
     .mock-avatar svg { width: 26px; height: 26px; }
-    .mock-name {
-      font-family: var(--ff-display);
-      font-size: 1.1rem;
-      color: var(--white);
-      font-weight: 600;
-    }
-    .mock-loc {
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.5);
-      margin-top: 2px;
-    }
-    .mock-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
+    .mock-name { font-family: var(--ff-display); font-size: 1.1rem; color: var(--white); font-weight: 600; }
+    .mock-loc { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+    .mock-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
     .mock-tag {
       padding: 4px 12px;
       background: rgba(255,255,255,0.07);
@@ -702,38 +545,22 @@
       letter-spacing: 0.06em;
     }
     .mock-compat {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 16px 20px;
       background: rgba(201,162,39,0.12);
       border: 1px solid rgba(201,162,39,0.2);
       border-radius: 4px;
     }
-    .mock-compat-label {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.6);
-      letter-spacing: 0.1em;
-    }
-    .mock-compat-val {
-      font-family: var(--ff-display);
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--gold);
-    }
-
-    /* Floating element */
+    .mock-compat-label { font-size: 0.72rem; color: rgba(255,255,255,0.6); letter-spacing: 0.1em; }
+    .mock-compat-val { font-family: var(--ff-display); font-size: 1.6rem; font-weight: 700; color: var(--gold); }
     .comment-float {
       position: absolute;
-      bottom: -20px;
-      left: -24px;
+      bottom: -20px; left: -24px;
       background: var(--white);
       border-radius: 8px;
       padding: 16px 22px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.12);
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      display: flex; align-items: center; gap: 12px;
     }
     .float-icon {
       width: 36px; height: 36px;
@@ -745,24 +572,13 @@
     .float-icon svg { width: 16px; height: 16px; }
     .float-text { font-size: 0.78rem; color: var(--text); font-weight: 500; }
     .float-text span { display: block; color: var(--text-m); font-size: 0.68rem; font-weight: 400; }
-
     @media (max-width: 900px) {
-      .comment-inner {
-        grid-template-columns: 1fr;
-        gap: 60px;
-      }
+      .comment-inner { grid-template-columns: 1fr; gap: 60px; }
       .comment-visual { order: -1; }
     }
 
-    /* ══════════════════════════════════════════════════════════
-       NOS VALEURS
-    ══════════════════════════════════════════════════════════ */
-    #valeurs {
-      padding: 120px 0;
-      background: var(--petrol-d);
-      position: relative;
-      overflow: hidden;
-    }
+    /* ══ VALEURS ══ */
+    #valeurs { padding: 120px 0; background: var(--petrol-d); position: relative; overflow: hidden; }
     #valeurs::before {
       content: '';
       position: absolute;
@@ -773,18 +589,10 @@
         repeating-linear-gradient(-45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
       background-size: 60px 60px;
     }
-    .valeurs-header {
-      text-align: center;
-      margin-bottom: 72px;
-    }
+    .valeurs-header { text-align: center; margin-bottom: 72px; }
     .valeurs-header .section-title { color: var(--white); }
     .valeurs-header .section-sub { color: rgba(255,255,255,0.55); margin-inline: auto; text-align: center; }
-
-    .valeurs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 24px;
-    }
+    .valeurs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
     .valeur-card {
       padding: 40px 32px;
       border: 1px solid rgba(201,162,39,0.15);
@@ -792,8 +600,7 @@
       text-align: center;
       background: rgba(255,255,255,0.03);
       transition: background 0.3s, border-color 0.3s, transform 0.35s var(--ease-out);
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
     .valeur-card::after {
       content: '';
@@ -803,13 +610,8 @@
       opacity: 0;
       transition: opacity 0.35s;
     }
-    .valeur-card:hover {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(201,162,39,0.35);
-      transform: translateY(-4px);
-    }
+    .valeur-card:hover { background: rgba(255,255,255,0.06); border-color: rgba(201,162,39,0.35); transform: translateY(-4px); }
     .valeur-card:hover::after { opacity: 1; }
-
     .valeur-icon {
       width: 60px; height: 60px;
       margin: 0 auto 24px;
@@ -821,101 +623,32 @@
       position: relative; z-index: 1;
     }
     .valeur-icon svg { width: 26px; height: 26px; }
-    .valeur-name {
-      font-family: var(--ff-display);
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 10px;
-      position: relative; z-index: 1;
-    }
-    .valeur-desc {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.8;
-      position: relative; z-index: 1;
-    }
+    .valeur-name { font-family: var(--ff-display); font-size: 1.25rem; font-weight: 600; color: var(--white); margin-bottom: 10px; position: relative; z-index: 1; }
+    .valeur-desc { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.8; position: relative; z-index: 1; }
 
-    /* ══════════════════════════════════════════════════════════
-       TESTIMONIAL STRIP (accent section)
-    ══════════════════════════════════════════════════════════ */
-    #temoignage {
-      background: var(--gold);
-      padding: 80px 0;
-      overflow: hidden;
-    }
-    .temoignage-inner {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 48px;
-    }
-    .temoignage-quote {
-      font-family: var(--ff-display);
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-style: italic;
-      font-weight: 400;
-      color: var(--petrol-d);
-      line-height: 1.5;
-      max-width: 700px;
-    }
-    .temoignage-attr {
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--petrol);
-      margin-top: 16px;
-      opacity: 0.75;
-    }
-    .temoignage-ornament {
-      font-family: var(--ff-display);
-      font-size: 8rem;
-      line-height: 1;
-      color: rgba(15,76,92,0.15);
-      font-style: italic;
-      user-select: none;
-    }
-
+    /* ══ TÉMOIGNAGE ══ */
+    #temoignage { background: var(--gold); padding: 80px 0; overflow: hidden; }
+    .temoignage-inner { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 48px; }
+    .temoignage-quote { font-family: var(--ff-display); font-size: clamp(1.4rem, 3vw, 2rem); font-style: italic; font-weight: 400; color: var(--petrol-d); line-height: 1.5; max-width: 700px; }
+    .temoignage-attr { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--petrol); margin-top: 16px; opacity: 0.75; }
+    .temoignage-ornament { font-family: var(--ff-display); font-size: 8rem; line-height: 1; color: rgba(15,76,92,0.15); font-style: italic; user-select: none; }
     @media (max-width: 700px) {
       .temoignage-inner { grid-template-columns: 1fr; text-align: center; }
       .temoignage-ornament { display: none; }
     }
 
-    /* ══════════════════════════════════════════════════════════
-       FAQ
-    ══════════════════════════════════════════════════════════ */
-    #faq {
-      padding: 120px 0;
-      background: var(--white);
-    }
-    .faq-inner {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 80px;
-      align-items: start;
-    }
+    /* ══ FAQ ══ */
+    #faq { padding: 120px 0; background: var(--white); }
+    .faq-inner { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start; }
     .faq-left { position: sticky; top: 100px; }
-    .faq-left .section-sub { max-width: 320px; }
-
-    .faq-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .faq-item {
-      border-bottom: 1px solid var(--grey-mid);
-    }
+    .faq-list { display: flex; flex-direction: column; gap: 0; }
+    .faq-item { border-bottom: 1px solid var(--grey-mid); }
     .faq-item:first-child { border-top: 1px solid var(--grey-mid); }
-
     .faq-q {
       width: 100%;
       text-align: left;
       padding: 24px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
       font-family: var(--ff-display);
       font-size: 1.1rem;
       font-weight: 600;
@@ -935,60 +668,19 @@
       color: var(--petrol);
       transition: background 0.25s, border-color 0.25s, transform 0.35s var(--ease-out);
     }
-    .faq-q.active .faq-icon {
-      background: var(--gold);
-      border-color: var(--gold);
-      color: var(--white);
-      transform: rotate(45deg);
-    }
+    .faq-q.active .faq-icon { background: var(--gold); border-color: var(--gold); color: var(--white); transform: rotate(45deg); }
     .faq-icon svg { width: 14px; height: 14px; }
-
-    .faq-a {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 0.45s var(--ease-out), padding 0.3s;
-    }
+    .faq-a { overflow: hidden; max-height: 0; transition: max-height 0.45s var(--ease-out); }
     .faq-a.open { max-height: 400px; }
-    .faq-a-inner {
-      padding-bottom: 24px;
-      font-size: 0.9rem;
-      color: var(--text-m);
-      line-height: 1.9;
-    }
+    .faq-a-inner { padding-bottom: 24px; font-size: 0.9rem; color: var(--text-m); line-height: 1.9; }
+    @media (max-width: 800px) { .faq-inner { grid-template-columns: 1fr; gap: 48px; } .faq-left { position: static; } }
 
-    @media (max-width: 800px) {
-      .faq-inner { grid-template-columns: 1fr; gap: 48px; }
-      .faq-left { position: static; }
-    }
-
-    /* ══════════════════════════════════════════════════════════
-       FOOTER
-    ══════════════════════════════════════════════════════════ */
-    #footer {
-      background: var(--petrol-d);
-      color: rgba(255,255,255,0.6);
-      padding: 80px 0 40px;
-    }
-    .footer-top {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 60px;
-      padding-bottom: 60px;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
+    /* ══ FOOTER ══ */
+    #footer { background: var(--petrol-d); color: rgba(255,255,255,0.6); padding: 80px 0 40px; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.07); }
     .footer-brand .nav-logo-name { font-size: 1.8rem; }
-    .footer-brand-desc {
-      font-size: 0.85rem;
-      line-height: 1.85;
-      margin-top: 16px;
-      max-width: 280px;
-      color: rgba(255,255,255,0.45);
-    }
-    .footer-socials {
-      display: flex;
-      gap: 12px;
-      margin-top: 24px;
-    }
+    .footer-brand-desc { font-size: 0.85rem; line-height: 1.85; margin-top: 16px; max-width: 280px; color: rgba(255,255,255,0.45); }
+    .footer-socials { display: flex; gap: 12px; margin-top: 24px; }
     .footer-social {
       width: 36px; height: 36px;
       border: 1px solid rgba(255,255,255,0.12);
@@ -997,82 +689,25 @@
       color: rgba(255,255,255,0.5);
       transition: border-color 0.25s, color 0.25s;
     }
-    .footer-social:hover {
-      border-color: var(--gold);
-      color: var(--gold);
-    }
+    .footer-social:hover { border-color: var(--gold); color: var(--gold); }
     .footer-social svg { width: 15px; height: 15px; }
-
-    .footer-col-title {
-      font-family: var(--ff-body);
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
-    }
+    .footer-col-title { font-family: var(--ff-body); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
     .footer-col ul { display: flex; flex-direction: column; gap: 12px; }
-    .footer-col ul a {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.5);
-      transition: color 0.25s;
-    }
+    .footer-col ul a { font-size: 0.85rem; color: rgba(255,255,255,0.5); transition: color 0.25s; }
     .footer-col ul a:hover { color: var(--gold); }
-
-    .footer-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 36px;
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.28);
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 36px; font-size: 0.75rem; color: rgba(255,255,255,0.28); flex-wrap: wrap; gap: 12px; }
     .footer-bottom-links { display: flex; gap: 20px; }
-    .footer-bottom-links a {
-      color: rgba(255,255,255,0.28);
-      transition: color 0.25s;
-    }
+    .footer-bottom-links a { color: rgba(255,255,255,0.28); transition: color 0.25s; }
     .footer-bottom-links a:hover { color: var(--gold); }
-
-    /* Halal badge */
-    .halal-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border: 1px solid rgba(201,162,39,0.25);
-      border-radius: 2px;
-      margin-top: 20px;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(201,162,39,0.7);
-    }
-
-    @media (max-width: 900px) {
-      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
-    }
-    @media (max-width: 550px) {
-      .footer-top { grid-template-columns: 1fr; }
-      .footer-bottom { flex-direction: column; text-align: center; }
-    }
-
-    /* ─── SECTION SPACING ON MOBILE ──────────────────────────── */
-    @media (max-width: 600px) {
-      #pourquoi, #comment, #valeurs, #faq { padding: 80px 0; }
-      #temoignage { padding: 60px 0; }
-    }
+    .halal-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid rgba(201,162,39,0.25); border-radius: 2px; margin-top: 20px; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(201,162,39,0.7); }
+    @media (max-width: 900px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; } }
+    @media (max-width: 550px) { .footer-top { grid-template-columns: 1fr; } .footer-bottom { flex-direction: column; text-align: center; } }
+    @media (max-width: 600px) { #pourquoi, #comment, #valeurs, #faq { padding: 80px 0; } #temoignage { padding: 60px 0; } }
   </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════════════
-     NAVBAR
-════════════════════════════════════════════════════ -->
+<!-- NAVBAR -->
 <nav id="navbar">
   <div class="container nav-inner">
     <a href="#" class="nav-logo">
@@ -1087,9 +722,14 @@
       <li><a href="#faq">FAQ</a></li>
     </ul>
 
-    <a href="#" class="nav-cta">
-      Commencer
-    </a>
+    <!-- ── Boutons droite bureau ── -->
+    <div class="nav-right">
+      <a href="connexion.html" class="nav-login">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        Se connecter
+      </a>
+      <a href="choix.html" class="nav-cta">Commencer</a>
+    </div>
 
     <button class="nav-burger" id="burger" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -1097,26 +737,29 @@
   </div>
 </nav>
 
-<!-- Mobile menu -->
+<!-- Menu mobile -->
 <div class="nav-mobile" id="mobile-menu">
   <a href="#pourquoi" class="mobile-link">Nos atouts</a>
   <a href="#comment" class="mobile-link">Fonctionnement</a>
   <a href="#valeurs" class="mobile-link">Valeurs</a>
   <a href="#faq" class="mobile-link">FAQ</a>
-  <a href="#" class="nav-cta">Commencer</a>
+
+  <!-- ── Séparateur ── -->
+  <div class="nav-mobile-sep"></div>
+
+  <!-- ── Connexion dans le menu mobile ── -->
+  <a href="connexion.html" class="nav-mobile-login mobile-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+    Se connecter
+  </a>
+  <a href="choix.html" class="nav-cta mobile-link">Créer mon profil</a>
 </div>
 
-<!-- ════════════════════════════════════════════════════
-     HERO
-════════════════════════════════════════════════════ -->
+<!-- HERO -->
 <section id="hero">
-  <div class="hero-bg">
-    <div class="hero-lattice"></div>
-  </div>
-
+  <div class="hero-bg"><div class="hero-lattice"></div></div>
   <div class="container hero-inner">
-    <!-- Arch SVG ornament -->
-    <svg class="hero-arch reveal" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="hero-arch reveal" viewBox="0 0 80 60" fill="none">
       <path d="M40 4 C20 4 6 18 6 36 L6 56 L74 56 L74 36 C74 18 60 4 40 4Z" stroke="#C9A227" stroke-width="1.5" fill="none" stroke-opacity="0.6"/>
       <path d="M40 12 C24 12 14 22 14 36 L14 50 L66 50 L66 36 C66 22 56 12 40 12Z" stroke="#C9A227" stroke-width="1" fill="none" stroke-opacity="0.3"/>
       <circle cx="40" cy="8" r="2" fill="#C9A227" fill-opacity="0.5"/>
@@ -1136,7 +779,7 @@
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path d="M8 0L9.8 6.2L16 8L9.8 9.8L8 16L6.2 9.8L0 8L6.2 6.2L8 0Z" fill="currentColor"/>
       </svg>
-      <div class="hero-divider-line" style="background: linear-gradient(90deg, var(--gold), transparent)"></div>
+      <div class="hero-divider-line" style="background:linear-gradient(90deg,var(--gold),transparent)"></div>
     </div>
 
     <p class="hero-subtitle reveal reveal-delay-3">
@@ -1144,13 +787,15 @@
     </p>
 
     <div class="hero-actions reveal reveal-delay-4">
+      <!-- Créer mon profil -->
       <a href="choix.html" class="btn-primary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         Créer mon profil
       </a>
-      <a href="#comment" class="btn-ghost">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M10 15l5-3-5-3v6z"/></svg>
-        Découvrir
+      <!-- ── NOUVEAU : Se connecter ── -->
+      <a href="connexion.html" class="btn-login">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        Se connecter
       </a>
     </div>
 
@@ -1171,71 +816,50 @@
       </div>
     </div>
   </div>
-
   <div class="scroll-indicator">
     <div class="scroll-mouse"><div class="scroll-dot"></div></div>
     <span>Défiler</span>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════
-     POURQUOI NOUS CHOISIR
-════════════════════════════════════════════════════ -->
+<!-- POURQUOI -->
 <section id="pourquoi">
   <div class="container">
     <div class="pourquoi-header">
       <p class="section-label reveal">Pourquoi nous choisir</p>
       <h2 class="section-title reveal reveal-delay-1">Un environnement conçu pour<br><em>votre sérénité</em></h2>
-      <p class="section-sub reveal reveal-delay-2" style="margin-inline: auto; text-align: center;">
+      <p class="section-sub reveal reveal-delay-2" style="margin-inline:auto;text-align:center;">
         Nour Al Zawwaj n'est pas une application de rencontre ordinaire. Chaque fonctionnalité a été pensée pour préserver votre dignité et faciliter votre chemin vers le mariage.
       </p>
     </div>
-
     <div class="cards-grid">
       <div class="card reveal">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <h3 class="card-title">Environnement 100% halal</h3>
         <p class="card-body">Chaque interaction respecte les préceptes islamiques. Pas de photos mixtes en accès libre, conversations supervisées, et charte de bonne conduite signée à l'inscription.</p>
       </div>
-
       <div class="card reveal reveal-delay-1">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        </div>
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
         <h3 class="card-title">Compatibilité approfondie</h3>
         <p class="card-body">Notre algorithme analyse vos valeurs, votre pratique religieuse, votre vision de la famille et vos critères personnels pour des suggestions vraiment pertinentes.</p>
       </div>
-
       <div class="card reveal reveal-delay-2">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
         <h3 class="card-title">Wali impliqué</h3>
         <p class="card-body">Un espace dédié permet à votre tuteur légal (wali) de suivre votre démarche, d'être informé et d'intervenir dans le processus selon votre souhait.</p>
       </div>
-
       <div class="card reveal">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
         <h3 class="card-title">Données protégées</h3>
         <p class="card-body">Vos informations personnelles, vos photos et vos échanges sont chiffrés et ne sont jamais vendus. Vous contrôlez entièrement qui peut voir votre profil.</p>
       </div>
-
       <div class="card reveal reveal-delay-1">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
         <h3 class="card-title">Accompagnement humain</h3>
         <p class="card-body">Une équipe de conseillers disponibles par messagerie pour vous guider, répondre à vos interrogations et vous soutenir à chaque étape de votre démarche.</p>
       </div>
-
       <div class="card reveal reveal-delay-2">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <h3 class="card-title">Profils vérifiés</h3>
         <p class="card-body">Vérification d'identité obligatoire pour chaque membre. Fini les faux profils : vous savez avec certitude que la personne en face de vous est bien réelle.</p>
       </div>
@@ -1243,65 +867,38 @@
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════
-     COMMENT ÇA FONCTIONNE
-════════════════════════════════════════════════════ -->
+<!-- COMMENT ÇA FONCTIONNE -->
 <section id="comment">
   <div class="container comment-inner">
     <div class="comment-left">
       <p class="section-label reveal">Comment ça fonctionne</p>
       <h2 class="section-title reveal reveal-delay-1">Quatre étapes vers votre <em>union</em></h2>
       <p class="section-sub reveal reveal-delay-2">Un processus clair, bienveillant et respectueux, pensé pour vous simplifier la recherche tout en préservant votre pudeur.</p>
-
       <div class="steps">
         <div class="step reveal reveal-delay-1">
-          <div class="step-num">1</div>
-          <div class="step-connector"></div>
-          <div class="step-content">
-            <h3 class="step-title">Créez votre profil</h3>
-            <p class="step-desc">Renseignez vos valeurs, votre pratique, vos attentes et téléchargez une photo vérifiée. L'inscription est gratuite et prend moins de dix minutes.</p>
-          </div>
+          <div class="step-num">1</div><div class="step-connector"></div>
+          <div class="step-content"><h3 class="step-title">Créez votre profil</h3><p class="step-desc">Renseignez vos valeurs, votre pratique, vos attentes et téléchargez une photo vérifiée. L'inscription est gratuite et prend moins de dix minutes.</p></div>
         </div>
-
         <div class="step reveal reveal-delay-2">
-          <div class="step-num">2</div>
-          <div class="step-connector"></div>
-          <div class="step-content">
-            <h3 class="step-title">Recevez vos suggestions</h3>
-            <p class="step-desc">Notre algorithme vous propose chaque jour des profils compatibles, triés selon vos critères religieux, géographiques et personnels.</p>
-          </div>
+          <div class="step-num">2</div><div class="step-connector"></div>
+          <div class="step-content"><h3 class="step-title">Recevez vos suggestions</h3><p class="step-desc">Notre algorithme vous propose chaque jour des profils compatibles, triés selon vos critères religieux, géographiques et personnels.</p></div>
         </div>
-
         <div class="step reveal reveal-delay-3">
-          <div class="step-num">3</div>
-          <div class="step-connector"></div>
-          <div class="step-content">
-            <h3 class="step-title">Échangez avec respect</h3>
-            <p class="step-desc">La messagerie est encadrée : pas de partage de contact direct avant que vous soyez prêts. Le wali peut être notifié et impliqué à tout moment.</p>
-          </div>
+          <div class="step-num">3</div><div class="step-connector"></div>
+          <div class="step-content"><h3 class="step-title">Échangez avec respect</h3><p class="step-desc">La messagerie est encadrée : pas de partage de contact direct avant que vous soyez prêts. Le wali peut être notifié et impliqué à tout moment.</p></div>
         </div>
-
         <div class="step reveal reveal-delay-4">
           <div class="step-num">4</div>
-          <div class="step-content">
-            <h3 class="step-title">Avancez vers l'union</h3>
-            <p class="step-desc">Quand la connexion est établie, nos conseillers vous accompagnent dans les démarches jusqu'à la nikkah, si vous le souhaitez.</p>
-          </div>
+          <div class="step-content"><h3 class="step-title">Avancez vers l'union</h3><p class="step-desc">Quand la connexion est établie, nos conseillers vous accompagnent dans les démarches jusqu'à la nikkah, si vous le souhaitez.</p></div>
         </div>
       </div>
     </div>
-
     <div class="comment-visual reveal reveal-delay-2">
       <div class="comment-card-mock">
         <div class="mock-badge">✦ Profil vérifié</div>
         <div class="mock-profile">
-          <div class="mock-avatar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <div>
-            <div class="mock-name">Amina K., 27 ans</div>
-            <div class="mock-loc">📍 Lyon, France</div>
-          </div>
+          <div class="mock-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div><div class="mock-name">Amina K., 27 ans</div><div class="mock-loc">📍 Lyon, France</div></div>
         </div>
         <div class="mock-tags">
           <span class="mock-tag">Pratiquante</span>
@@ -1311,29 +908,19 @@
           <span class="mock-tag">Sérieuse</span>
         </div>
         <div class="mock-compat">
-          <div>
-            <div class="mock-compat-label">COMPATIBILITÉ</div>
-          </div>
+          <div><div class="mock-compat-label">COMPATIBILITÉ</div></div>
           <div class="mock-compat-val">94%</div>
         </div>
       </div>
-
       <div class="comment-float">
-        <div class="float-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <div class="float-text">
-          Profil vérifié
-          <span>Identité confirmée par notre équipe</span>
-        </div>
+        <div class="float-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="float-text">Profil vérifié<span>Identité confirmée par notre équipe</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════
-     NOS VALEURS
-════════════════════════════════════════════════════ -->
+<!-- VALEURS -->
 <section id="valeurs">
   <div class="container">
     <div class="valeurs-header">
@@ -1341,36 +928,24 @@
       <h2 class="section-title reveal reveal-delay-1">Ce qui nous <em>guide</em></h2>
       <p class="section-sub reveal reveal-delay-2">Nour Al Zawwaj repose sur des fondations spirituelles et éthiques qui orientent chacune de nos décisions.</p>
     </div>
-
     <div class="valeurs-grid">
       <div class="valeur-card reveal">
-        <div class="valeur-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
+        <div class="valeur-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <h3 class="valeur-name">Taqwā</h3>
         <p class="valeur-desc">La piété guide chaque rencontre. Nous encourageons la conscience divine comme socle de toute relation.</p>
       </div>
-
       <div class="valeur-card reveal reveal-delay-1">
-        <div class="valeur-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
+        <div class="valeur-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
         <h3 class="valeur-name">Raḥma</h3>
         <p class="valeur-desc">La miséricorde et la bienveillance envers chaque membre, quel que soit son parcours ou sa situation.</p>
       </div>
-
       <div class="valeur-card reveal reveal-delay-2">
-        <div class="valeur-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        </div>
+        <div class="valeur-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
         <h3 class="valeur-name">Amāna</h3>
         <p class="valeur-desc">La confiance est notre engagement. Vos données, vos échanges et votre vie privée sont traités avec la plus grande intégrité.</p>
       </div>
-
       <div class="valeur-card reveal reveal-delay-3">
-        <div class="valeur-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
+        <div class="valeur-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
         <h3 class="valeur-name">Jamā'a</h3>
         <p class="valeur-desc">La communauté. Nous construisons un espace sûr où chaque membre se sent soutenu et compris par ses pairs.</p>
       </div>
@@ -1378,17 +953,13 @@
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════
-     TÉMOIGNAGE ACCENT
-════════════════════════════════════════════════════ -->
+<!-- TÉMOIGNAGE -->
 <section id="temoignage">
   <div class="container">
     <div class="temoignage-inner">
       <div class="temoignage-ornament">"</div>
       <div>
-        <p class="temoignage-quote">
-          « Grâce à Nour Al Zawwaj, j'ai rencontré mon mari en trois mois. L'ambiance sereine de la plateforme et l'implication de notre conseillère nous ont aidés à avancer avec confiance. »
-        </p>
+        <p class="temoignage-quote">« Grâce à Nour Al Zawwaj, j'ai rencontré mon mari en trois mois. L'ambiance sereine de la plateforme et l'implication de notre conseillère nous ont aidés à avancer avec confiance. »</p>
         <p class="temoignage-attr">Fatima & Youssef · Mariés en 2024 · Bordeaux</p>
       </div>
       <div class="temoignage-ornament">"</div>
@@ -1396,9 +967,7 @@
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════
-     FAQ
-════════════════════════════════════════════════════ -->
+<!-- FAQ -->
 <section id="faq">
   <div class="container">
     <div class="faq-inner">
@@ -1406,106 +975,43 @@
         <p class="section-label reveal">FAQ</p>
         <h2 class="section-title reveal reveal-delay-1">Questions <em>fréquentes</em></h2>
         <p class="section-sub reveal reveal-delay-2">Une question sans réponse ici ? Notre équipe vous répond dans les 24 heures.</p>
-        <br/><a href="connexion.html" class="btn-primary reveal reveal-delay-3" style="display:inline-flex; margin-top: 8px;">
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-  </svg>
-  Nous contacter
-</a>
+        <br/>
+        <a href="connexion.html" class="btn-primary reveal reveal-delay-3" style="display:inline-flex;margin-top:8px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Nous contacter
+        </a>
       </div>
-
       <div class="faq-list">
         <div class="faq-item reveal">
-          <button class="faq-q" aria-expanded="false">
-            <span>Nour Al Zawwaj est-il vraiment halal ?</span>
-            <div class="faq-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </div>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              Oui. La plateforme a été conçue dès le départ pour respecter les préceptes islamiques : pas de contact direct entre hommes et femmes non mahrams sans supervision, obligation de mentionner ses intentions matrimoniales, possibilité d'impliquer le wali, et charte de conduite stricte. Nous collaborons avec des conseillers religieux pour garantir cette conformité.
-            </div>
-          </div>
+          <button class="faq-q" aria-expanded="false"><span>Nour Al Zawwaj est-il vraiment halal ?</span><div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></button>
+          <div class="faq-a"><div class="faq-a-inner">Oui. La plateforme a été conçue dès le départ pour respecter les préceptes islamiques : pas de contact direct entre hommes et femmes non mahrams sans supervision, obligation de mentionner ses intentions matrimoniales, possibilité d'impliquer le wali, et charte de conduite stricte. Nous collaborons avec des conseillers religieux pour garantir cette conformité.</div></div>
         </div>
-
         <div class="faq-item reveal reveal-delay-1">
-          <button class="faq-q" aria-expanded="false">
-            <span>L'inscription est-elle gratuite ?</span>
-            <div class="faq-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </div>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              L'inscription et la création de profil sont entièrement gratuites. Un abonnement premium optionnel débloque des fonctionnalités avancées comme les suggestions illimitées, la mise en avant du profil et l'accès à notre service de conseil personnalisé.
-            </div>
-          </div>
+          <button class="faq-q" aria-expanded="false"><span>L'inscription est-elle gratuite ?</span><div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></button>
+          <div class="faq-a"><div class="faq-a-inner">L'inscription et la création de profil sont entièrement gratuites. Un abonnement premium optionnel débloque des fonctionnalités avancées comme les suggestions illimitées, la mise en avant du profil et l'accès à notre service de conseil personnalisé.</div></div>
         </div>
-
         <div class="faq-item reveal reveal-delay-2">
-          <button class="faq-q" aria-expanded="false">
-            <span>Comment le wali peut-il être impliqué ?</span>
-            <div class="faq-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </div>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              Lors de l'inscription, vous pouvez renseigner l'adresse e-mail de votre wali (père, frère, oncle…). Il recevra des notifications à chaque étape importante que vous choisissez de partager, pourra consulter les profils qui vous ont été proposés et valider les échanges. Tout reste sous votre contrôle.
-            </div>
-          </div>
+          <button class="faq-q" aria-expanded="false"><span>Comment le wali peut-il être impliqué ?</span><div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></button>
+          <div class="faq-a"><div class="faq-a-inner">Lors de l'inscription, vous pouvez renseigner l'adresse e-mail de votre wali (père, frère, oncle…). Il recevra des notifications à chaque étape importante que vous choisissez de partager, pourra consulter les profils qui vous ont été proposés et valider les échanges. Tout reste sous votre contrôle.</div></div>
         </div>
-
         <div class="faq-item reveal">
-          <button class="faq-q" aria-expanded="false">
-            <span>Mes photos sont-elles visibles par tous ?</span>
-            <div class="faq-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </div>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              Non. Par défaut, votre photo principale est visible uniquement par les membres du même genre que vous qui ont été validés. Vous pouvez choisir de la rendre visible uniquement après une demande acceptée. Les femmes portant le voile peuvent paramétrer leur visibilité très précisément.
-            </div>
-          </div>
+          <button class="faq-q" aria-expanded="false"><span>Mes photos sont-elles visibles par tous ?</span><div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></button>
+          <div class="faq-a"><div class="faq-a-inner">Non. Par défaut, votre photo principale est visible uniquement par les membres du même genre que vous qui ont été validés. Vous pouvez choisir de la rendre visible uniquement après une demande acceptée. Les femmes portant le voile peuvent paramétrer leur visibilité très précisément.</div></div>
         </div>
-
         <div class="faq-item reveal reveal-delay-1">
-          <button class="faq-q" aria-expanded="false">
-            <span>Est-ce disponible en dehors de la France ?</span>
-            <div class="faq-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </div>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              Nour Al Zawwaj est disponible dans toute la francophonie : France, Belgique, Suisse, Maroc, Algérie, Tunisie, et bien d'autres pays. Vous pouvez indiquer si vous êtes ouvert à des relations à distance ou uniquement à des personnes de votre région.
-            </div>
-          </div>
+          <button class="faq-q" aria-expanded="false"><span>Est-ce disponible en dehors de la France ?</span><div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></button>
+          <div class="faq-a"><div class="faq-a-inner">Nour Al Zawwaj est disponible dans toute la francophonie : France, Belgique, Suisse, Maroc, Algérie, Tunisie, et bien d'autres pays. Vous pouvez indiquer si vous êtes ouvert à des relations à distance ou uniquement à des personnes de votre région.</div></div>
         </div>
-
         <div class="faq-item reveal reveal-delay-2">
-          <button class="faq-q" aria-expanded="false">
-            <span>Que faire si je suis victime d'un comportement irrespectueux ?</span>
-            <div class="faq-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </div>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">
-              Un bouton de signalement est disponible sur chaque profil et dans chaque conversation. Notre équipe traite les signalements dans un délai maximum de 24 heures. Tout membre contrevenant à notre charte est immédiatement suspendu en attendant enquête.
-            </div>
-          </div>
+          <button class="faq-q" aria-expanded="false"><span>Que faire si je suis victime d'un comportement irrespectueux ?</span><div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></button>
+          <div class="faq-a"><div class="faq-a-inner">Un bouton de signalement est disponible sur chaque profil et dans chaque conversation. Notre équipe traite les signalements dans un délai maximum de 24 heures. Tout membre contrevenant à notre charte est immédiatement suspendu en attendant enquête.</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════════════ -->
+<!-- FOOTER -->
 <footer id="footer">
   <div class="container">
     <div class="footer-top">
@@ -1514,29 +1020,18 @@
           <span class="nav-logo-name">Nour Al Zawwaj</span>
           <span class="nav-logo-tagline">La lumière du mariage</span>
         </a>
-        <p class="footer-brand-desc">
-          La plateforme de rencontres halal qui accompagne les musulmans francophones vers un mariage sérieux, béni et respectueux des valeurs islamiques.
-        </p>
+        <p class="footer-brand-desc">La plateforme de rencontres halal qui accompagne les musulmans francophones vers un mariage sérieux, béni et respectueux des valeurs islamiques.</p>
         <div class="halal-badge">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           Plateforme certifiée halal
         </div>
         <div class="footer-socials">
-          <a href="#" class="footer-social" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </a>
-          <a href="#" class="footer-social" aria-label="Facebook">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-          </a>
-          <a href="#" class="footer-social" aria-label="TikTok">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
-          </a>
-          <a href="#" class="footer-social" aria-label="YouTube">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
-          </a>
+          <a href="#" class="footer-social" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" class="footer-social" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+          <a href="#" class="footer-social" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
         </div>
       </div>
-
       <div class="footer-col">
         <p class="footer-col-title">Navigation</p>
         <ul>
@@ -1547,7 +1042,6 @@
           <li><a href="#">Blog</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
         <p class="footer-col-title">À propos</p>
         <ul>
@@ -1558,7 +1052,6 @@
           <li><a href="#">Presse</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
         <p class="footer-col-title">Légal</p>
         <ul>
@@ -1570,7 +1063,6 @@
         </ul>
       </div>
     </div>
-
     <div class="footer-bottom">
       <span>© 2025 Nour Al Zawwaj. Tous droits réservés.</span>
       <div class="footer-bottom-links">
@@ -1583,23 +1075,22 @@
 </footer>
 
 <script>
-  /* ─── NAVBAR scroll ──────────────────────────────── */
+  /* Navbar scroll */
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 40);
   }, { passive: true });
 
-  /* ─── BURGER / mobile menu ───────────────────────── */
-  const burger      = document.getElementById('burger');
-  const mobileMenu  = document.getElementById('mobile-menu');
-  const mobileLinks = mobileMenu.querySelectorAll('.mobile-link, .nav-cta');
+  /* Burger */
+  const burger     = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileLinks = mobileMenu.querySelectorAll('.mobile-link');
 
   burger.addEventListener('click', () => {
     const open = mobileMenu.classList.toggle('open');
     burger.classList.toggle('open', open);
     document.body.style.overflow = open ? 'hidden' : '';
   });
-
   mobileLinks.forEach(link => {
     link.addEventListener('click', () => {
       mobileMenu.classList.remove('open');
@@ -1608,51 +1099,33 @@
     });
   });
 
-  /* ─── SCROLL REVEAL ──────────────────────────────── */
+  /* Scroll reveal */
   const revealEls = document.querySelectorAll('.reveal');
-  const observer  = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
   revealEls.forEach(el => observer.observe(el));
 
-  /* ─── FAQ accordion ──────────────────────────────── */
-  const faqBtns = document.querySelectorAll('.faq-q');
-
-  faqBtns.forEach(btn => {
+  /* FAQ */
+  document.querySelectorAll('.faq-q').forEach(btn => {
     btn.addEventListener('click', () => {
       const answer = btn.nextElementSibling;
       const isOpen = answer.classList.contains('open');
-
-      // Close all
       document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
-      document.querySelectorAll('.faq-q').forEach(b => {
-        b.classList.remove('active');
-        b.setAttribute('aria-expanded', 'false');
-      });
-
-      // Open clicked (unless it was already open)
-      if (!isOpen) {
-        answer.classList.add('open');
-        btn.classList.add('active');
-        btn.setAttribute('aria-expanded', 'true');
-      }
+      document.querySelectorAll('.faq-q').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-expanded','false'); });
+      if (!isOpen) { answer.classList.add('open'); btn.classList.add('active'); btn.setAttribute('aria-expanded','true'); }
     });
   });
 
-  /* ─── Smooth scroll for anchor links ─────────────── */
+  /* Smooth scroll */
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', e => {
       const target = document.querySelector(link.getAttribute('href'));
       if (target) {
         e.preventDefault();
-        const offset = navbar.offsetHeight + 16;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        const top = target.getBoundingClientRect().top + window.scrollY - navbar.offsetHeight - 16;
         window.scrollTo({ top, behavior: 'smooth' });
       }
     });

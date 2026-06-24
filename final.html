@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <!-- ═══════════════════════════════════════════
+       META & SEO
+  ═══════════════════════════════════════════ -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Nour Al Zawwaj – Rencontres Halal · Mariage Musulman Sérieux</title>
+  <meta name="description" content="Plateforme de mariage halal pour musulmans francophones. Profils vérifiés, implication du wali, messagerie supervisée. Plus de 12 000 membres actifs, 900+ mariages réalisés.">
+  <meta name="keywords" content="mariage halal, rencontre musulmane, zawaj, mariage islamique, mariage sérieux, wali, nikkah, mariage franco-algérien, mariage franco-marocain">
+  <meta name="author" content="Nour Al Zawwaj">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <link rel="canonical" href="https://nour-al-zawwaj.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nour-al-zawwaj.com/">
+  <meta property="og:title" content="Nour Al Zawwaj – Rencontres Halal & Mariage Sérieux">
+  <meta property="og:description" content="La plateforme de mariage halal de référence pour les musulmans francophones. Profils vérifiés, environnement 100% islamique.">
+  <meta property="og:image" content="https://nour-al-zawwaj.com/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Nour Al Zawwaj">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Nour Al Zawwaj – Mariage Halal">
+  <meta name="twitter:description" content="Rencontres sérieuses pour musulmans francophones dans le respect des valeurs islamiques.">
+  <meta name="twitter:image" content="https://nour-al-zawwaj.com/og-cover.jpg">
+
+  <!-- Sécurité HTTP Headers (simulés en meta — à configurer côté serveur) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-RANDOM_NONCE'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- Performances : preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fonts (display=swap pour performance) -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap"></noscript>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0A0F16">
+
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Nour Al Zawwaj",
+    "url": "https://nour-al-zawwaj.com",
+    "description": "Plateforme de mariage halal pour musulmans francophones",
+    "potentialAction": {
+      "@type": "RegisterAction",
+      "target": "https://nour-al-zawwaj.com/choix"
+    },
+    "sameAs": [],
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "EUR",
+      "lowPrice": "0",
+      "highPrice": "49.99",
+      "offerCount": "3"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Nour Al Zawwaj est-il vraiment halal ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui. La plateforme respecte les préceptes islamiques : supervision des échanges, implication du wali possible, charte islamique obligatoire."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "L'inscription est-elle gratuite ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "L'inscription et la création de profil sont entièrement gratuites. Un abonnement premium optionnel débloque des fonctionnalités avancées."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="tokens.css">
+  <style>
+    /* ─────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      height: var(--nav-h);
+      display: flex; align-items: center;
+      padding-inline: var(--sp-6);
+      border-bottom: 1px solid transparent;
+      transition: background var(--t-slow), border-color var(--t-slow), backdrop-filter var(--t-slow);
+    }
+    .nav.scrolled {
+      background: rgba(10,15,22,0.92);
+      border-bottom-color: var(--c-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .nav__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; max-width: var(--max-w-wide); margin-inline: auto;
+    }
+    .nav__logo {
+      display: flex; align-items: center; gap: var(--sp-3); text-decoration: none;
+    }
+    .nav__logo-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--c-emerald), var(--c-emerald-mid));
+      border: 1px solid rgba(201,168,76,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: var(--c-gold); flex-shrink: 0;
+    }
+    .nav__logo-text { line-height: 1; }
+    .nav__logo-name {
+      display: block; font-family: var(--ff-display);
+      font-size: 1rem; font-weight: 700; color: var(--c-text);
+    }
+    .nav__logo-tagline {
+      display: block; font-size: 9px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--c-gold); margin-top: 1px;
+    }
+    .nav__links {
+      display: flex; align-items: center; gap: var(--sp-8);
+    }
+    .nav__links a {
+      font-size: var(--fs-sm); font-weight: var(--fw-medium);
+      color: var(--c-text-muted); transition: color var(--t-fast);
+      position: relative;
+    }
+    .nav__links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1px; background: var(--c-gold); transform: scaleX(0);
+      transform-origin: left; transition: transform var(--t-base);
+    }
+    .nav__links a:hover { color: var(--c-gold); }
+    .nav__links a:hover::after { transform: scaleX(1); }
+    .nav__cta { display: flex; align-items: center; gap: var(--sp-3); }
+    .nav__burger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: var(--sp-2);
+    }
+    .nav__burger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--c-text-muted); border-radius: 1px;
+      transition: all var(--t-base);
+    }
+    .nav__mobile {
+      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: rgba(10,15,22,0.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--c-border);
+      padding: var(--sp-6); flex-direction: column; gap: var(--sp-4);
+      z-index: 499;
+    }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile a {
+      font-size: var(--fs-md); color: var(--c-text-muted);
+      padding-block: var(--sp-3); border-bottom: 1px solid var(--c-border-soft);
+    }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding-top: var(--nav-h); position: relative; overflow: hidden;
+    }
+    .hero__bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 70% 50%, rgba(26,74,58,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 20% 80%, rgba(201,168,76,0.06) 0%, transparent 50%),
+        var(--c-bg);
+    }
+    .hero__grid {
+      position: absolute; inset: 0; z-index: 0; opacity: 0.04;
+      background-image: linear-gradient(var(--c-gold) 1px, transparent 1px), linear-gradient(90deg, var(--c-gold) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at center, black, transparent);
+    }
+    .hero__inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-16);
+      align-items: center; padding-block: var(--sp-24);
+    }
+    .hero__eyebrow {
+      display: inline-flex; align-items: center; gap: var(--sp-3);
+      background: var(--c-gold-bg); border: 1px solid rgba(201,168,76,0.25);
+      border-radius: var(--r-full); padding: var(--sp-2) var(--sp-4);
+      font-size: var(--fs-xs); font-weight: var(--fw-semi);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--c-gold); margin-bottom: var(--sp-6);
+    }
+    .hero__eyebrow-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--c-gold); animation: pulse 2s ease infinite;
+    }
+    .hero__title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--c-text); margin-bottom: var(--sp-6);
+      letter-spacing: -0.02em;
+    }
+    .hero__title em { font-style: italic; color: var(--c-gold); }
+    .hero__verse {
+      font-family: var(--ff-arabic);
+      font-size: var(--fs-lg); color: var(--c-gold);
+      direction: rtl; text-align: right;
+      margin-bottom: var(--sp-3); opacity: 0.85;
+    }
+    .hero__verse-ref {
+      font-size: var(--fs-xs); color: var(--c-text-muted);
+      letter-spacing: 0.08em; margin-bottom: var(--sp-8);
+    }
+    .hero__desc {
+      font-size: var(--fs-md); color: var(--c-text-muted);
+      line-height: var(--lh-loose); max-width: 52ch; margin-bottom: var(--sp-8);
+    }
+    .hero__actions { display: flex; gap: var(--sp-3); flex-wrap: wrap; margin-bottom: var(--sp-10); }
+    .hero__trust {
+      display: flex; align-items: center; gap: var(--sp-4);
+      flex-wrap: wrap;
+    }
+    .hero__trust-item {
+      display: flex; align-items: center; gap: var(--sp-2);
+      font-size: var(--fs-xs); color: var(--c-text-muted);
+    }
+    .hero__trust-icon { color: var(--c-gold); font-size: 12px; }
+    .hero__visual { position: relative; }
+    .hero__stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4);
+    }
+    .stat-card {
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: var(--r-xl); padding: var(--sp-6);
+      transition: border-color var(--t-base);
+    }
+    .stat-card:hover { border-color: rgba(201,168,76,0.4); }
+    .stat-card--featured {
+      grid-column: span 2;
+      background: linear-gradient(135deg, var(--c-emerald), rgba(26,74,58,0.6));
+      border-color: var(--c-emerald-mid);
+    }
+    .stat-card__num {
+      font-family: var(--ff-display);
+      font-size: var(--fs-3xl); font-weight: var(--fw-bold);
+      color: var(--c-gold); line-height: 1;
+      margin-bottom: var(--sp-1);
+    }
+    .stat-card__label { font-size: var(--fs-sm); color: var(--c-text-muted); }
+    .stat-card__sub { font-size: var(--fs-xs); color: var(--c-text-dim); margin-top: var(--sp-1); }
+
+    /* ─────────────────────────────────────────
+       FEATURES
+    ───────────────────────────────────────── */
+    .features__grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-5);
+      margin-top: var(--sp-12);
+    }
+    .feature-card {
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: var(--r-xl); padding: var(--sp-8);
+      transition: all var(--t-base); position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--c-gold), transparent);
+      transform: scaleX(0); transform-origin: left; transition: transform var(--t-base);
+    }
+    .feature-card:hover::before { transform: scaleX(1); }
+    .feature-card:hover { border-color: rgba(201,168,76,0.25); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .feature-card__icon {
+      width: 48px; height: 48px; border-radius: var(--r-lg);
+      background: linear-gradient(135deg, var(--c-emerald), var(--c-emerald-mid));
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; margin-bottom: var(--sp-5); color: var(--c-gold);
+    }
+    .feature-card__title { font-size: var(--fs-md); color: var(--c-text); margin-bottom: var(--sp-3); font-family: var(--ff-display); }
+    .feature-card__desc { font-size: var(--fs-sm); color: var(--c-text-muted); line-height: var(--lh-loose); }
+
+    /* ─────────────────────────────────────────
+       HOW IT WORKS
+    ───────────────────────────────────────── */
+    .steps { margin-top: var(--sp-12); position: relative; }
+    .steps__line {
+      position: absolute; top: 28px; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--c-border) 20%, var(--c-border) 80%, transparent);
+    }
+    .steps__grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-8);
+      position: relative; z-index: 1;
+    }
+    .step { text-align: center; }
+    .step__num {
+      width: 56px; height: 56px; border-radius: 50%; margin-inline: auto;
+      background: var(--c-surface); border: 2px solid var(--c-gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-display); font-size: var(--fs-xl); font-weight: var(--fw-bold);
+      color: var(--c-gold); margin-bottom: var(--sp-6); position: relative;
+    }
+    .step__num::after {
+      content: ''; position: absolute; inset: -6px; border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+    .step__title { font-size: var(--fs-md); color: var(--c-text); margin-bottom: var(--sp-3); font-family: var(--ff-display); }
+    .step__desc { font-size: var(--fs-sm); color: var(--c-text-muted); line-height: var(--lh-loose); }
+
+    /* ─────────────────────────────────────────
+       PROFILE PREVIEW
+    ───────────────────────────────────────── */
+    .profiles-section { background: var(--c-surface); border-block: 1px solid var(--c-border); }
+    .profiles-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-5);
+      margin-top: var(--sp-12);
+    }
+    .profile-card {
+      background: var(--c-bg); border: 1px solid var(--c-border);
+      border-radius: var(--r-xl); overflow: hidden;
+      transition: all var(--t-base); cursor: pointer;
+    }
+    .profile-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    .profile-card__photo {
+      aspect-ratio: 4/3; background: var(--c-surface-2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; position: relative; overflow: hidden;
+    }
+    .profile-card__photo-blur {
+      position: absolute; inset: 0;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      background: rgba(10,15,22,0.3);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .profile-card__photo-lock { font-size: 24px; color: var(--c-gold); }
+    .profile-card__verified {
+      position: absolute; top: var(--sp-3); right: var(--sp-3);
+    }
+    .profile-card__body { padding: var(--sp-5); }
+    .profile-card__name { font-size: var(--fs-md); font-weight: var(--fw-semi); color: var(--c-text); margin-bottom: var(--sp-1); }
+    .profile-card__meta { font-size: var(--fs-xs); color: var(--c-text-muted); margin-bottom: var(--sp-4); display: flex; gap: var(--sp-3); }
+    .profile-card__tags { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-bottom: var(--sp-4); }
+    .profile-card__tag {
+      font-size: 10px; padding: 2px 6px; border-radius: var(--r-sm);
+      background: var(--c-surface-3); color: var(--c-text-muted);
+    }
+    .profile-card__compat {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .compat-bar {
+      flex: 1; height: 4px; background: var(--c-surface-3); border-radius: 2px;
+      overflow: hidden; margin-right: var(--sp-3);
+    }
+    .compat-bar__fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, var(--c-emerald-bright), var(--c-gold));
+    }
+    .compat-pct { font-size: var(--fs-xs); font-weight: var(--fw-semi); color: var(--c-gold); }
+
+    /* ─────────────────────────────────────────
+       TARIFS
+    ───────────────────────────────────────── */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-6);
+      margin-top: var(--sp-12); align-items: start;
+    }
+    .pricing-card {
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: var(--r-xl); padding: var(--sp-8); position: relative;
+    }
+    .pricing-card--featured {
+      background: linear-gradient(180deg, rgba(26,74,58,0.4), var(--c-surface));
+      border-color: var(--c-gold);
+      box-shadow: var(--shadow-gold);
+    }
+    .pricing-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--c-gold), var(--c-gold-light));
+      color: var(--c-bg); font-size: var(--fs-xs); font-weight: var(--fw-bold);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 4px 16px; border-radius: var(--r-full); white-space: nowrap;
+    }
+    .pricing-card__name { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--c-text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--sp-4); }
+    .pricing-card__price { display: flex; align-items: baseline; gap: var(--sp-1); margin-bottom: var(--sp-2); }
+    .pricing-card__amount { font-family: var(--ff-display); font-size: 2.5rem; font-weight: 700; color: var(--c-text); }
+    .pricing-card__currency { font-size: var(--fs-md); color: var(--c-text-muted); }
+    .pricing-card__period { font-size: var(--fs-xs); color: var(--c-text-dim); margin-bottom: var(--sp-6); }
+    .pricing-card__features { list-style: none; margin-bottom: var(--sp-8); }
+    .pricing-card__features li {
+      display: flex; align-items: flex-start; gap: var(--sp-3);
+      font-size: var(--fs-sm); color: var(--c-text-muted);
+      padding-block: var(--sp-2); border-bottom: 1px solid var(--c-border-soft);
+    }
+    .pricing-card__features li:last-child { border-bottom: none; }
+    .pricing-check { color: var(--c-gold); flex-shrink: 0; }
+    .pricing-cross { color: var(--c-text-dim); flex-shrink: 0; }
+
+    /* ─────────────────────────────────────────
+       TÉMOIGNAGES
+    ───────────────────────────────────────── */
+    .testimonials { background: var(--c-surface); border-block: 1px solid var(--c-border); }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-5);
+      margin-top: var(--sp-12);
+    }
+    .testimonial-card {
+      background: var(--c-bg); border: 1px solid var(--c-border);
+      border-radius: var(--r-xl); padding: var(--sp-7);
+    }
+    .testimonial-card__quote {
+      font-size: var(--fs-md); color: var(--c-gold); font-family: var(--ff-display);
+      font-style: italic; margin-bottom: var(--sp-5); line-height: var(--lh-snug);
+    }
+    .testimonial-card__text {
+      font-size: var(--fs-sm); color: var(--c-text-muted); line-height: var(--lh-loose);
+      margin-bottom: var(--sp-6);
+    }
+    .testimonial-card__author { display: flex; align-items: center; gap: var(--sp-3); }
+    .testimonial-card__avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--c-emerald), var(--c-emerald-mid));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: var(--fs-sm); color: var(--c-gold);
+    }
+    .testimonial-card__name { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--c-text); }
+    .testimonial-card__location { font-size: var(--fs-xs); color: var(--c-text-dim); }
+    .testimonial-stars { color: var(--c-gold); font-size: 12px; margin-bottom: var(--sp-4); letter-spacing: 2px; }
+
+    /* ─────────────────────────────────────────
+       VALEURS
+    ───────────────────────────────────────── */
+    .values-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-6);
+      margin-top: var(--sp-12);
+    }
+    .value-card {
+      display: flex; gap: var(--sp-5); padding: var(--sp-6);
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: var(--r-xl);
+    }
+    .value-card__num {
+      font-family: var(--ff-arabic); font-size: var(--fs-2xl);
+      color: var(--c-gold); opacity: 0.5; line-height: 1; flex-shrink: 0;
+      width: 48px; text-align: center;
+    }
+    .value-card__title { font-size: var(--fs-md); color: var(--c-text); margin-bottom: var(--sp-2); font-family: var(--ff-display); }
+    .value-card__desc { font-size: var(--fs-sm); color: var(--c-text-muted); line-height: var(--lh-loose); }
+
+    /* ─────────────────────────────────────────
+       FAQ
+    ───────────────────────────────────────── */
+    .faq-list { margin-top: var(--sp-12); max-width: 800px; margin-inline: auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--c-border);
+    }
+    .faq-item__btn {
+      width: 100%; display: flex; justify-content: space-between; align-items: center;
+      padding: var(--sp-6) 0; background: none; border: none; cursor: pointer;
+      text-align: left; color: var(--c-text); font-size: var(--fs-md);
+      font-weight: var(--fw-medium); gap: var(--sp-4);
+    }
+    .faq-item__btn:hover { color: var(--c-gold); }
+    .faq-icon {
+      width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+      background: var(--c-surface-3); border: 1px solid var(--c-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: var(--c-gold); transition: transform var(--t-base);
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-item__body {
+      display: none; padding-bottom: var(--sp-6);
+      font-size: var(--fs-sm); color: var(--c-text-muted); line-height: var(--lh-loose);
+    }
+    .faq-item.open .faq-item__body { display: block; }
+
+    /* ─────────────────────────────────────────
+       CTA BAND
+    ───────────────────────────────────────── */
+    .cta-band {
+      background: linear-gradient(135deg, var(--c-emerald) 0%, rgba(26,74,58,0.6) 50%, var(--c-bg) 100%);
+      border-block: 1px solid var(--c-emerald-mid); text-align: center;
+    }
+    .cta-band__verse {
+      font-family: var(--ff-arabic); font-size: var(--fs-2xl); color: var(--c-gold);
+      direction: rtl; margin-bottom: var(--sp-4);
+    }
+    .cta-band__title { font-size: clamp(var(--fs-xl), 3vw, var(--fs-3xl)); color: var(--c-text); margin-bottom: var(--sp-4); }
+    .cta-band__desc { font-size: var(--fs-md); color: var(--c-text-muted); max-width: 60ch; margin-inline: auto; margin-bottom: var(--sp-8); }
+    .cta-band__actions { display: flex; justify-content: center; gap: var(--sp-4); flex-wrap: wrap; }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    .footer {
+      background: var(--c-surface); border-top: 1px solid var(--c-border);
+      padding-block: var(--sp-16) var(--sp-8);
+    }
+    .footer__grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: var(--sp-12);
+      margin-bottom: var(--sp-12);
+    }
+    .footer__brand-desc { font-size: var(--fs-sm); color: var(--c-text-muted); line-height: var(--lh-loose); margin-top: var(--sp-4); max-width: 36ch; }
+    .footer__cert {
+      display: flex; gap: var(--sp-3); margin-top: var(--sp-6); flex-wrap: wrap;
+    }
+    .footer__cert-badge {
+      display: flex; align-items: center; gap: var(--sp-2);
+      background: var(--c-emerald); border: 1px solid var(--c-emerald-mid);
+      border-radius: var(--r-md); padding: var(--sp-2) var(--sp-3);
+      font-size: var(--fs-xs); color: var(--c-emerald-text);
+    }
+    .footer__col-title { font-size: var(--fs-xs); font-weight: var(--fw-semi); letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-text-muted); margin-bottom: var(--sp-5); }
+    .footer__links { display: flex; flex-direction: column; gap: var(--sp-3); }
+    .footer__links a { font-size: var(--fs-sm); color: var(--c-text-muted); transition: color var(--t-fast); }
+    .footer__links a:hover { color: var(--c-gold); }
+    .footer__bottom {
+      padding-top: var(--sp-6); border-top: 1px solid var(--c-border);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--sp-4);
+    }
+    .footer__bottom-text { font-size: var(--fs-xs); color: var(--c-text-dim); }
+    .footer__bottom-links { display: flex; gap: var(--sp-5); }
+    .footer__bottom-links a { font-size: var(--fs-xs); color: var(--c-text-dim); transition: color var(--t-fast); }
+    .footer__bottom-links a:hover { color: var(--c-gold); }
+    .footer__social { display: flex; gap: var(--sp-3); margin-top: var(--sp-5); }
+    .social-link {
+      width: 36px; height: 36px; border-radius: var(--r-md);
+      background: var(--c-surface-3); border: 1px solid var(--c-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--c-text-muted); font-size: 14px;
+      transition: all var(--t-fast);
+    }
+    .social-link:hover { border-color: var(--c-gold); color: var(--c-gold); }
+
+    /* ─────────────────────────────────────────
+       COOKIE BANNER
+    ───────────────────────────────────────── */
+    .cookie-banner {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 800;
+      background: var(--c-surface-2); border-top: 1px solid var(--c-border);
+      padding: var(--sp-5) var(--sp-6); display: none;
+    }
+    .cookie-banner.show { display: block; }
+    .cookie-banner__inner {
+      max-width: var(--max-w-content); margin-inline: auto;
+      display: flex; align-items: center; gap: var(--sp-6); flex-wrap: wrap;
+    }
+    .cookie-banner__text { font-size: var(--fs-sm); color: var(--c-text-muted); flex: 1; min-width: 300px; }
+    .cookie-banner__text a { color: var(--c-gold); text-decoration: underline; }
+    .cookie-banner__actions { display: flex; gap: var(--sp-3); flex-shrink: 0; }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .features__grid { grid-template-columns: repeat(2, 1fr); }
+      .profiles-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; }
+      .footer__grid { grid-template-columns: 1fr 1fr; gap: var(--sp-8); }
+    }
+    @media (max-width: 768px) {
+      .hero__inner { grid-template-columns: 1fr; gap: var(--sp-10); padding-block: var(--sp-16); }
+      .hero__stats { grid-template-columns: 1fr 1fr; }
+      .hero__visual { order: -1; }
+      .steps__line { display: none; }
+      .steps__grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-8); }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+      .nav__links { display: none; }
+      .nav__cta .btn--outline { display: none; }
+      .nav__burger { display: flex; }
+      .footer__grid { grid-template-columns: 1fr; gap: var(--sp-8); }
+    }
+    @media (max-width: 480px) {
+      .features__grid { grid-template-columns: 1fr; }
+      .profiles-grid { grid-template-columns: 1fr; }
+      .hero__actions { flex-direction: column; }
+      .steps__grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip navigation (accessibilité) -->
+  <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
+  <!-- ══════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════ -->
+  <nav class="nav" id="main-nav" aria-label="Navigation principale" role="navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Nour Al Zawwaj – Accueil">
+        <div class="nav__logo-icon" aria-hidden="true">✦</div>
+        <div class="nav__logo-text">
+          <span class="nav__logo-name">Nour Al Zawwaj</span>
+          <span class="nav__logo-tagline">La Lumière du Mariage</span>
+        </div>
+      </a>
+
+      <div class="nav__links" role="menubar">
+        <a href="#pourquoi" role="menuitem">Nos atouts</a>
+        <a href="#comment" role="menuitem">Fonctionnement</a>
+        <a href="#tarifs" role="menuitem">Tarifs</a>
+        <a href="#valeurs" role="menuitem">Valeurs</a>
+        <a href="#temoignages" role="menuitem">Témoignages</a>
+        <a href="#faq" role="menuitem">FAQ</a>
+      </div>
+
+      <div class="nav__cta">
+        <a href="connexion.html" class="btn btn--ghost btn--sm">Connexion</a>
+        <a href="choix.html" class="btn btn--primary btn--sm">S'inscrire</a>
+      </div>
+
+      <button class="nav__burger" id="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="nav__mobile" id="mobile-nav" role="navigation" aria-label="Menu mobile">
+      <a href="#pourquoi">Nos atouts</a>
+      <a href="#comment">Fonctionnement</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#valeurs">Valeurs</a>
+      <a href="#temoignages">Témoignages</a>
+      <a href="#faq">FAQ</a>
+      <a href="connexion.html" class="btn btn--ghost" style="text-align:center;margin-top:.5rem">Connexion</a>
+      <a href="choix.html" class="btn btn--primary" style="text-align:center">S'inscrire gratuitement</a>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════
+       HERO
+  ══════════════════════════════════ -->
+  <main id="main-content">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__grid" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero__inner">
+        <!-- Left -->
+        <div class="hero__content">
+          <div class="hero__eyebrow">
+            <span class="hero__eyebrow-dot" aria-hidden="true"></span>
+            Rencontres Halal · Avenirs Bénis
+          </div>
+
+          <div class="hero__verse arabic" aria-label="Verset coranique en arabe">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا</div>
+          <p class="hero__verse-ref">— Sourate Ar-Rûm, 21 · Et parmi Ses signes, Il a créé pour vous des épouses</p>
+
+          <h1 class="hero__title" id="hero-title">
+            Trouver votre <em>moitié</em><br>dans la lumière
+          </h1>
+
+          <p class="hero__desc">
+            Une plateforme pensée pour les musulmans francophones qui recherchent un mariage sérieux, dans le respect des valeurs islamiques et la bienséance.
+          </p>
+
+          <div class="hero__actions">
+            <a href="choix.html" class="btn btn--primary btn--lg">
+              <span>✦</span> Créer mon profil — c'est gratuit
+            </a>
+            <a href="#comment" class="btn btn--outline btn--lg">Découvrir comment</a>
+          </div>
+
+          <div class="hero__trust" role="list" aria-label="Garanties">
+            <div class="hero__trust-item" role="listitem">
+              <span class="hero__trust-icon" aria-hidden="true">✓</span>
+              <span>100% Halal certifié</span>
+            </div>
+            <div class="hero__trust-item" role="listitem">
+              <span class="hero__trust-icon" aria-hidden="true">✓</span>
+              <span>Profils vérifiés</span>
+            </div>
+            <div class="hero__trust-item" role="listitem">
+              <span class="hero__trust-icon" aria-hidden="true">✓</span>
+              <span>Données chiffrées</span>
+            </div>
+            <div class="hero__trust-item" role="listitem">
+              <span class="hero__trust-icon" aria-hidden="true">✓</span>
+              <span>Sans engagement</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right -->
+        <div class="hero__visual" aria-hidden="true">
+          <div class="hero__stats">
+            <div class="stat-card stat-card--featured">
+              <div class="stat-card__num">12 000+</div>
+              <div class="stat-card__label">Membres actifs vérifiés</div>
+              <div class="stat-card__sub">France · Belgique · Maroc · Algérie · Tunisie et plus</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__num">934</div>
+              <div class="stat-card__label">Mariages réalisés</div>
+              <div class="stat-card__sub">+12 ce mois</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__num">97%</div>
+              <div class="stat-card__label">Satisfaction membres</div>
+              <div class="stat-card__sub">Note moyenne 4.8/5</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       FEATURES
+  ══════════════════════════════════ -->
+  <section class="section" id="pourquoi" aria-labelledby="features-title">
+    <div class="container">
+      <div class="eyebrow" aria-hidden="true">Pourquoi nous choisir</div>
+      <h2 class="section-title" id="features-title">Un environnement conçu pour<br><em>votre sérénité</em></h2>
+      <p class="section-sub">Chaque fonctionnalité a été pensée pour préserver votre dignité et faciliter votre chemin vers le mariage.</p>
+
+      <div class="features__grid" role="list">
+        <div class="feature-card" role="listitem">
+          <div class="feature-card__icon" aria-hidden="true">☽</div>
+          <h3 class="feature-card__title">Environnement 100% halal</h3>
+          <p class="feature-card__desc">Chaque interaction respecte les préceptes islamiques. Pas de photos mixtes en accès libre, conversations supervisées, charte islamique signée à l'inscription.</p>
+        </div>
+        <div class="feature-card" role="listitem">
+          <div class="feature-card__icon" aria-hidden="true">◆</div>
+          <h3 class="feature-card__title">Compatibilité approfondie</h3>
+          <p class="feature-card__desc">Notre algorithme analyse vos valeurs, pratique religieuse, vision de la famille et critères personnels pour des suggestions vraiment pertinentes.</p>
+        </div>
+        <div class="feature-card" role="listitem">
+          <div class="feature-card__icon" aria-hidden="true">◉</div>
+          <h3 class="feature-card__title">Wali impliqué</h3>
+          <p class="feature-card__desc">Un espace dédié permet à votre tuteur légal de suivre votre démarche, d'être informé et d'intervenir dans le processus selon votre souhait.</p>
+        </div>
+        <div class="feature-card" role="listitem">
+          <div class="feature-card__icon" aria-hidden="true">⊛</div>
+          <h3 class="feature-card__title">Données protégées RGPD</h3>
+          <p class="feature-card__desc">Vos données sont chiffrées (AES-256), hébergées en Europe et ne sont jamais vendues. Droit à l'effacement total sur demande.</p>
+        </div>
+        <div class="feature-card" role="listitem">
+          <div class="feature-card__icon" aria-hidden="true">✦</div>
+          <h3 class="feature-card__title">Profils vérifiés</h3>
+          <p class="feature-card__desc">Vérification d'identité obligatoire pour chaque membre. Fini les faux profils — vous savez avec certitude que la personne en face est réelle.</p>
+        </div>
+        <div class="feature-card" role="listitem">
+          <div class="feature-card__icon" aria-hidden="true">◈</div>
+          <h3 class="feature-card__title">Accompagnement humain</h3>
+          <p class="feature-card__desc">Une équipe de conseillers disponibles pour vous guider, répondre à vos interrogations et vous soutenir à chaque étape de votre démarche.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       HOW IT WORKS
+  ══════════════════════════════════ -->
+  <section class="section section--sm" id="comment" aria-labelledby="steps-title" style="background:var(--c-surface);border-block:1px solid var(--c-border)">
+    <div class="container">
+      <div class="eyebrow" aria-hidden="true">Comment ça fonctionne</div>
+      <h2 class="section-title" id="steps-title">Quatre étapes vers votre <em>union</em></h2>
+      <p class="section-sub">Un processus clair, bienveillant et respectueux, pensé pour vous simplifier la recherche tout en préservant votre pudeur.</p>
+
+      <div class="steps">
+        <div class="steps__line" aria-hidden="true"></div>
+        <ol class="steps__grid">
+          <li class="step">
+            <div class="step__num" aria-hidden="true">1</div>
+            <h3 class="step__title">Créez votre profil</h3>
+            <p class="step__desc">Renseignez vos valeurs, pratique, attentes et téléchargez une photo vérifiée. L'inscription est gratuite et prend moins de dix minutes.</p>
+          </li>
+          <li class="step">
+            <div class="step__num" aria-hidden="true">2</div>
+            <h3 class="step__title">Recevez vos suggestions</h3>
+            <p class="step__desc">Notre algorithme vous propose chaque jour des profils compatibles, triés selon vos critères religieux, géographiques et personnels.</p>
+          </li>
+          <li class="step">
+            <div class="step__num" aria-hidden="true">3</div>
+            <h3 class="step__title">Échangez avec respect</h3>
+            <p class="step__desc">La messagerie est encadrée : pas de contact direct avant que vous soyez prêts. Le wali peut être notifié à tout moment.</p>
+          </li>
+          <li class="step">
+            <div class="step__num" aria-hidden="true">4</div>
+            <h3 class="step__title">Avancez vers l'union</h3>
+            <p class="step__desc">Quand la connexion est établie, nos conseillers vous accompagnent jusqu'à la nikkah si vous le souhaitez.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       PROFILS (aperçu anonymisé)
+  ══════════════════════════════════ -->
+  <section class="section profiles-section" aria-labelledby="profiles-title">
+    <div class="container">
+      <div class="eyebrow" aria-hidden="true">Membres récents</div>
+      <h2 class="section-title" id="profiles-title">Des profils <em>sérieux</em> vous attendent</h2>
+      <p class="section-sub">Chaque profil est vérifié par notre équipe avant d'être publié. Les photos sont protégées et visibles uniquement par les membres validés.</p>
+
+      <div class="profiles-grid" role="list" aria-label="Aperçu de profils membres">
+        <!-- Profile cards -->
+        <article class="profile-card" role="listitem">
+          <div class="profile-card__photo" aria-label="Photo protégée">
+            <span aria-hidden="true" style="font-size:2.5rem;opacity:0.2">👤</span>
+            <div class="profile-card__photo-blur">
+              <span class="profile-card__photo-lock" aria-label="Photo visible après inscription">🔒</span>
+            </div>
+            <div class="profile-card__verified">
+              <span class="badge badge--emerald" aria-label="Profil vérifié">✓ Vérifié</span>
+            </div>
+          </div>
+          <div class="profile-card__body">
+            <div class="profile-card__name">Amina K.</div>
+            <div class="profile-card__meta">
+              <span>27 ans</span>
+              <span>·</span>
+              <span>📍 Lyon</span>
+            </div>
+            <div class="profile-card__tags" role="list" aria-label="Caractéristiques">
+              <span class="profile-card__tag" role="listitem">Pratiquante</span>
+              <span class="profile-card__tag" role="listitem">Hijab</span>
+              <span class="profile-card__tag" role="listitem">Doctorat</span>
+              <span class="profile-card__tag" role="listitem">Sérieuse</span>
+            </div>
+            <div class="profile-card__compat">
+              <div class="compat-bar" role="progressbar" aria-valuenow="94" aria-valuemin="0" aria-valuemax="100" aria-label="Compatibilité 94%">
+                <div class="compat-bar__fill" style="width:94%"></div>
+              </div>
+              <span class="compat-pct">94%</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="profile-card" role="listitem">
+          <div class="profile-card__photo" aria-label="Photo protégée">
+            <span aria-hidden="true" style="font-size:2.5rem;opacity:0.2">👤</span>
+            <div class="profile-card__photo-blur">
+              <span class="profile-card__photo-lock" aria-label="Photo visible après inscription">🔒</span>
+            </div>
+            <div class="profile-card__verified">
+              <span class="badge badge--emerald">✓ Vérifié</span>
+            </div>
+          </div>
+          <div class="profile-card__body">
+            <div class="profile-card__name">Khadija M.</div>
+            <div class="profile-card__meta"><span>24 ans</span><span>·</span><span>📍 Paris</span></div>
+            <div class="profile-card__tags">
+              <span class="profile-card__tag">Pratiquante</span>
+              <span class="profile-card__tag">Niqab</span>
+              <span class="profile-card__tag">Master</span>
+            </div>
+            <div class="profile-card__compat">
+              <div class="compat-bar" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100" aria-label="Compatibilité 88%">
+                <div class="compat-bar__fill" style="width:88%"></div>
+              </div>
+              <span class="compat-pct">88%</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="profile-card" role="listitem">
+          <div class="profile-card__photo" aria-label="Photo protégée">
+            <span aria-hidden="true" style="font-size:2.5rem;opacity:0.2">👤</span>
+            <div class="profile-card__photo-blur">
+              <span class="profile-card__photo-lock" aria-label="Photo visible après inscription">🔒</span>
+            </div>
+            <div class="profile-card__verified">
+              <span class="badge badge--emerald">✓ Vérifié</span>
+            </div>
+          </div>
+          <div class="profile-card__body">
+            <div class="profile-card__name">Nour F.</div>
+            <div class="profile-card__meta"><span>29 ans</span><span>·</span><span>📍 Bruxelles</span></div>
+            <div class="profile-card__tags">
+              <span class="profile-card__tag">Pratiquante</span>
+              <span class="profile-card__tag">Infirmière</span>
+              <span class="profile-card__tag">Famille</span>
+            </div>
+            <div class="profile-card__compat">
+              <div class="compat-bar" role="progressbar" aria-valuenow="91" aria-valuemin="0" aria-valuemax="100" aria-label="Compatibilité 91%">
+                <div class="compat-bar__fill" style="width:91%"></div>
+              </div>
+              <span class="compat-pct">91%</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="profile-card" role="listitem" style="display:flex;align-items:center;justify-content:center;text-align:center;padding:var(--sp-8)">
+          <div>
+            <div style="font-size:2.5rem;margin-bottom:var(--sp-4);opacity:0.3">✦</div>
+            <p style="font-size:var(--fs-sm);color:var(--c-text-muted);margin-bottom:var(--sp-5)">Inscrivez-vous pour découvrir tous les profils compatibles avec vos critères.</p>
+            <a href="choix.html" class="btn btn--primary btn--sm">Voir les profils</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       TARIFS
+  ══════════════════════════════════ -->
+  <section class="section" id="tarifs" aria-labelledby="pricing-title">
+    <div class="container">
+      <div class="eyebrow" aria-hidden="true">Formules</div>
+      <h2 class="section-title" id="pricing-title">Simple, transparent, <em>sans surprise</em></h2>
+      <p class="section-sub">Commencez gratuitement. Passez à Premium quand vous êtes prêt — résiliable à tout moment.</p>
+
+      <div class="pricing-grid">
+        <!-- Gratuit -->
+        <div class="pricing-card" aria-labelledby="plan-free">
+          <div class="pricing-card__name" id="plan-free">Découverte</div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__amount">0</span>
+            <span class="pricing-card__currency">€</span>
+          </div>
+          <div class="pricing-card__period">Pour toujours gratuit</div>
+          <ul class="pricing-card__features" aria-label="Fonctionnalités incluses">
+            <li><span class="pricing-check" aria-label="Inclus">✓</span>Création de profil vérifiée</li>
+            <li><span class="pricing-check" aria-label="Inclus">✓</span>3 suggestions par semaine</li>
+            <li><span class="pricing-check" aria-label="Inclus">✓</span>Messagerie encadrée (5 conv.)</li>
+            <li><span class="pricing-check" aria-label="Inclus">✓</span>Espace wali</li>
+            <li><span class="pricing-cross" aria-hidden="true">—</span><span style="color:var(--c-text-dim)">Suggestions illimitées</span></li>
+            <li><span class="pricing-cross" aria-hidden="true">—</span><span style="color:var(--c-text-dim)">Mise en avant profil</span></li>
+            <li><span class="pricing-cross" aria-hidden="true">—</span><span style="color:var(--c-text-dim)">Conseiller dédié</span></li>
+          </ul>
+          <a href="choix.html" class="btn btn--outline" style="width:100%;justify-content:center">Commencer gratuitement</a>
+        </div>
+
+        <!-- Premium -->
+        <div class="pricing-card pricing-card--featured" aria-labelledby="plan-premium" aria-label="Formule recommandée">
+          <div class="pricing-badge" aria-label="Formule la plus populaire">Le plus populaire</div>
+          <div class="pricing-card__name" id="plan-premium">Premium</div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__amount">29</span>
+            <span class="pricing-card__currency">,99€</span>
+          </div>
+          <div class="pricing-card__period">par mois — résiliable à tout moment</div>
+          <ul class="pricing-card__features">
+            <li><span class="pricing-check">✓</span>Tout de Découverte</li>
+            <li><span class="pricing-check">✓</span>Suggestions illimitées</li>
+            <li><span class="pricing-check">✓</span>Messagerie illimitée</li>
+            <li><span class="pricing-check">✓</span>Mise en avant du profil</li>
+            <li><span class="pricing-check">✓</span>Filtres avancés</li>
+            <li><span class="pricing-check">✓</span>Qui a consulté mon profil</li>
+            <li><span class="pricing-cross" aria-hidden="true">—</span><span style="color:var(--c-text-dim)">Conseiller dédié</span></li>
+          </ul>
+          <a href="choix.html" class="btn btn--primary" style="width:100%;justify-content:center">Essayer 7 jours offerts</a>
+        </div>
+
+        <!-- Premium+ -->
+        <div class="pricing-card" aria-labelledby="plan-plus">
+          <div class="pricing-card__name" id="plan-plus">Premium+</div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__amount">49</span>
+            <span class="pricing-card__currency">,99€</span>
+          </div>
+          <div class="pricing-card__period">par mois — résiliable à tout moment</div>
+          <ul class="pricing-card__features">
+            <li><span class="pricing-check">✓</span>Tout de Premium</li>
+            <li><span class="pricing-check">✓</span>Conseiller dédié</li>
+            <li><span class="pricing-check">✓</span>Accompagnement jusqu'à la nikkah</li>
+            <li><span class="pricing-check">✓</span>Vérification d'identité prioritaire</li>
+            <li><span class="pricing-check">✓</span>Boost profil ×3 par semaine</li>
+            <li><span class="pricing-check">✓</span>Accès profils internationaux</li>
+            <li><span class="pricing-check">✓</span>Support prioritaire 7j/7</li>
+          </ul>
+          <a href="choix.html" class="btn btn--outline" style="width:100%;justify-content:center">Découvrir Premium+</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       TÉMOIGNAGES
+  ══════════════════════════════════ -->
+  <section class="section testimonials" id="temoignages" aria-labelledby="testimonials-title">
+    <div class="container">
+      <div class="eyebrow" aria-hidden="true">Témoignages</div>
+      <h2 class="section-title" id="testimonials-title">Des unions <em>bénis</em></h2>
+      <p class="section-sub">Ce sont leurs mots, pas les nôtres. Chaque témoignage est vérifié par notre équipe.</p>
+
+      <div class="testimonials-grid" role="list">
+        <article class="testimonial-card" role="listitem">
+          <div class="testimonial-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+          <p class="testimonial-card__quote">« Alhamdulillah, je l'ai rencontré en trois mois. »</p>
+          <p class="testimonial-card__text">L'ambiance sereine et islamique de la plateforme nous a aidés à avancer avec confiance. Notre wali a été impliqué dès le début, ce qui a rassuré toute la famille.</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar" aria-hidden="true">F</div>
+            <div>
+              <div class="testimonial-card__name">Fatima & Youssef</div>
+              <div class="testimonial-card__location">Mariés en 2024 · Bordeaux</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial-card" role="listitem">
+          <div class="testimonial-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+          <p class="testimonial-card__quote">« La vérification d'identité m'a donné la confiance. »</p>
+          <p class="testimonial-card__text">Avant Nour Al Zawwaj, j'avais peur des faux profils. Ici, chaque personne est réelle et sérieuse. J'ai trouvé ma femme en deux mois. Barakallahu fikum.</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar" aria-hidden="true">K</div>
+            <div>
+              <div class="testimonial-card__name">Karim & Houda</div>
+              <div class="testimonial-card__location">Mariés en 2024 · Casablanca</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial-card" role="listitem">
+          <div class="testimonial-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+          <p class="testimonial-card__quote">« Le conseiller nous a guidés jusqu'à la nikkah. »</p>
+          <p class="testimonial-card__text">Le service Premium+ a été un vrai accompagnement. Notre conseillère Mme Rachida nous a aidés à communiquer les bonnes choses au bon moment. Très professionnelle.</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar" aria-hidden="true">S</div>
+            <div>
+              <div class="testimonial-card__name">Sana & Bilal</div>
+              <div class="testimonial-card__location">Mariés en 2023 · Lyon</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       VALEURS
+  ══════════════════════════════════ -->
+  <section class="section" id="valeurs" aria-labelledby="values-title">
+    <div class="container">
+      <div class="eyebrow" aria-hidden="true">Nos valeurs</div>
+      <h2 class="section-title" id="values-title">Ce qui nous <em>guide</em></h2>
+      <p class="section-sub">Nour Al Zawwaj repose sur des fondations spirituelles et éthiques qui orientent chacune de nos décisions.</p>
+
+      <div class="values-grid" role="list">
+        <div class="value-card" role="listitem">
+          <div class="value-card__num" aria-hidden="true">١</div>
+          <div>
+            <h3 class="value-card__title">Taqwā — التقوى</h3>
+            <p class="value-card__desc">La piété guide chaque rencontre. Nous encourageons la conscience divine comme socle de toute relation. Chaque décision de plateforme est passée au crible de cette valeur.</p>
+          </div>
+        </div>
+        <div class="value-card" role="listitem">
+          <div class="value-card__num" aria-hidden="true">٢</div>
+          <div>
+            <h3 class="value-card__title">Raḥma — الرحمة</h3>
+            <p class="value-card__desc">La miséricorde et la bienveillance envers chaque membre, quel que soit son parcours ou sa situation. Personne n'est jugé ici — chacun est accueilli.</p>
+          </div>
+        </div>
+        <div class="value-card" role="listitem">
+          <div class="value-card__num" aria-hidden="true">٣</div>
+          <div>
+            <h3 class="value-card__title">Amāna — الأمانة</h3>
+            <p class="value-card__desc">La confiance est notre engagement. Vos données, vos échanges et votre vie privée sont traités avec la plus grande intégrité. Jamais vendus, toujours protégés.</p>
+          </div>
+        </div>
+        <div class="value-card" role="listitem">
+          <div class="value-card__num" aria-hidden="true">٤</div>
+          <div>
+            <h3 class="value-card__title">Jamā'a — الجماعة</h3>
+            <p class="value-card__desc">La communauté. Nous construisons un espace sûr où chaque membre se sent soutenu et compris par ses pairs. La umma comme soutien, pas comme pression.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       CTA BAND
+  ══════════════════════════════════ -->
+  <section class="section cta-band" aria-labelledby="cta-title">
+    <div class="container container--narrow">
+      <div class="cta-band__verse arabic" aria-label="Verset arabe">وَاللَّهُ جَعَلَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا</div>
+      <h2 class="cta-band__title" id="cta-title">Votre <em>moitié</em> vous attend</h2>
+      <p class="cta-band__desc">Rejoignez plus de 12 000 membres qui ont fait confiance à Nour Al Zawwaj pour les accompagner vers un mariage béni. Inscription gratuite, sans engagement.</p>
+      <div class="cta-band__actions">
+        <a href="choix.html" class="btn btn--primary btn--lg">Créer mon profil gratuitement</a>
+        <a href="connexion.html" class="btn btn--ghost btn--lg">J'ai déjà un compte</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       FAQ
+  ══════════════════════════════════ -->
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="eyebrow" aria-hidden="true">FAQ</div>
+      <h2 class="section-title" id="faq-title">Questions <em>fréquentes</em></h2>
+      <p class="section-sub">Une question sans réponse ici ? Notre équipe vous répond dans les 24 heures.</p>
+
+      <div class="faq-list" role="list">
+        <div class="faq-item" role="listitem">
+          <button class="faq-item__btn" aria-expanded="false" aria-controls="faq-1">
+            Nour Al Zawwaj est-il vraiment halal ?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div id="faq-1" class="faq-item__body" role="region">
+            Oui. La plateforme a été conçue dès le départ pour respecter les préceptes islamiques : pas de contact direct entre hommes et femmes non mahrams sans supervision, obligation de mentionner ses intentions matrimoniales, possibilité d'impliquer le wali, et charte de conduite stricte. Nous collaborons avec des conseillers religieux pour garantir cette conformité.
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-item__btn" aria-expanded="false" aria-controls="faq-2">
+            L'inscription est-elle vraiment gratuite ?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div id="faq-2" class="faq-item__body" role="region">
+            L'inscription et la création de profil sont entièrement gratuites. Un abonnement premium optionnel débloque des fonctionnalités avancées comme les suggestions illimitées, la mise en avant du profil et l'accès à notre service de conseil personnalisé. Aucune carte bancaire requise pour s'inscrire.
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-item__btn" aria-expanded="false" aria-controls="faq-3">
+            Comment le wali peut-il être impliqué ?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div id="faq-3" class="faq-item__body" role="region">
+            Lors de l'inscription, vous pouvez renseigner l'adresse e-mail de votre wali (père, frère, oncle…). Il recevra des notifications à chaque étape importante que vous choisissez de partager, pourra consulter les profils proposés et valider les échanges. Tout reste sous votre contrôle.
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-item__btn" aria-expanded="false" aria-controls="faq-4">
+            Mes photos sont-elles visibles par tous ?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div id="faq-4" class="faq-item__body" role="region">
+            Non. Par défaut, votre photo principale est visible uniquement par les membres du même genre validés. Vous pouvez choisir de la rendre visible uniquement après une demande acceptée. Les femmes portant le voile peuvent paramétrer leur visibilité très précisément.
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-item__btn" aria-expanded="false" aria-controls="faq-5">
+            Est-ce disponible en dehors de la France ?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div id="faq-5" class="faq-item__body" role="region">
+            Nour Al Zawwaj est disponible dans toute la francophonie : France, Belgique, Suisse, Maroc, Algérie, Tunisie, Mauritanie, Sénégal, Canada et bien d'autres pays. Vous pouvez indiquer si vous êtes ouvert à des relations à distance ou uniquement à des personnes de votre région.
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-item__btn" aria-expanded="false" aria-controls="faq-6">
+            Comment fonctionne la sécurité des données ?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div id="faq-6" class="faq-item__body" role="region">
+            Toutes vos données sont chiffrées avec AES-256 au repos et TLS 1.3 en transit. Nos serveurs sont hébergés en Europe (conformité RGPD). Vous pouvez demander l'export ou la suppression définitive de vos données à tout moment depuis les paramètres de votre compte ou par email à privacy@nour-al-zawwaj.com.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- ══════════════════════════════════
+       FOOTER
+  ══════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <!-- Brand -->
+        <div>
+          <a href="/" class="nav__logo" aria-label="Nour Al Zawwaj – Accueil">
+            <div class="nav__logo-icon" aria-hidden="true">✦</div>
+            <div class="nav__logo-text">
+              <span class="nav__logo-name">Nour Al Zawwaj</span>
+              <span class="nav__logo-tagline">La Lumière du Mariage</span>
+            </div>
+          </a>
+          <p class="footer__brand-desc">La plateforme de rencontres halal qui accompagne les musulmans francophones vers un mariage sérieux, béni et respectueux des valeurs islamiques.</p>
+          <div class="footer__cert" aria-label="Certifications">
+            <div class="footer__cert-badge">✦ Halal certifié</div>
+            <div class="footer__cert-badge">⊛ RGPD conforme</div>
+          </div>
+          <div class="footer__social" aria-label="Réseaux sociaux">
+            <a href="#" class="social-link" aria-label="Instagram"><span aria-hidden="true">◈</span></a>
+            <a href="#" class="social-link" aria-label="Facebook"><span aria-hidden="true">◆</span></a>
+            <a href="#" class="social-link" aria-label="YouTube"><span aria-hidden="true">▶</span></a>
+            <a href="#" class="social-link" aria-label="TikTok"><span aria-hidden="true">✦</span></a>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav aria-label="Navigation footer">
+          <div class="footer__col-title">Navigation</div>
+          <ul class="footer__links">
+            <li><a href="#pourquoi">Nos atouts</a></li>
+            <li><a href="#comment">Fonctionnement</a></li>
+            <li><a href="#tarifs">Tarifs</a></li>
+            <li><a href="#valeurs">Nos valeurs</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="blog.html">Blog islamique</a></li>
+          </ul>
+        </nav>
+
+        <!-- À propos -->
+        <nav aria-label="À propos">
+          <div class="footer__col-title">À propos</div>
+          <ul class="footer__links">
+            <li><a href="histoire.html">Notre histoire</a></li>
+            <li><a href="equipe.html">L'équipe</a></li>
+            <li><a href="conseillers.html">Nos conseillers</a></li>
+            <li><a href="temoignages.html">Témoignages</a></li>
+            <li><a href="presse.html">Presse</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- Légal -->
+        <nav aria-label="Liens légaux">
+          <div class="footer__col-title">Légal &amp; sécurité</div>
+          <ul class="footer__links">
+            <li><a href="cgu.html">Conditions d'utilisation</a></li>
+            <li><a href="confidentialite.html">Politique de confidentialité</a></li>
+            <li><a href="charte.html">Charte islamique</a></li>
+            <li><a href="cookies.html">Politique cookies</a></li>
+            <li><a href="rgpd.html">Mes données (RGPD)</a></li>
+            <li><a href="signalement.html">Signaler un abus</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__bottom-text">© 2025 Nour Al Zawwaj. Tous droits réservés. Hébergé en Europe · Données chiffrées AES-256</p>
+        <div class="footer__bottom-links">
+          <a href="confidentialite.html">Confidentialité</a>
+          <a href="cgu.html">Conditions</a>
+          <a href="cookies.html">Cookies</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════
+       COOKIE BANNER (RGPD)
+  ══════════════════════════════════ -->
+  <div class="cookie-banner" id="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-live="polite">
+    <div class="cookie-banner__inner">
+      <p class="cookie-banner__text" id="cookie-title">
+        🍪 Nous utilisons des cookies strictement nécessaires au fonctionnement de la plateforme. Aucune donnée publicitaire. <a href="cookies.html">En savoir plus</a>
+      </p>
+      <div class="cookie-banner__actions">
+        <button class="btn btn--ghost btn--sm" id="cookie-decline">Refuser non essentiels</button>
+        <button class="btn btn--primary btn--sm" id="cookie-accept">Accepter</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Nav scroll effect ──
+    const nav = document.getElementById('main-nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // ── Mobile menu ──
+    const burger = document.getElementById('nav-burger');
+    const mobileNav = document.getElementById('mobile-nav');
+    burger.addEventListener('click', () => {
+      const open = mobileNav.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open);
+      burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    });
+
+    // ── FAQ accordion ──
+    document.querySelectorAll('.faq-item__btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const expanded = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', expanded);
+      });
+    });
+
+    // ── Cookie banner ──
+    const cookieBanner = document.getElementById('cookie-banner');
+    if (!localStorage.getItem('naz-cookies')) cookieBanner.classList.add('show');
+    document.getElementById('cookie-accept').addEventListener('click', () => {
+      localStorage.setItem('naz-cookies', 'accepted');
+      cookieBanner.classList.remove('show');
+    });
+    document.getElementById('cookie-decline').addEventListener('click', () => {
+      localStorage.setItem('naz-cookies', 'declined');
+      cookieBanner.classList.remove('show');
+    });
+
+    // ── Intersection Observer (animations entrée) ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.feature-card, .step, .profile-card, .testimonial-card, .value-card, .pricing-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

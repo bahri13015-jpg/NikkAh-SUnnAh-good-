@@ -1,0 +1,1082 @@
+Database
+
+-- ============================================================
+--  NOUR AL ZAWWAJ — Schéma de base de données Supabase
+--  Version  : 1.0
+--  Auteur   : Nour Al Zawwaj Dev
+--  Licence  : Privé
+-- ============================================================
+--
+--  ORDRE DE CRÉATION
+--  1. Extensions & types ENUM
+--  2. Table utilisateurs
+--  3. Table profils
+--  4. Table photos
+--  5. Table favoris
+--  6. Table conversations
+--  7. Table messages
+--  8. Table abonnements
+--  9. Table signalements
+-- 10. Row Level Security (RLS)
+-- 11. Index de performance
+-- 12. Triggers utilitaires
+-- ============================================================
+
+
+-- ============================================================
+-- 0. EXTENSIONS
+-- ============================================================
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";      -- uuid_generate_v4()
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";        -- crypt(), gen_salt()
+CREATE EXTENSION IF NOT EXISTS "pg_trgm";         -- recherche full-text floue
+
+
+-- ============================================================
+-- 1. TYPES ENUM
+-- ============================================================
+
+-- Genre
+CREATE TYPE genre_enum AS ENUM (
+    'homme',
+    'femme'
+);
+
+-- Situation matrimoniale
+CREATE TYPE situation_enum AS ENUM (
+    'celibataire',
+    'divorce',
+    'veuf',
+    'marie'           -- polygamie licite : déjà marié, cherche 2e épouse
+);
+
+-- Niveau de pratique
+CREATE TYPE pratique_enum AS ENUM (
+    'en_cheminement',
+    'pratiquant',
+    'pratiquant_assidu',
+    'tres_pratiquant'
+);
+
+-- Port du voile (femmes)
+CREATE TYPE voile_enum AS ENUM (
+    'aucun',
+    'en_adoption',
+    'hijab',
+    'jilbab',
+    'niqab'
+);
+
+-- Visibilité photo
+CREATE TYPE photo_visibilite_enum AS ENUM (
+    'privee',           -- visible uniquement après acceptation mutuelle
+    'membres_meme_genre',
+    'publique'
+);
+
+-- Statut conversation
+CREATE TYPE conversation_statut_enum AS ENUM (
+    'en_attente',       -- demande envoyée, pas encore acceptée
+    'active',
+    'archivee',
+    'bloquee'
+);
+
+-- Statut message
+CREATE TYPE message_statut_enum AS ENUM (
+    'envoye',
+    'distribue',
+    'lu'
+);
+
+-- Plan abonnement
+CREATE TYPE plan_enum AS ENUM (
+    'gratuit',
+    'premium_mensuel',
+    'premium_trimestriel',
+    'premium_annuel'
+);
+
+-- Statut abonnement
+CREATE TYPE abonnement_statut_enum AS ENUM (
+    'actif',
+    'expire',
+    'annule',
+    'en_attente_paiement'
+);
+
+-- Motif signalement
+CREATE TYPE signalement_motif_enum AS ENUM (
+    'faux_profil',
+    'comportement_irrespectueux',
+    'contenu_inapproprie',
+    'harcelement',
+    'arnaque',
+    'autre'
+);
+
+-- Statut signalement
+CREATE TYPE signalement_statut_enum AS ENUM (
+    'en_cours',
+    'examine',
+    'resolu',
+    'rejete'
+);
+
+
+-- ============================================================
+-- 2. TABLE : utilisateurs
+--    Liée à auth.users de Supabase (Auth)
+-- ============================================================
+
+CREATE TABLE utilisateurs (
+    id                  UUID            PRIMARY KEY DEFAULT uuid_generate_v4(),
+    auth_id             UUID            UNIQUE NOT NULL
+                                        REFERENCES auth.users(id) ON DELETE CASCADE,
+
+    email               TEXT            UNIQUE NOT NULL,
+    genre               genre_enum      NOT NULL,
+
+    -- Vérification d'identité
+    identite_verifiee   BOOLEAN         NOT NULL DEFAULT FALSE,
+    email_verifie       BOOLEAN         NOT NULL DEFAULT FALSE,
+    telephone           TEXT,
+    telephone_verifie   BOOLEAN         NOT NULL DEFAULT FALSE,
+
+    -- Statut du compte
+    compte_actif        BOOLEAN         NOT NULL DEFAULT TRUE,
+    compte_suspendu     BOOLEAN         NOT NULL DEFAULT FALSE,
+    raison_suspension   TEXT,
+
+    -- Wali (tuteur légal – principalement pour les femmes)
+    wali_nom            TEXT,
+    wali_email          TEXT,
+    wali_lien           TEXT,           -- père, frère, oncle…
+    wali_notifie        BOOLEAN         NOT NULL DEFAULT FALSE,
+
+    -- Préférences de confidentialité
+    profil_visible      BOOLEAN         NOT NULL DEFAULT TRUE,
+    accepte_suggestions BOOLEAN         NOT NULL DEFAULT TRUE,
+
+    -- Métadonnées
+    derniere_connexion  TIMESTAMPTZ,
+    created_at          TIMESTAMPTZ     NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ     NOT NULL DEFAULT NOW()
+);
+
+COMMENT ON TABLE  utilisateurs                  IS 'Comptes membres — liés à auth.users Supabase.';
+COMMENT ON COLUMN utilisateurs.auth_id          IS 'FK vers auth.users.id (Supabase Auth).';
+COMMENT ON COLUMN utilisateurs.identite_verifiee IS 'Vrai après vérification manuelle par l''équipe.';
+COMMENT ON COLUMN utilisateurs.wali_notifie     IS 'Si true, le wali reçoit les notifications activées.';
+
+
+-- ============================================================
+-- 3. TABLE : profils
+--    Informations personnelles et critères de recherche
+-- ============================================================
+
+CREATE TABLE profils (
+    id                      UUID            PRIMARY KEY DEFAULT uuid_generate_v4(),
+    utilisateur_id          UUID            UNIQUE NOT NULL
+                                            REFERENCES utilisateurs(id) ON DELETE CASCADE,
+
+    -- Identité
+    prenom                  TEXT            NOT NULL,
+    age                     SMALLINT        NOT NULL CHECK (age BETWEEN 18 AND 99),
+    pays                    TEXT            NOT NULL,
+    ville                   TEXT            NOT NULL,
+    nationalite             TEXT,
+    profession              TEXT            NOT NULL,
+
+    -- Situation familiale
+    situation               situation_enum  NOT NULL,
+    nb_enfants              SMALLINT        NOT NULL DEFAULT 0 CHECK (nb_enfants >= 0),
+    garde_enfants           TEXT,           -- 'totale', 'partagee', 'autre', NULL
+
+    -- Religion
+    niveau_pratique         pratique_enum   NOT NULL,
+    ecole_juridique         TEXT,           -- hanafi, maliki, chafi_i, hanbali…
+    pratiques               TEXT[],         -- ['salat','jeune','halal','quran'…]
+
+    -- Spécifique femme
+    port_voile              voile_enum,     -- NULL si genre = homme
+
+    -- Vision du foyer
+    role_foyer_souhaite     TEXT,
+    nb_enfants_souhaites    TEXT,           -- '1_2', '3_4', '5+', 'laisse_a_allah'
+
+    -- Présentation
+    description             TEXT            CHECK (char_length(description) BETWEEN 60 AND 600),
+    mots_cles               TEXT[],         -- tags libres
+
+    -- Critères recherchés
+    critere_age_min         SMALLINT        CHECK (critere_age_min >= 18),
+    critere_age_max         SMALLINT        CHECK (critere_age_max <= 99),
+    critere_pays            TEXT,           -- 'tous', 'france', 'europe', 'maghreb'…
+    critere_niveau_pratique TEXT,           -- 'similaire', 'pratiquant', 'ouvert'…
+    critere_situation       TEXT,           -- 'celibataire', 'tous', 'ouvert'
+    criteres_coches         TEXT[],         -- ['hijab','diplome','travail'…]
+    criteres_libres         TEXT            CHECK (char_length(criteres_libres) <= 400),
+
+    -- Score de complétude (0–100) — calculé par trigger
+    completude              SMALLINT        NOT NULL DEFAULT 0,
+
+    -- Statut de modération
+    profil_valide           BOOLEAN         NOT NULL DEFAULT FALSE,
+    profil_en_revue         BOOLEAN         NOT NULL DEFAULT TRUE,
+    note_moderation         TEXT,
+
+    -- Métadonnées
+    created_at              TIMESTAMPTZ     NOT NULL DEFAULT NOW(),
+    updated_at              TIMESTAMPTZ     NOT NULL DEFAULT NOW()
+);
+
+COMMENT ON TABLE  profils                    IS 'Profil complet du membre : infos perso, religion, critères.';
+COMMENT ON COLUMN profils.pratiques          IS 'Tableau des pratiques cochées : salat, jeune, halal, quran, zakat…';
+COMMENT ON COLUMN profils.mots_cles         IS 'Tags libres saisis par le membre (max 12).';
+COMMENT ON COLUMN profils.completude        IS 'Pourcentage de complétion du profil, mis à jour par trigger.';
+COMMENT ON COLUMN profils.profil_valide     IS 'True après validation manuelle par l''équipe de modération.';
+
+
+-- ============================================================
+-- 4. TABLE : photos
+--    Stockage des références aux photos (fichiers dans Supabase Storage)
+-- ============================================================
+
+CREATE TABLE photos (
+    id              UUID                    PRIMARY KEY DEFAULT uuid_generate_v4(),
+    utilisateur_id  UUID                    NOT NULL
+                                            REFERENCES utilisateurs(id) ON DELETE CASCADE,
+
+    -- Référence fichier
+    storage_path    TEXT                    NOT NULL,   -- ex: 'photos/uuid/avatar.webp'
+    url_publique    TEXT,                               -- URL signée ou publique selon bucket
+
+    -- Ordre d'affichage (0 = photo principale)
+    ordre           SMALLINT                NOT NULL DEFAULT 0,
+    est_principale  BOOLEAN                 NOT NULL DEFAULT FALSE,
+
+    -- Contrôle de visibilité
+    visibilite      photo_visibilite_enum   NOT NULL DEFAULT 'membres_meme_genre',
+
+    -- Modération
+    validee         BOOLEAN                 NOT NULL DEFAULT FALSE,
+    rejetee         BOOLEAN                 NOT NULL DEFAULT FALSE,
+    raison_rejet    TEXT,
+
+    -- Métadonnées fichier
+    taille_octets   INTEGER,
+    largeur_px      SMALLINT,
+    hauteur_px      SMALLINT,
+    format          TEXT,                               -- 'jpeg', 'png', 'webp'
+
+    created_at      TIMESTAMPTZ             NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ             NOT NULL DEFAULT NOW(),
+
+    -- Contraintes
+    CONSTRAINT une_seule_principale UNIQUE NULLS NOT DISTINCT (utilisateur_id, est_principale)
+        DEFERRABLE INITIALLY DEFERRED
+);
+
+COMMENT ON TABLE  photos                  IS 'Photos des membres — les fichiers sont dans Supabase Storage.';
+COMMENT ON COLUMN photos.storage_path     IS 'Chemin relatif dans le bucket Supabase Storage.';
+COMMENT ON COLUMN photos.est_principale   IS 'Une seule photo principale par utilisateur (contrainte UNIQUE partielle).';
+COMMENT ON COLUMN photos.visibilite       IS 'Contrôle qui peut voir cette photo.';
+
+
+-- ============================================================
+-- 5. TABLE : favoris
+--    Profils mis en favori (« j'aime ») par un utilisateur
+-- ============================================================
+
+CREATE TABLE favoris (
+    id              UUID            PRIMARY KEY DEFAULT uuid_generate_v4(),
+    utilisateur_id  UUID            NOT NULL
+                                    REFERENCES utilisateurs(id) ON DELETE CASCADE,
+    favori_id       UUID            NOT NULL
+                                    REFERENCES utilisateurs(id) ON DELETE CASCADE,
+
+    -- Note personnelle (privée, non visible par le favori)
+    note            TEXT            CHECK (char_length(note) <= 200),
+
+    created_at      TIMESTAMPTZ     NOT NULL DEFAULT NOW(),
+
+    -- Contraintes
+    CONSTRAINT pas_de_favori_soi_meme CHECK (utilisateur_id <> favori_id),
+    CONSTRAINT favori_unique UNIQUE (utilisateur_id, favori_id)
+);
+
+COMMENT ON TABLE  favoris              IS 'Profils mis en favori par un membre. Pas de notification automatique.';
+COMMENT ON COLUMN favoris.note         IS 'Mémo privé laissé par l''utilisateur sur ce favori.';
+
+
+-- ============================================================
+-- 6. TABLE : conversations
+--    Canal de messagerie entre deux membres
+-- ============================================================
+
+CREATE TABLE conversations (
+    id              UUID                        PRIMARY KEY DEFAULT uuid_generate_v4(),
+
+    -- Participants (toujours triés : initiateur < destinataire pour éviter doublons)
+    membre_a_id     UUID                        NOT NULL
+                                                REFERENCES utilisateurs(id) ON DELETE CASCADE,
+    membre_b_id     UUID                        NOT NULL
+                                                REFERENCES utilisateurs(id) ON DELETE CASCADE,
+
+    -- Statut
+    statut          conversation_statut_enum    NOT NULL DEFAULT 'en_attente',
+
+    -- Qui a initié la conversation
+    initiateur_id   UUID                        NOT NULL
+                                                REFERENCES utilisateurs(id),
+
+    -- Wali impliqué ?
+    wali_implique   BOOLEAN                     NOT NULL DEFAULT FALSE,
+    wali_email      TEXT,
+
+    -- Dernier message (dénormalisé pour perf)
+    dernier_message_at  TIMESTAMPTZ,
+    dernier_message_apercu TEXT CHECK (char_length(dernier_message_apercu) <= 100),
+
+    -- Compteurs non lus (dénormalisés, mis à jour par trigger)
+    nb_non_lus_a    SMALLINT                    NOT NULL DEFAULT 0,
+    nb_non_lus_b    SMALLINT                    NOT NULL DEFAULT 0,
+
+    created_at      TIMESTAMPTZ                 NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ                 NOT NULL DEFAULT NOW(),
+
+    -- Contraintes
+    CONSTRAINT pas_conversation_soi_meme CHECK (membre_a_id <> membre_b_id),
+    CONSTRAINT ordre_membres CHECK (membre_a_id < membre_b_id),
+    CONSTRAINT conversation_unique UNIQUE (membre_a_id, membre_b_id)
+);
+
+COMMENT ON TABLE  conversations                     IS 'Canal de messagerie entre deux membres validés.';
+COMMENT ON COLUMN conversations.statut              IS 'en_attente → active → archivee / bloquee.';
+COMMENT ON COLUMN conversations.ordre_membres       IS 'membre_a_id < membre_b_id : empêche les doublons de paires.';
+COMMENT ON COLUMN conversations.dernier_message_apercu IS 'Aperçu tronqué du dernier message (100 car. max).';
+
+
+-- ============================================================
+-- 7. TABLE : messages
+--    Messages individuels au sein d'une conversation
+-- ============================================================
+
+CREATE TABLE messages (
+    id                  UUID                    PRIMARY KEY DEFAULT uuid_generate_v4(),
+    conversation_id     UUID                    NOT NULL
+                                                REFERENCES conversations(id) ON DELETE CASCADE,
+    expediteur_id       UUID                    NOT NULL
+                                                REFERENCES utilisateurs(id) ON DELETE CASCADE,
+
+    -- Contenu
+    contenu             TEXT                    NOT NULL
+                                                CHECK (char_length(contenu) BETWEEN 1 AND 2000),
+
+    -- Pièce jointe (optionnelle – stockée dans Supabase Storage)
+    piece_jointe_path   TEXT,
+    piece_jointe_type   TEXT,                   -- 'image/jpeg', 'application/pdf'…
+
+    -- Statut de livraison
+    statut              message_statut_enum     NOT NULL DEFAULT 'envoye',
+    lu_at               TIMESTAMPTZ,
+
+    -- Modération
+    signale             BOOLEAN                 NOT NULL DEFAULT FALSE,
+    supprime_expediteur BOOLEAN                 NOT NULL DEFAULT FALSE,
+    supprime_destinataire BOOLEAN               NOT NULL DEFAULT FALSE,
+
+    created_at          TIMESTAMPTZ             NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ             NOT NULL DEFAULT NOW()
+);
+
+COMMENT ON TABLE  messages                        IS 'Messages individuels dans une conversation.';
+COMMENT ON COLUMN messages.contenu                IS 'Texte du message, entre 1 et 2000 caractères.';
+COMMENT ON COLUMN messages.supprime_expediteur    IS 'Soft-delete côté expéditeur uniquement.';
+COMMENT ON COLUMN messages.supprime_destinataire  IS 'Soft-delete côté destinataire uniquement.';
+
+
+-- ============================================================
+-- 8. TABLE : abonnements
+--    Gestion des plans payants (Stripe ou autre)
+-- ============================================================
+
+CREATE TABLE abonnements (
+    id                      UUID                        PRIMARY KEY DEFAULT uuid_generate_v4(),
+    utilisateur_id          UUID                        UNIQUE NOT NULL
+                                                        REFERENCES utilisateurs(id) ON DELETE CASCADE,
+
+    -- Plan
+    plan                    plan_enum                   NOT NULL DEFAULT 'gratuit',
+    statut                  abonnement_statut_enum      NOT NULL DEFAULT 'actif',
+
+    -- Paiement
+    stripe_customer_id      TEXT,
+    stripe_subscription_id  TEXT UNIQUE,
+    stripe_price_id         TEXT,
+
+    -- Dates
+    date_debut              TIMESTAMPTZ                 NOT NULL DEFAULT NOW(),
+    date_fin                TIMESTAMPTZ,
+    date_renouvellement     TIMESTAMPTZ,
+    date_annulation         TIMESTAMPTZ,
+
+    -- Montant
+    montant_centimes        INTEGER                     CHECK (montant_centimes >= 0),
+    devise                  CHAR(3)                     NOT NULL DEFAULT 'EUR',
+
+    -- Fonctionnalités débloquées
+    suggestions_illimitees  BOOLEAN                     NOT NULL DEFAULT FALSE,
+    mise_en_avant           BOOLEAN                     NOT NULL DEFAULT FALSE,
+    conseil_personnalise    BOOLEAN                     NOT NULL DEFAULT FALSE,
+
+    -- Métadonnées
+    created_at              TIMESTAMPTZ                 NOT NULL DEFAULT NOW(),
+    updated_at              TIMESTAMPTZ                 NOT NULL DEFAULT NOW()
+);
+
+COMMENT ON TABLE  abonnements                       IS 'Abonnements membres — intégration Stripe recommandée.';
+COMMENT ON COLUMN abonnements.stripe_customer_id    IS 'ID client Stripe, ex: cus_XXXXXXXXXXXXXXXX.';
+COMMENT ON COLUMN abonnements.stripe_subscription_id IS 'ID abonnement Stripe, ex: sub_XXXXXXXXXXXXXXXX.';
+COMMENT ON COLUMN abonnements.montant_centimes      IS 'Montant en centimes (ex: 999 = 9,99 €).';
+COMMENT ON COLUMN abonnements.mise_en_avant         IS 'Le profil apparaît en priorité dans les suggestions.';
+
+
+-- ============================================================
+-- 9. TABLE : signalements
+--    Signalements de comportements ou contenus inappropriés
+-- ============================================================
+
+CREATE TABLE signalements (
+    id                  UUID                        PRIMARY KEY DEFAULT uuid_generate_v4(),
+
+    -- Qui signale, qui est signalé
+    rapporteur_id       UUID                        NOT NULL
+                                                    REFERENCES utilisateurs(id) ON DELETE CASCADE,
+    signale_id          UUID                        NOT NULL
+                                                    REFERENCES utilisateurs(id) ON DELETE CASCADE,
+
+    -- Contexte optionnel (message signalé)
+    message_id          UUID
+                        REFERENCES messages(id) ON DELETE SET NULL,
+
+    -- Détail du signalement
+    motif               signalement_motif_enum      NOT NULL,
+    description         TEXT                        CHECK (char_length(description) <= 1000),
+
+    -- Traitement modération
+    statut              signalement_statut_enum     NOT NULL DEFAULT 'en_cours',
+    moderateur_id       UUID
+                        REFERENCES utilisateurs(id) ON DELETE SET NULL,
+    note_moderation     TEXT,
+    resolu_at           TIMESTAMPTZ,
+
+    -- Action prise
+    action_prise        TEXT,    -- 'avertissement', 'suspension_7j', 'bannissement'…
+
+    -- Métadonnées
+    created_at          TIMESTAMPTZ                 NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ                 NOT NULL DEFAULT NOW(),
+
+    -- Contraintes
+    CONSTRAINT pas_signalement_soi_meme CHECK (rapporteur_id <> signale_id)
+);
+
+COMMENT ON TABLE  signalements                IS 'Signalements membres traités par l''équipe de modération.';
+COMMENT ON COLUMN signalements.message_id     IS 'Message spécifique signalé (optionnel).';
+COMMENT ON COLUMN signalements.action_prise   IS 'Action de modération appliquée après examen.';
+
+
+-- ============================================================
+-- 10. ROW LEVEL SECURITY (RLS)
+-- ============================================================
+
+-- Activer RLS sur toutes les tables
+ALTER TABLE utilisateurs    ENABLE ROW LEVEL SECURITY;
+ALTER TABLE profils         ENABLE ROW LEVEL SECURITY;
+ALTER TABLE photos          ENABLE ROW LEVEL SECURITY;
+ALTER TABLE favoris         ENABLE ROW LEVEL SECURITY;
+ALTER TABLE conversations   ENABLE ROW LEVEL SECURITY;
+ALTER TABLE messages        ENABLE ROW LEVEL SECURITY;
+ALTER TABLE abonnements     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE signalements    ENABLE ROW LEVEL SECURITY;
+
+-- ── UTILISATEURS ──────────────────────────────────────────
+
+-- Lecture : chaque membre voit son propre enregistrement
+CREATE POLICY "utilisateurs_select_own"
+    ON utilisateurs FOR SELECT
+    USING (auth.uid() = auth_id);
+
+-- Mise à jour : idem
+CREATE POLICY "utilisateurs_update_own"
+    ON utilisateurs FOR UPDATE
+    USING (auth.uid() = auth_id);
+
+-- ── PROFILS ───────────────────────────────────────────────
+
+-- Lecture : profils validés visibles par tous les membres authentifiés
+CREATE POLICY "profils_select_valides"
+    ON profils FOR SELECT
+    USING (
+        profil_valide = TRUE
+        AND (
+            -- Le membre lit son propre profil
+            utilisateur_id IN (
+                SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+            )
+            OR
+            -- Ou un autre profil validé et dont le compte est actif
+            utilisateur_id IN (
+                SELECT id FROM utilisateurs
+                WHERE compte_actif = TRUE
+                AND   compte_suspendu = FALSE
+                AND   profil_visible = TRUE
+            )
+        )
+    );
+
+-- Insertion / mise à jour : uniquement son propre profil
+CREATE POLICY "profils_insert_own"
+    ON profils FOR INSERT
+    WITH CHECK (
+        utilisateur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "profils_update_own"
+    ON profils FOR UPDATE
+    USING (
+        utilisateur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+    );
+
+-- ── PHOTOS ────────────────────────────────────────────────
+
+-- Lecture : photo privée → uniquement propriétaire
+--           membres_meme_genre → membre connecté même genre
+--           publique → tout membre authentifié
+CREATE POLICY "photos_select"
+    ON photos FOR SELECT
+    USING (
+        -- Toujours visible par le propriétaire
+        utilisateur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+        OR
+        -- Photos publiques ou de même genre (simplification — à affiner selon logique métier)
+        (validee = TRUE AND rejetee = FALSE AND visibilite IN ('publique', 'membres_meme_genre'))
+    );
+
+CREATE POLICY "photos_insert_own"
+    ON photos FOR INSERT
+    WITH CHECK (
+        utilisateur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "photos_update_own"
+    ON photos FOR UPDATE
+    USING (
+        utilisateur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "photos_delete_own"
+    ON photos FOR DELETE
+    USING (
+        utilisateur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+    );
+
+-- ── FAVORIS ───────────────────────────────────────────────
+
+CREATE POLICY "favoris_select_own"
+    ON favoris FOR SELECT
+    USING (
+        utilisateur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "favoris_insert_own"
+    ON favoris FOR INSERT
+    WITH CHECK (
+        utilisateur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "favoris_delete_own"
+    ON favoris FOR DELETE
+    USING (
+        utilisateur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+    );
+
+-- ── CONVERSATIONS ─────────────────────────────────────────
+
+CREATE POLICY "conversations_select_participant"
+    ON conversations FOR SELECT
+    USING (
+        membre_a_id IN (SELECT id FROM utilisateurs WHERE auth_id = auth.uid())
+        OR
+        membre_b_id IN (SELECT id FROM utilisateurs WHERE auth_id = auth.uid())
+    );
+
+CREATE POLICY "conversations_insert_initiateur"
+    ON conversations FOR INSERT
+    WITH CHECK (
+        initiateur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "conversations_update_participant"
+    ON conversations FOR UPDATE
+    USING (
+        membre_a_id IN (SELECT id FROM utilisateurs WHERE auth_id = auth.uid())
+        OR
+        membre_b_id IN (SELECT id FROM utilisateurs WHERE auth_id = auth.uid())
+    );
+
+-- ── MESSAGES ──────────────────────────────────────────────
+
+CREATE POLICY "messages_select_participant"
+    ON messages FOR SELECT
+    USING (
+        conversation_id IN (
+            SELECT id FROM conversations
+            WHERE
+                membre_a_id IN (SELECT id FROM utilisateurs WHERE auth_id = auth.uid())
+                OR
+                membre_b_id IN (SELECT id FROM utilisateurs WHERE auth_id = auth.uid())
+        )
+        -- Masquer si soft-deleted pour cet utilisateur
+        AND (
+            CASE
+                WHEN expediteur_id IN (SELECT id FROM utilisateurs WHERE auth_id = auth.uid())
+                THEN supprime_expediteur = FALSE
+                ELSE supprime_destinataire = FALSE
+            END
+        )
+    );
+
+CREATE POLICY "messages_insert_participant"
+    ON messages FOR INSERT
+    WITH CHECK (
+        expediteur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+        AND
+        conversation_id IN (
+            SELECT id FROM conversations
+            WHERE statut = 'active'
+            AND (
+                membre_a_id IN (SELECT id FROM utilisateurs WHERE auth_id = auth.uid())
+                OR
+                membre_b_id IN (SELECT id FROM utilisateurs WHERE auth_id = auth.uid())
+            )
+        )
+    );
+
+CREATE POLICY "messages_update_expediteur"
+    ON messages FOR UPDATE
+    USING (
+        expediteur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+    );
+
+-- ── ABONNEMENTS ───────────────────────────────────────────
+
+CREATE POLICY "abonnements_select_own"
+    ON abonnements FOR SELECT
+    USING (
+        utilisateur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+    );
+
+-- Les insertions/mises à jour sont gérées par le backend (service role)
+
+-- ── SIGNALEMENTS ──────────────────────────────────────────
+
+-- Le rapporteur voit uniquement ses propres signalements
+CREATE POLICY "signalements_select_own"
+    ON signalements FOR SELECT
+    USING (
+        rapporteur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "signalements_insert_own"
+    ON signalements FOR INSERT
+    WITH CHECK (
+        rapporteur_id IN (
+            SELECT id FROM utilisateurs WHERE auth_id = auth.uid()
+        )
+    );
+
+
+-- ============================================================
+-- 11. INDEX DE PERFORMANCE
+-- ============================================================
+
+-- Utilisateurs
+CREATE INDEX idx_utilisateurs_auth_id     ON utilisateurs (auth_id);
+CREATE INDEX idx_utilisateurs_email       ON utilisateurs (email);
+CREATE INDEX idx_utilisateurs_genre       ON utilisateurs (genre);
+CREATE INDEX idx_utilisateurs_actif       ON utilisateurs (compte_actif, compte_suspendu);
+
+-- Profils
+CREATE INDEX idx_profils_utilisateur      ON profils (utilisateur_id);
+CREATE INDEX idx_profils_valide           ON profils (profil_valide);
+CREATE INDEX idx_profils_pays_ville       ON profils (pays, ville);
+CREATE INDEX idx_profils_age              ON profils (age);
+CREATE INDEX idx_profils_pratique         ON profils (niveau_pratique);
+CREATE INDEX idx_profils_situation        ON profils (situation);
+CREATE INDEX idx_profils_completude       ON profils (completude DESC);
+
+-- Recherche plein texte sur description + prénom
+CREATE INDEX idx_profils_description_fts  ON profils USING GIN (to_tsvector('french', coalesce(description, '')));
+CREATE INDEX idx_profils_prenom_trgm      ON profils USING GIN (prenom gin_trgm_ops);
+
+-- Photos
+CREATE INDEX idx_photos_utilisateur       ON photos (utilisateur_id);
+CREATE INDEX idx_photos_principale        ON photos (utilisateur_id, est_principale);
+CREATE INDEX idx_photos_validee           ON photos (validee, rejetee);
+
+-- Favoris
+CREATE INDEX idx_favoris_utilisateur      ON favoris (utilisateur_id);
+CREATE INDEX idx_favoris_favori           ON favoris (favori_id);
+
+-- Conversations
+CREATE INDEX idx_conv_membre_a            ON conversations (membre_a_id);
+CREATE INDEX idx_conv_membre_b            ON conversations (membre_b_id);
+CREATE INDEX idx_conv_statut              ON conversations (statut);
+CREATE INDEX idx_conv_dernier_message     ON conversations (dernier_message_at DESC);
+
+-- Messages
+CREATE INDEX idx_messages_conversation    ON messages (conversation_id, created_at DESC);
+CREATE INDEX idx_messages_expediteur      ON messages (expediteur_id);
+CREATE INDEX idx_messages_statut          ON messages (statut);
+CREATE INDEX idx_messages_signale         ON messages (signale) WHERE signale = TRUE;
+
+-- Abonnements
+CREATE INDEX idx_abonnements_utilisateur  ON abonnements (utilisateur_id);
+CREATE INDEX idx_abonnements_statut       ON abonnements (statut);
+CREATE INDEX idx_abonnements_plan         ON abonnements (plan);
+CREATE INDEX idx_abonnements_stripe_sub   ON abonnements (stripe_subscription_id);
+
+-- Signalements
+CREATE INDEX idx_signalements_rapporteur  ON signalements (rapporteur_id);
+CREATE INDEX idx_signalements_signale     ON signalements (signale_id);
+CREATE INDEX idx_signalements_statut      ON signalements (statut);
+CREATE INDEX idx_signalements_created     ON signalements (created_at DESC);
+
+
+-- ============================================================
+-- 12. TRIGGERS UTILITAIRES
+-- ============================================================
+
+-- ── Fonction générique updated_at ─────────────────────────
+
+CREATE OR REPLACE FUNCTION set_updated_at()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$;
+
+-- Appliquer updated_at sur toutes les tables concernées
+CREATE TRIGGER tg_utilisateurs_updated_at
+    BEFORE UPDATE ON utilisateurs
+    FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER tg_profils_updated_at
+    BEFORE UPDATE ON profils
+    FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER tg_photos_updated_at
+    BEFORE UPDATE ON photos
+    FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER tg_conversations_updated_at
+    BEFORE UPDATE ON conversations
+    FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER tg_messages_updated_at
+    BEFORE UPDATE ON messages
+    FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER tg_abonnements_updated_at
+    BEFORE UPDATE ON abonnements
+    FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER tg_signalements_updated_at
+    BEFORE UPDATE ON signalements
+    FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+-- ── Calcul automatique du score de complétude du profil ───
+
+CREATE OR REPLACE FUNCTION calcul_completude()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+DECLARE
+    score SMALLINT := 0;
+BEGIN
+    -- Champs obligatoires de base (60 pts)
+    IF NEW.prenom       IS NOT NULL THEN score := score + 10; END IF;
+    IF NEW.pays         IS NOT NULL THEN score := score + 5;  END IF;
+    IF NEW.ville        IS NOT NULL THEN score := score + 5;  END IF;
+    IF NEW.profession   IS NOT NULL THEN score := score + 5;  END IF;
+    IF NEW.situation    IS NOT NULL THEN score := score + 5;  END IF;
+    IF NEW.niveau_pratique IS NOT NULL THEN score := score + 10; END IF;
+    IF NEW.description  IS NOT NULL AND char_length(NEW.description) >= 60
+                                    THEN score := score + 15; END IF;
+    -- Critères de recherche (25 pts)
+    IF NEW.critere_age_min IS NOT NULL THEN score := score + 5;  END IF;
+    IF NEW.critere_age_max IS NOT NULL THEN score := score + 5;  END IF;
+    IF NEW.critere_pays    IS NOT NULL THEN score := score + 5;  END IF;
+    IF NEW.criteres_libres IS NOT NULL THEN score := score + 10; END IF;
+    -- Bonus (15 pts)
+    IF array_length(NEW.mots_cles, 1) > 0  THEN score := score + 5;  END IF;
+    IF array_length(NEW.pratiques,  1) > 0  THEN score := score + 5;  END IF;
+    IF NEW.ecole_juridique IS NOT NULL      THEN score := score + 5;  END IF;
+
+    NEW.completude := LEAST(score, 100);
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tg_profils_completude
+    BEFORE INSERT OR UPDATE ON profils
+    FOR EACH ROW EXECUTE FUNCTION calcul_completude();
+
+-- ── Dénormalisation conversation : dernier message ─────────
+
+CREATE OR REPLACE FUNCTION maj_conversation_apres_message()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+DECLARE
+    conv conversations%ROWTYPE;
+    uid_a UUID;
+    uid_b UUID;
+BEGIN
+    SELECT * INTO conv FROM conversations WHERE id = NEW.conversation_id;
+    uid_a := conv.membre_a_id;
+    uid_b := conv.membre_b_id;
+
+    UPDATE conversations SET
+        dernier_message_at      = NEW.created_at,
+        dernier_message_apercu  = LEFT(NEW.contenu, 100),
+        nb_non_lus_a = CASE
+            WHEN NEW.expediteur_id = uid_b THEN nb_non_lus_a + 1
+            ELSE nb_non_lus_a
+        END,
+        nb_non_lus_b = CASE
+            WHEN NEW.expediteur_id = uid_a THEN nb_non_lus_b + 1
+            ELSE nb_non_lus_b
+        END,
+        updated_at = NOW()
+    WHERE id = NEW.conversation_id;
+
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tg_message_maj_conversation
+    AFTER INSERT ON messages
+    FOR EACH ROW EXECUTE FUNCTION maj_conversation_apres_message();
+
+-- ── Réinitialisation du compteur non-lus à la lecture ─────
+
+CREATE OR REPLACE FUNCTION reset_non_lus_apres_lecture()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+DECLARE
+    conv conversations%ROWTYPE;
+BEGIN
+    -- Déclenché quand statut passe à 'lu'
+    IF NEW.statut = 'lu' AND OLD.statut <> 'lu' THEN
+        SELECT * INTO conv FROM conversations WHERE id = NEW.conversation_id;
+
+        UPDATE conversations SET
+            nb_non_lus_a = CASE
+                WHEN NEW.expediteur_id <> conv.membre_a_id THEN 0
+                ELSE nb_non_lus_a
+            END,
+            nb_non_lus_b = CASE
+                WHEN NEW.expediteur_id <> conv.membre_b_id THEN 0
+                ELSE nb_non_lus_b
+            END
+        WHERE id = NEW.conversation_id;
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tg_message_reset_non_lus
+    AFTER UPDATE OF statut ON messages
+    FOR EACH ROW EXECUTE FUNCTION reset_non_lus_apres_lecture();
+
+-- ── Création automatique d'un abonnement gratuit ──────────
+--    Déclenché à la création d'un utilisateur
+
+CREATE OR REPLACE FUNCTION creer_abonnement_gratuit()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN
+    INSERT INTO abonnements (utilisateur_id, plan, statut)
+    VALUES (NEW.id, 'gratuit', 'actif');
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tg_utilisateur_abonnement_gratuit
+    AFTER INSERT ON utilisateurs
+    FOR EACH ROW EXECUTE FUNCTION creer_abonnement_gratuit();
+
+-- ── Mise à jour de derniere_connexion ─────────────────────
+
+CREATE OR REPLACE FUNCTION maj_derniere_connexion()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN
+    UPDATE utilisateurs
+    SET derniere_connexion = NOW()
+    WHERE auth_id = NEW.id;   -- NEW.id = auth.users.id
+    RETURN NEW;
+END;
+$$;
+
+-- S'applique sur auth.users (table interne Supabase)
+CREATE TRIGGER tg_auth_derniere_connexion
+    AFTER UPDATE OF last_sign_in_at ON auth.users
+    FOR EACH ROW EXECUTE FUNCTION maj_derniere_connexion();
+
+
+-- ============================================================
+-- 13. VUES UTILITAIRES
+-- ============================================================
+
+-- Vue : profil public (données non-sensibles exposables)
+CREATE VIEW v_profils_publics AS
+SELECT
+    p.id,
+    p.utilisateur_id,
+    p.prenom,
+    p.age,
+    p.pays,
+    p.ville,
+    p.profession,
+    p.situation,
+    p.nb_enfants,
+    p.niveau_pratique,
+    p.port_voile,
+    p.description,
+    p.mots_cles,
+    p.completude,
+    u.genre,
+    -- Photo principale validée
+    (
+        SELECT ph.url_publique
+        FROM   photos ph
+        WHERE  ph.utilisateur_id = p.utilisateur_id
+        AND    ph.est_principale = TRUE
+        AND    ph.validee        = TRUE
+        AND    ph.rejetee        = FALSE
+        LIMIT  1
+    ) AS photo_principale_url,
+    -- Plan abonnement
+    (
+        SELECT ab.plan
+        FROM   abonnements ab
+        WHERE  ab.utilisateur_id = p.utilisateur_id
+        LIMIT  1
+    ) AS plan_abonnement,
+    p.created_at
+FROM      profils      p
+JOIN      utilisateurs u ON u.id = p.utilisateur_id
+WHERE     p.profil_valide       = TRUE
+AND       u.compte_actif        = TRUE
+AND       u.compte_suspendu     = FALSE
+AND       u.profil_visible      = TRUE;
+
+COMMENT ON VIEW v_profils_publics IS 'Profils validés et actifs — données publiques sans infos sensibles.';
+
+-- Vue : statistiques de conversation par membre
+CREATE VIEW v_conversations_membre AS
+SELECT
+    c.id                    AS conversation_id,
+    c.statut,
+    c.dernier_message_at,
+    c.dernier_message_apercu,
+    -- Côté A
+    c.membre_a_id,
+    pa.prenom               AS prenom_a,
+    c.nb_non_lus_a,
+    -- Côté B
+    c.membre_b_id,
+    pb.prenom               AS prenom_b,
+    c.nb_non_lus_b,
+    c.created_at
+FROM      conversations  c
+LEFT JOIN profils        pa ON pa.utilisateur_id = c.membre_a_id
+LEFT JOIN profils        pb ON pb.utilisateur_id = c.membre_b_id;
+
+COMMENT ON VIEW v_conversations_membre IS 'Vue enrichie des conversations avec prénoms des participants.';
+
+-- Vue : tableau de bord modération
+CREATE VIEW v_moderation_signalements AS
+SELECT
+    s.id,
+    s.motif,
+    s.statut,
+    s.description,
+    s.created_at,
+    s.action_prise,
+    pr.prenom   AS prenom_rapporteur,
+    ps.prenom   AS prenom_signale,
+    ur.genre    AS genre_rapporteur
+FROM      signalements s
+LEFT JOIN profils      pr ON pr.utilisateur_id = s.rapporteur_id
+LEFT JOIN profils      ps ON ps.utilisateur_id = s.signale_id
+LEFT JOIN utilisateurs ur ON ur.id = s.rapporteur_id
+ORDER BY  s.created_at DESC;
+
+COMMENT ON VIEW v_moderation_signalements IS 'Tableau de bord signalements — réservé aux admins (service role).';
+
+
+-- ============================================================
+-- FIN DU SCHÉMA
+-- ============================================================
+--
+--  GUIDE DE DÉPLOIEMENT
+--  ─────────────────────────────────────────────────────────
+--  1. Ouvrir l'éditeur SQL de Supabase (Dashboard > SQL Editor)
+--  2. Coller et exécuter ce fichier en entier
+--  3. Vérifier les tables dans Database > Tables
+--  4. Activer Realtime sur : messages, conversations
+--     (Database > Replication > Tables)
+--  5. Configurer le bucket Storage "photos" :
+--     - Accès : privé
+--     - Taille max : 5 Mo
+--     - Types MIME autorisés : image/jpeg, image/png, image/webp
+--  6. Connecter Stripe Webhooks → Edge Function Supabase
+--     pour mettre à jour la table abonnements
+--
+--  VARIABLES D'ENVIRONNEMENT REQUISES (.env)
+--  ─────────────────────────────────────────────────────────
+--  SUPABASE_URL=https://xxxx.supabase.co
+--  SUPABASE_ANON_KEY=eyJ...
+--  SUPABASE_SERVICE_ROLE_KEY=eyJ...  (backend uniquement)
+--  STRIPE_SECRET_KEY=sk_live_...
+--  STRIPE_WEBHOOK_SECRET=whsec_...
+--
+-- ============================================================

@@ -1,223 +1,83 @@
 <!DOCTYPE html>
-
 <html lang="fr">
-
 <head>
-
   <meta charset="UTF-8" />
-
   <title>Admin Panel</title>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-
-    body {
-
-      font-family: Arial;
-
-      background: #0d1117;
-
-      color: white;
-
-      padding: 20px;
-
-    }
-
-    .card {
-
-      background: #161b22;
-
-      padding: 12px;
-
-      margin: 10px 0;
-
-      border-radius: 8px;
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-    }
-
-    button {
-
-      padding: 6px 10px;
-
-      margin-left: 6px;
-
-      cursor: pointer;
-
-      border-radius: 4px;
-
-      border: none;
-
-    }
-
-    .ok { background: #2ea043; color: white; }
-
-    .ban { background: #d29922; color: black; }
-
-    .del { background: #da3633; color: white; }
-
+    body { font-family: Arial; background:#0d1117; color:white; padding:20px; }
+    .card { background:#161b22; padding:12px; margin:10px 0; border-radius:8px; }
+    button { margin-right:8px; padding:6px 10px; cursor:pointer; }
   </style>
-
 </head>
 
 <body>
 
-<h1>🛠 Admin Panel</h1>
-
-<div id="list">Chargement...</div>
+<h1>Admin Panel</h1>
+<div id="list"></div>
 
 <script>
+  // ⚠️ TON SUPABASE (OK côté front)
+  const supabaseUrl = "https://hozxklpzfzmrswzbamye.supabase.co";
+  const supabaseKey = "sb_publishable_MurlKY4clW48vcHYcuXCMw_WrbuhDIA";
 
-/* =========================
+  const client = supabase.createClient(supabaseUrl, supabaseKey);
 
-   🔥 1. SUPABASE CONFIG
+  async function loadUsers() {
+    const { data, error } = await client
+      .from("profils")
+      .select("*")
+      .eq("profil_en_revue", true);
 
-   ========================= */
+    if (error) {
+      document.getElementById("list").innerHTML = error.message;
+      return;
+    }
 
-const supabase = window.supabase.createClient(
+    document.getElementById("list").innerHTML = data.map(u => `
+      <div class="card">
+        <b>${u.prenom || "Sans nom"}</b><br/>
+        ${u.ville || ""} - ${u.pays || ""}<br/>
+        Statut: ${u.profil_valide ? "VALIDÉ" : "EN ATTENTE"}<br/><br/>
 
-  "https://hozxklpzfzmrswzbamye.supabase.co",
-
-  "sb_publishable_MurlKY4clW48vcHYcuXCMw_WrbuhDIA"
-
-);
-
-/* =========================
-
-   🔥 2. CHARGER PROFILS
-
-   ========================= */
-
-async function loadUsers() {
-
-  const { data, error } = await supabase
-
-    .from("profils")
-
-    .select("*")
-
-    .eq("profil_en_revue", true);
-
-  if (error) {
-
-    console.error(error);
-
-    document.getElementById("list").innerHTML = "Erreur Supabase";
-
-    return;
-
+        <button onclick="validate('${u.utilisateur_id}')">Valider</button>
+        <button onclick="ban('${u.utilisateur_id}')">Bannir</button>
+        <button onclick="remove('${u.utilisateur_id}')">Supprimer</button>
+      </div>
+    `).join("");
   }
 
-  const list = document.getElementById("list");
+  async function validate(id) {
+    await client.from("profils")
+      .update({ profil_valide: true, profil_en_revue: false })
+      .eq("utilisateur_id", id);
 
-  list.innerHTML = "";
-
-  if (!data.length) {
-
-    list.innerHTML = "Aucun profil en attente";
-
-    return;
-
+    loadUsers();
   }
 
-  data.forEach(user => {
+  async function ban(id) {
+    await client.from("utilisateurs")
+      .update({ admin_valide: false })
+      .eq("id", id);
 
-    const div = document.createElement("div");
+    loadUsers();
+  }
 
-    div.className = "card";
+  async function remove(id) {
+    await client.from("profils")
+      .delete()
+      .eq("utilisateur_id", id);
 
-    div.innerHTML = `
+    await client.from("utilisateurs")
+      .delete()
+      .eq("id", id);
 
-      <div>
-
-        <b>${user.prenom || "Sans nom"}</b><br/>
-
-        ${user.age || ""} ans - ${user.ville || ""}
-
-      </div>
-
-      <div>
-
-        <button class="ok" onclick="validate('${user.id}')">Valider</button>
-
-        <button class="ban" onclick="ban('${user.id}')">Bannir</button>
-
-        <button class="del" onclick="remove('${user.id}')">Supprimer</button>
-
-      </div>
-
-    `;
-
-    list.appendChild(div);
-
-  });
-
-}
-
-/* =========================
-
-   🔥 3. ACTIONS ADMIN
-
-   ========================= */
-
-async function validate(id) {
-
-  await supabase
-
-    .from("profils")
-
-    .update({ profil_en_revue: false, profil_valide: true })
-
-    .eq("id", id);
+    loadUsers();
+  }
 
   loadUsers();
-
-}
-
-async function ban(id) {
-
-  await supabase
-
-    .from("profils")
-
-    .update({ profil_valide: false })
-
-    .eq("id", id);
-
-  loadUsers();
-
-}
-
-async function remove(id) {
-
-  await supabase
-
-    .from("profils")
-
-    .delete()
-
-    .eq("id", id);
-
-  loadUsers();
-
-}
-
-/* =========================
-
-   🔥 4. START
-
-   ========================= */
-
-loadUsers();
-
 </script>
 
 </body>
-
 </html>

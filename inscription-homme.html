@@ -25,48 +25,31 @@
     a{text-decoration:none;color:inherit}
     button{cursor:pointer;border:none;background:none;font:inherit}
     .container{width:min(1100px,90vw);margin-inline:auto}
-
-    /* REVEAL */
     .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out)}
     .reveal.visible{opacity:1;transform:translateY(0)}
     .reveal-delay-1{transition-delay:.08s}.reveal-delay-2{transition-delay:.16s}.reveal-delay-3{transition-delay:.24s}
     @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
-
-    /* NAVBAR */
-    #navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,53,67,.97);
-            backdrop-filter:blur(12px);box-shadow:0 2px 32px rgba(0,0,0,.18);padding:14px 0}
+    #navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,53,67,.97);backdrop-filter:blur(12px);box-shadow:0 2px 32px rgba(0,0,0,.18);padding:14px 0}
     .nav-inner{display:flex;align-items:center;justify-content:space-between}
     .nav-logo{display:flex;flex-direction:column;line-height:1}
     .nav-logo-name{font-family:var(--ff-display);font-size:1.5rem;font-weight:700;color:var(--gold);letter-spacing:.04em}
     .nav-logo-tagline{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(201,162,39,.7);margin-top:2px}
-    .nav-back{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:500;
-              letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65);transition:color .25s}
+    .nav-back{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65);transition:color .25s}
     .nav-back:hover{color:var(--gold)}
     .nav-back svg{width:15px;height:15px}
-
-    /* PAGE HEADER */
     #page-header{background:var(--petrol-d);padding:120px 0 72px;position:relative;overflow:hidden;text-align:center}
-    #page-header::before{content:'';position:absolute;inset:0;opacity:.04;
-      background-image:repeating-linear-gradient(45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 50%),
-                       repeating-linear-gradient(-45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 50%);
-      background-size:40px 40px}
-    #page-header::after{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;
-      border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.1) 0%,transparent 70%);pointer-events:none}
+    #page-header::before{content:'';position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 50%),repeating-linear-gradient(-45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 50%);background-size:40px 40px}
+    #page-header::after{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.1) 0%,transparent 70%);pointer-events:none}
     .header-inner{position:relative;z-index:2}
-    .header-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);
-                    margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:14px}
+    .header-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:14px}
     .header-eyebrow::before,.header-eyebrow::after{content:'';height:1px;width:40px;background:linear-gradient(90deg,transparent,var(--gold))}
     .header-eyebrow::after{background:linear-gradient(90deg,var(--gold),transparent)}
     .header-title{font-family:var(--ff-display);font-size:clamp(2.4rem,5vw,3.6rem);font-weight:300;color:var(--white);line-height:1.1}
     .header-title em{font-style:italic;color:var(--gold)}
     .header-sub{font-size:.95rem;color:rgba(255,255,255,.55);max-width:480px;margin:18px auto 0;line-height:1.8}
-
-    /* STEPS */
     .steps-indicator{display:flex;align-items:center;justify-content:center;margin-top:48px}
     .step-dot{display:flex;flex-direction:column;align-items:center;gap:8px}
-    .step-dot-circle{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(201,162,39,.3);
-                     background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;
-                     font-family:var(--ff-display);font-size:.95rem;font-weight:700;color:rgba(255,255,255,.35);transition:all .35s}
+    .step-dot-circle{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(201,162,39,.3);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;font-family:var(--ff-display);font-size:.95rem;font-weight:700;color:rgba(255,255,255,.35);transition:all .35s}
     .step-dot.active .step-dot-circle{border-color:var(--gold);background:var(--gold);color:var(--petrol-d)}
     .step-dot.done .step-dot-circle{border-color:var(--gold);background:transparent;color:var(--gold)}
     .step-dot-label{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);white-space:nowrap}
@@ -75,58 +58,32 @@
     .step-connector-line{width:56px;height:1px;background:rgba(201,162,39,.2);margin-bottom:22px}
     .step-connector-line.done{background:var(--gold)}
     @media(max-width:560px){.step-dot-label{display:none}.step-connector-line{width:32px}}
-
-    /* FORM LAYOUT */
     #form-section{padding:80px 0 100px;background:var(--grey)}
     .form-shell{display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:start}
-
-    /* SIDEBAR */
     .form-sidebar{position:sticky;top:80px}
     .sidebar-progress{background:var(--white);border:1px solid var(--grey-mid);border-radius:6px;overflow:hidden}
     .sidebar-progress-bar{height:3px;background:var(--grey-mid);position:relative}
-    .sidebar-progress-fill{position:absolute;top:0;left:0;bottom:0;
-                           background:linear-gradient(90deg,var(--gold-d),var(--gold-l));width:10%;transition:width .5s var(--ease-out)}
+    .sidebar-progress-fill{position:absolute;top:0;left:0;bottom:0;background:linear-gradient(90deg,var(--gold-d),var(--gold-l));width:10%;transition:width .5s var(--ease-out)}
     .sidebar-nav{padding:28px 24px;display:flex;flex-direction:column;gap:4px}
-    .sidebar-nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:4px;
-                      cursor:pointer;transition:background .2s;font-size:.82rem;font-weight:500;color:var(--text-m);
-                      border:none;background:none;width:100%;text-align:left}
+    .sidebar-nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:4px;cursor:pointer;transition:background .2s;font-size:.82rem;font-weight:500;color:var(--text-m);border:none;background:none;width:100%;text-align:left}
     .sidebar-nav-item:hover{background:var(--grey)}
     .sidebar-nav-item.active{background:rgba(201,162,39,.08);color:var(--gold-d)}
     .sidebar-nav-item.done{color:var(--petrol)}
-    .sidebar-nav-icon{width:28px;height:28px;flex-shrink:0;border-radius:50%;border:1.5px solid var(--grey-mid);
-                      display:flex;align-items:center;justify-content:center;font-family:var(--ff-display);
-                      font-size:.8rem;font-weight:700;color:var(--text-m);transition:all .25s}
+    .sidebar-nav-icon{width:28px;height:28px;flex-shrink:0;border-radius:50%;border:1.5px solid var(--grey-mid);display:flex;align-items:center;justify-content:center;font-family:var(--ff-display);font-size:.8rem;font-weight:700;color:var(--text-m);transition:all .25s}
     .sidebar-nav-item.active .sidebar-nav-icon{border-color:var(--gold);background:var(--gold);color:var(--white)}
     .sidebar-nav-item.done .sidebar-nav-icon{border-color:var(--petrol);color:var(--petrol)}
-    .sidebar-note{margin:0 16px 20px;padding:14px 16px;background:rgba(15,76,92,.05);
-                  border:1px solid rgba(15,76,92,.12);border-radius:4px;font-size:.78rem;color:var(--text-m);line-height:1.7}
+    .sidebar-note{margin:0 16px 20px;padding:14px 16px;background:rgba(15,76,92,.05);border:1px solid rgba(15,76,92,.12);border-radius:4px;font-size:.78rem;color:var(--text-m);line-height:1.7}
     .sidebar-note strong{color:var(--petrol)}
-
-    @media(max-width:860px){
-      .form-shell{grid-template-columns:1fr}
-      .form-sidebar{position:static}
-      .sidebar-nav{flex-direction:row;flex-wrap:wrap;gap:8px;padding:16px}
-      .sidebar-nav-item{flex:1 1 auto;min-width:120px}
-      .sidebar-note{margin:0 16px 16px}
-    }
-
-    /* PANELS */
+    @media(max-width:860px){.form-shell{grid-template-columns:1fr}.form-sidebar{position:static}.sidebar-nav{flex-direction:row;flex-wrap:wrap;gap:8px;padding:16px}.sidebar-nav-item{flex:1 1 auto;min-width:120px}.sidebar-note{margin:0 16px 16px}}
     .form-panel{display:none;flex-direction:column;gap:0}
     .form-panel.active{display:flex}
-
-    /* CARDS */
     .form-card{background:var(--white);border:1px solid var(--grey-mid);border-radius:6px;overflow:hidden;margin-bottom:24px}
     .form-card-header{padding:28px 36px 20px;border-bottom:1px solid var(--grey-mid);display:flex;align-items:center;gap:16px}
-    .form-card-icon{width:44px;height:44px;flex-shrink:0;
-                    background:linear-gradient(135deg,rgba(201,162,39,.12),rgba(201,162,39,.04));
-                    border:1px solid rgba(201,162,39,.25);border-radius:3px;
-                    display:flex;align-items:center;justify-content:center;color:var(--gold)}
+    .form-card-icon{width:44px;height:44px;flex-shrink:0;background:linear-gradient(135deg,rgba(201,162,39,.12),rgba(201,162,39,.04));border:1px solid rgba(201,162,39,.25);border-radius:3px;display:flex;align-items:center;justify-content:center;color:var(--gold)}
     .form-card-icon svg{width:20px;height:20px}
     .form-card-title{font-family:var(--ff-display);font-size:1.25rem;font-weight:600;color:var(--petrol)}
     .form-card-desc{font-size:.8rem;color:var(--text-m);margin-top:2px}
     .form-card-body{padding:32px 36px}
-
-    /* FIELDS */
     .field-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
     .field-row.full{grid-template-columns:1fr}
     @media(max-width:640px){.field-row{grid-template-columns:1fr}}
@@ -134,51 +91,34 @@
     .field-label{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--petrol)}
     .field-label .req{color:var(--gold);margin-left:3px}
     .field-hint{font-size:.75rem;color:var(--text-m);margin-top:-2px;line-height:1.5}
-
-    .inp,.sel,.tex{width:100%;padding:12px 16px;border:1.5px solid var(--grey-mid);border-radius:3px;
-                   font-family:var(--ff-body);font-size:.9rem;color:var(--text);background:var(--white);
-                   transition:border-color .25s,box-shadow .25s;appearance:none;-webkit-appearance:none}
+    .inp,.sel,.tex{width:100%;padding:12px 16px;border:1.5px solid var(--grey-mid);border-radius:3px;font-family:var(--ff-body);font-size:.9rem;color:var(--text);background:var(--white);transition:border-color .25s,box-shadow .25s;appearance:none;-webkit-appearance:none}
     .inp:focus,.sel:focus,.tex:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.12)}
     .inp::placeholder,.tex::placeholder{color:rgba(74,101,112,.5)}
     .inp.has-error,.sel.has-error,.tex.has-error{border-color:var(--error)}
-
     .sel-wrap{position:relative}
-    .sel-wrap::after{content:'';position:absolute;right:14px;top:50%;transform:translateY(-50%);
-                     width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;
-                     border-top:6px solid var(--text-m);pointer-events:none}
+    .sel-wrap::after{content:'';position:absolute;right:14px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--text-m);pointer-events:none}
     .sel{padding-right:36px}
     .tex{resize:vertical;min-height:110px;line-height:1.7}
-
-    /* RANGE */
     .range-wrap{display:flex;align-items:center;gap:14px}
     .range-wrap input[type=range]{flex:1;-webkit-appearance:none;height:4px;border-radius:2px;background:var(--grey-mid);outline:none;cursor:pointer}
-    .range-wrap input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;
-      background:var(--gold);border:2px solid var(--white);box-shadow:0 2px 8px rgba(201,162,39,.4);cursor:pointer}
+    .range-wrap input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);border:2px solid var(--white);box-shadow:0 2px 8px rgba(201,162,39,.4);cursor:pointer}
     .range-val{min-width:36px;text-align:center;font-family:var(--ff-display);font-size:1.1rem;font-weight:700;color:var(--gold)}
-
-    /* TILES */
     .tiles{display:grid;gap:10px}
     .tiles.cols-2{grid-template-columns:1fr 1fr}
     .tiles.cols-3{grid-template-columns:repeat(3,1fr)}
     @media(max-width:480px){.tiles.cols-2,.tiles.cols-3{grid-template-columns:1fr 1fr}}
     .tile input{position:absolute;opacity:0;width:0;height:0}
     .tile{position:relative}
-    .tile-label{display:flex;align-items:center;gap:10px;padding:12px 16px;border:1.5px solid var(--grey-mid);
-                border-radius:3px;cursor:pointer;font-size:.85rem;color:var(--text-m);
-                transition:border-color .2s,background .2s,color .2s;user-select:none;line-height:1.3}
-    .tile-label::before{content:'';flex-shrink:0;width:16px;height:16px;border-radius:50%;
-                        border:1.5px solid var(--grey-mid);transition:border-color .2s,background .2s}
+    .tile-label{display:flex;align-items:center;gap:10px;padding:12px 16px;border:1.5px solid var(--grey-mid);border-radius:3px;cursor:pointer;font-size:.85rem;color:var(--text-m);transition:border-color .2s,background .2s,color .2s;user-select:none;line-height:1.3}
+    .tile-label::before{content:'';flex-shrink:0;width:16px;height:16px;border-radius:50%;border:1.5px solid var(--grey-mid);transition:border-color .2s,background .2s}
     .tile.checkbox .tile-label::before{border-radius:3px}
     .tile input:checked+.tile-label{border-color:var(--gold);background:rgba(201,162,39,.06);color:var(--petrol)}
     .tile input:checked+.tile-label::before{border-color:var(--gold);background:var(--gold)}
     .tile input:focus-visible+.tile-label{box-shadow:0 0 0 3px rgba(201,162,39,.2)}
-
-    /* RELIGION */
     .relig-options{display:flex;flex-direction:column;gap:8px}
     .relig-tile input{position:absolute;opacity:0}
     .relig-tile{position:relative}
-    .relig-label{display:flex;align-items:center;gap:14px;padding:14px 18px;border:1.5px solid var(--grey-mid);
-                 border-radius:3px;cursor:pointer;transition:border-color .2s,background .2s}
+    .relig-label{display:flex;align-items:center;gap:14px;padding:14px 18px;border:1.5px solid var(--grey-mid);border-radius:3px;cursor:pointer;transition:border-color .2s,background .2s}
     .relig-label:hover{border-color:rgba(201,162,39,.35)}
     .relig-tile input:checked+.relig-label{border-color:var(--gold);background:rgba(201,162,39,.06)}
     .relig-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
@@ -186,14 +126,10 @@
     .relig-bar{display:flex;gap:3px}
     .relig-bar span{display:block;width:10px;height:10px;border-radius:2px;background:var(--grey-mid)}
     .relig-bar span.on{background:var(--gold)}
-
-    /* PHOTO */
-    .photo-drop{border:2px dashed var(--grey-mid);border-radius:6px;padding:48px 24px;text-align:center;
-                cursor:pointer;transition:border-color .25s,background .25s;position:relative;background:var(--grey)}
+    .photo-drop{border:2px dashed var(--grey-mid);border-radius:6px;padding:48px 24px;text-align:center;cursor:pointer;transition:border-color .25s,background .25s;position:relative;background:var(--grey)}
     .photo-drop:hover,.photo-drop.drag-over{border-color:var(--gold);background:rgba(201,162,39,.04)}
     .photo-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
-    .photo-drop-icon{width:56px;height:56px;margin:0 auto 16px;border-radius:50%;background:rgba(201,162,39,.1);
-                     border:1px solid rgba(201,162,39,.25);display:flex;align-items:center;justify-content:center;color:var(--gold)}
+    .photo-drop-icon{width:56px;height:56px;margin:0 auto 16px;border-radius:50%;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.25);display:flex;align-items:center;justify-content:center;color:var(--gold)}
     .photo-drop-icon svg{width:24px;height:24px}
     .photo-drop-title{font-family:var(--ff-display);font-size:1.1rem;font-weight:600;color:var(--petrol);margin-bottom:6px}
     .photo-drop-sub{font-size:.8rem;color:var(--text-m);line-height:1.6}
@@ -203,63 +139,35 @@
     .photo-drop.has-photo{padding:32px 24px}
     #photo-preview{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--gold)}
     .photo-change{font-size:.78rem;color:var(--gold-d);text-decoration:underline;cursor:pointer;background:none;border:none}
-
-    /* TAGS */
-    .tags-wrap{border:1.5px solid var(--grey-mid);border-radius:3px;padding:8px 12px;min-height:52px;
-               display:flex;flex-wrap:wrap;gap:6px;align-items:center;cursor:text;transition:border-color .25s,box-shadow .25s}
+    .tags-wrap{border:1.5px solid var(--grey-mid);border-radius:3px;padding:8px 12px;min-height:52px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;cursor:text;transition:border-color .25s,box-shadow .25s}
     .tags-wrap:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.12)}
-    .tag-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:rgba(15,76,92,.08);
-              border:1px solid rgba(15,76,92,.15);border-radius:20px;font-size:.78rem;color:var(--petrol)}
-    .tag-chip button{width:14px;height:14px;border-radius:50%;background:rgba(15,76,92,.15);
-                     display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--petrol);line-height:1;padding:0;cursor:pointer;border:none}
+    .tag-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:rgba(15,76,92,.08);border:1px solid rgba(15,76,92,.15);border-radius:20px;font-size:.78rem;color:var(--petrol)}
+    .tag-chip button{width:14px;height:14px;border-radius:50%;background:rgba(15,76,92,.15);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--petrol);line-height:1;padding:0;cursor:pointer;border:none}
     .tag-chip button:hover{background:var(--error);color:var(--white)}
     .tags-input{border:none;outline:none;font-family:var(--ff-body);font-size:.9rem;color:var(--text);background:transparent;flex:1;min-width:120px}
     .tags-input::placeholder{color:rgba(74,101,112,.45)}
-
-    /* CHAR COUNTER */
     .char-counter{text-align:right;font-size:.7rem;color:var(--text-m);margin-top:4px}
     .char-counter.warn{color:var(--gold-d)}.char-counter.over{color:var(--error)}
-
-    /* ERRORS */
     .field-error{font-size:.75rem;color:var(--error);margin-top:2px;display:none}
     .field-error.show{display:block}
-
-    /* NAV BUTTONS */
-    .form-nav{display:flex;align-items:center;justify-content:space-between;padding:28px 36px;
-              background:var(--white);border:1px solid var(--grey-mid);border-radius:6px}
-    .btn-prev{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border:1.5px solid var(--grey-mid);
-              color:var(--text-m);font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
-              border-radius:2px;transition:border-color .25s,color .25s;cursor:pointer;background:none}
+    .form-nav{display:flex;align-items:center;justify-content:space-between;padding:28px 36px;background:var(--white);border:1px solid var(--grey-mid);border-radius:6px}
+    .btn-prev{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border:1.5px solid var(--grey-mid);color:var(--text-m);font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border-radius:2px;transition:border-color .25s,color .25s;cursor:pointer;background:none}
     .btn-prev:hover{border-color:var(--petrol);color:var(--petrol)}
     .btn-prev svg{width:14px;height:14px}
-    .btn-next{display:inline-flex;align-items:center;gap:10px;padding:14px 36px;background:var(--gold);
-              color:var(--petrol-d);font-size:.82rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-              border-radius:2px;transition:background .25s,transform .2s,box-shadow .25s;
-              box-shadow:0 4px 20px rgba(201,162,39,.25);cursor:pointer;border:none}
+    .btn-next{display:inline-flex;align-items:center;gap:10px;padding:14px 36px;background:var(--gold);color:var(--petrol-d);font-size:.82rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-radius:2px;transition:background .25s,transform .2s,box-shadow .25s;box-shadow:0 4px 20px rgba(201,162,39,.25);cursor:pointer;border:none}
     .btn-next:hover{background:var(--gold-l);transform:translateY(-1px);box-shadow:0 6px 24px rgba(201,162,39,.35)}
     .btn-next:disabled{opacity:.65;cursor:not-allowed;transform:none}
     .btn-next svg{width:15px;height:15px}
-
-    /* TRUST */
-    .trust-strip{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;
-                 padding:24px 0 0;border-top:1px solid var(--grey-mid);margin-top:8px}
+    .trust-strip{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;padding:24px 0 0;border-top:1px solid var(--grey-mid);margin-top:8px}
     .trust-item{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--text-m)}
     .trust-item svg{width:14px;height:14px;color:var(--gold)}
-
-    /* GLOBAL ALERT */
-    .alert{display:none;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:3px;
-           font-size:.83rem;line-height:1.6;margin-bottom:20px}
+    .alert{display:none;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:3px;font-size:.83rem;line-height:1.6;margin-bottom:20px}
     .alert.show{display:flex}
     .alert svg{width:16px;height:16px;flex-shrink:0;margin-top:1px}
     .alert-error{background:rgba(192,57,43,.07);border:1px solid rgba(192,57,43,.2);color:var(--error)}
-    .alert-success{background:rgba(26,122,74,.07);border:1px solid rgba(26,122,74,.22);color:var(--success)}
-
-    /* CONFIRM */
     #confirm-screen{display:none}
     .confirm-card{background:var(--white);border:1px solid var(--grey-mid);border-radius:6px;padding:64px 48px;text-align:center}
-    .confirm-icon{width:80px;height:80px;margin:0 auto 32px;border-radius:50%;
-                  background:linear-gradient(135deg,rgba(201,162,39,.15),rgba(201,162,39,.05));
-                  border:2px solid rgba(201,162,39,.35);display:flex;align-items:center;justify-content:center;color:var(--gold)}
+    .confirm-icon{width:80px;height:80px;margin:0 auto 32px;border-radius:50%;background:linear-gradient(135deg,rgba(201,162,39,.15),rgba(201,162,39,.05));border:2px solid rgba(201,162,39,.35);display:flex;align-items:center;justify-content:center;color:var(--gold)}
     .confirm-icon svg{width:36px;height:36px}
     .confirm-title{font-family:var(--ff-display);font-size:2.2rem;font-weight:600;color:var(--petrol);margin-bottom:16px}
     .confirm-title em{font-style:italic;color:var(--gold)}
@@ -267,13 +175,10 @@
     .confirm-steps{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
     .confirm-step{display:flex;align-items:center;gap:10px;padding:14px 20px;background:var(--grey);border-radius:4px;font-size:.82rem;color:var(--text-m)}
     .confirm-step svg{width:16px;height:16px;color:var(--gold);flex-shrink:0}
-
-    /* FOOTER */
     #footer{background:var(--petrol-d);padding:36px 0;text-align:center}
     .footer-copy{font-size:.75rem;color:rgba(255,255,255,.28)}
     .footer-copy a{color:rgba(201,162,39,.6);transition:color .2s}
     .footer-copy a:hover{color:var(--gold)}
-
     @keyframes spin{to{transform:rotate(360deg)}}
   </style>
 </head>
@@ -310,50 +215,30 @@
 <section id="form-section">
   <div class="container">
     <div class="form-shell" id="form-shell">
-
-      <!-- SIDEBAR -->
       <aside class="form-sidebar reveal">
         <div class="sidebar-progress">
           <div class="sidebar-progress-bar"><div class="sidebar-progress-fill" id="progress-fill"></div></div>
           <div class="sidebar-nav" id="sidebar-nav">
-            <button class="sidebar-nav-item active" data-goto="1">
-              <div class="sidebar-nav-icon">1</div>Compte & identité
-            </button>
-            <button class="sidebar-nav-item" data-goto="2">
-              <div class="sidebar-nav-icon">2</div>Pratique religieuse
-            </button>
-            <button class="sidebar-nav-item" data-goto="3">
-              <div class="sidebar-nav-icon">3</div>Profil & critères
-            </button>
+            <button class="sidebar-nav-item active" data-goto="1"><div class="sidebar-nav-icon">1</div>Compte & identité</button>
+            <button class="sidebar-nav-item" data-goto="2"><div class="sidebar-nav-icon">2</div>Pratique religieuse</button>
+            <button class="sidebar-nav-item" data-goto="3"><div class="sidebar-nav-icon">3</div>Profil & critères</button>
           </div>
-          <div class="sidebar-note">
-            <strong>Confidentialité</strong><br>
-            Vos informations sont chiffrées et ne sont jamais partagées sans votre accord.
-          </div>
+          <div class="sidebar-note"><strong>Confidentialité</strong><br>Vos informations sont chiffrées et ne sont jamais partagées sans votre accord.</div>
         </div>
       </aside>
 
       <div>
-
-        <!-- ══ PANEL 1 : Compte & Identité ══ -->
+        <!-- ══ PANEL 1 ══ -->
         <div class="form-panel active" id="panel-1">
-
-          <!-- Alerte globale -->
           <div class="alert alert-error" id="alert-global">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             <span id="alert-text">Une erreur est survenue.</span>
           </div>
 
-          <!-- Compte Supabase -->
           <div class="form-card reveal">
             <div class="form-card-header">
-              <div class="form-card-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
-              </div>
-              <div>
-                <p class="form-card-title">Votre compte</p>
-                <p class="form-card-desc">Ces identifiants vous permettront de vous connecter</p>
-              </div>
+              <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></div>
+              <div><p class="form-card-title">Votre compte</p><p class="form-card-desc">Ces identifiants vous permettront de vous connecter</p></div>
             </div>
             <div class="form-card-body">
               <div class="field-row">
@@ -378,24 +263,16 @@
             </div>
           </div>
 
-          <!-- Photo -->
           <div class="form-card reveal reveal-delay-1">
             <div class="form-card-header">
-              <div class="form-card-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              </div>
-              <div>
-                <p class="form-card-title">Votre photo</p>
-                <p class="form-card-desc">Visible uniquement par les membres validés</p>
-              </div>
+              <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+              <div><p class="form-card-title">Votre photo</p><p class="form-card-desc">Visible uniquement par les membres validés</p></div>
             </div>
             <div class="form-card-body">
               <div class="photo-drop" id="photo-drop">
                 <input type="file" id="photo-input" accept="image/png,image/jpeg,image/webp"/>
                 <div class="photo-drop-placeholder">
-                  <div class="photo-drop-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  </div>
+                  <div class="photo-drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
                   <p class="photo-drop-title">Déposer ou choisir une photo</p>
                   <p class="photo-drop-sub">JPG, PNG ou WEBP · Max 5 Mo</p>
                 </div>
@@ -407,16 +284,10 @@
             </div>
           </div>
 
-          <!-- Infos personnelles -->
           <div class="form-card reveal reveal-delay-2">
             <div class="form-card-header">
-              <div class="form-card-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-              </div>
-              <div>
-                <p class="form-card-title">Informations personnelles</p>
-                <p class="form-card-desc">Votre identité de base</p>
-              </div>
+              <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+              <div><p class="form-card-title">Informations personnelles</p><p class="form-card-desc">Votre identité de base</p></div>
             </div>
             <div class="form-card-body">
               <div class="field-row">
@@ -427,10 +298,7 @@
                 </div>
                 <div class="field">
                   <label class="field-label" for="age">Âge <span class="req">*</span></label>
-                  <div class="range-wrap">
-                    <input type="range" id="age" min="18" max="75" value="28"/>
-                    <span class="range-val" id="age-val">28</span>
-                  </div>
+                  <div class="range-wrap"><input type="range" id="age" min="18" max="75" value="28"/><span class="range-val" id="age-val">28</span></div>
                 </div>
               </div>
               <div class="field-row">
@@ -467,16 +335,10 @@
             </div>
           </div>
 
-          <!-- Situation matrimoniale -->
           <div class="form-card reveal reveal-delay-3">
             <div class="form-card-header">
-              <div class="form-card-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              </div>
-              <div>
-                <p class="form-card-title">Situation matrimoniale</p>
-                <p class="form-card-desc">Votre situation actuelle</p>
-              </div>
+              <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <div><p class="form-card-title">Situation matrimoniale</p><p class="form-card-desc">Votre situation actuelle</p></div>
             </div>
             <div class="form-card-body">
               <div class="field" style="margin-bottom:20px">
@@ -506,10 +368,7 @@
 
           <div class="form-nav reveal">
             <div></div>
-            <button class="btn-next" id="next-1">
-              Étape suivante
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
+            <button class="btn-next" id="next-1">Étape suivante<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>
           </div>
           <div class="trust-strip reveal">
             <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Données chiffrées</div>
@@ -518,7 +377,7 @@
           </div>
         </div>
 
-        <!-- ══ PANEL 2 : Religion ══ -->
+        <!-- ══ PANEL 2 ══ -->
         <div class="form-panel" id="panel-2">
           <div class="form-card reveal">
             <div class="form-card-header">
@@ -610,9 +469,8 @@
           </div>
         </div>
 
-        <!-- ══ PANEL 3 : Profil & Critères ══ -->
+        <!-- ══ PANEL 3 ══ -->
         <div class="form-panel" id="panel-3">
-
           <div class="form-card reveal">
             <div class="form-card-header">
               <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
@@ -693,17 +551,13 @@
             </div>
           </div>
 
-          <!-- CGU -->
           <div class="form-card reveal reveal-delay-2">
             <div class="form-card-body">
               <div class="field">
                 <div class="tiles" style="gap:12px">
-                  <label class="tile checkbox"><input type="checkbox" id="cgu"/>
-                    <span class="tile-label">J'accepte les <a href="#" style="color:var(--gold-d);text-decoration:underline">Conditions d'utilisation</a> et la <a href="#" style="color:var(--gold-d);text-decoration:underline">Politique de confidentialité</a> <span class="req">*</span></span></label>
-                  <label class="tile checkbox"><input type="checkbox" id="charte"/>
-                    <span class="tile-label">Je m'engage à respecter la <a href="#" style="color:var(--gold-d);text-decoration:underline">Charte islamique</a> de la plateforme <span class="req">*</span></span></label>
-                  <label class="tile checkbox"><input type="checkbox" id="sincere"/>
-                    <span class="tile-label">Je certifie que les informations fournies sont sincères et exactes <span class="req">*</span></span></label>
+                  <label class="tile checkbox"><input type="checkbox" id="cgu"/><span class="tile-label">J'accepte les <a href="#" style="color:var(--gold-d);text-decoration:underline">Conditions d'utilisation</a> et la <a href="#" style="color:var(--gold-d);text-decoration:underline">Politique de confidentialité</a> <span class="req">*</span></span></label>
+                  <label class="tile checkbox"><input type="checkbox" id="charte"/><span class="tile-label">Je m'engage à respecter la <a href="#" style="color:var(--gold-d);text-decoration:underline">Charte islamique</a> de la plateforme <span class="req">*</span></span></label>
+                  <label class="tile checkbox"><input type="checkbox" id="sincere"/><span class="tile-label">Je certifie que les informations fournies sont sincères et exactes <span class="req">*</span></span></label>
                 </div>
                 <span class="field-error" id="err-cgu">Veuillez accepter les conditions pour continuer</span>
               </div>
@@ -718,16 +572,12 @@
             </button>
           </div>
         </div>
-
       </div>
-    </div><!-- /form-shell -->
+    </div>
 
-    <!-- CONFIRMATION -->
     <div id="confirm-screen">
       <div class="confirm-card">
-        <div class="confirm-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        </div>
+        <div class="confirm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
         <h2 class="confirm-title">Profil créé, <em>barak Allahu fik</em></h2>
         <p class="confirm-sub">Votre compte a été créé avec succès. Vérifiez votre e-mail pour activer votre compte. Notre équipe validera votre profil sous 24h.</p>
         <div class="confirm-steps">
@@ -747,31 +597,24 @@
   </div>
 </footer>
 
-<!-- ═══════════════════════════════════════════════
-     SUPABASE + LOGIQUE
-═══════════════════════════════════════════════ -->
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-// ── ⚠️ REMPLACER PAR VOS VRAIES CLÉS ─────────────
 const SUPABASE_URL  = 'https://hozxklpzfzmrswzbamye.supabase.co';
 const SUPABASE_ANON = 'sb_publishable_MurlKY4clW48vcHYcuXCMw_WrbuhDIA';
-// ──────────────────────────────────────────────────
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON, {
   auth: { persistSession: true, autoRefreshToken: true }
 });
 
-/* ── STATE ── */
 let currentStep = 1;
 let photoFile   = null;
 
 /* ── REVEAL ── */
-const revEls = document.querySelectorAll('.reveal');
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
 }, { threshold: .1, rootMargin: '0px 0px -30px 0px' });
-revEls.forEach(el => obs.observe(el));
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
 /* ── NAVIGATION ── */
 function goToStep(n) {
@@ -793,9 +636,9 @@ function goToStep(n) {
 }
 
 /* ── HELPERS ── */
-const showErr  = (id, show) => { const el = document.getElementById(id); if (el) el.classList.toggle('show', show); };
-const markInp  = (id, err)  => { const el = document.getElementById(id); if (el) el.classList.toggle('has-error', err); };
-const isEmail  = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v||'').trim());
+const showErr = (id, show) => { const el = document.getElementById(id); if (el) el.classList.toggle('show', show); };
+const markInp = (id, err)  => { const el = document.getElementById(id); if (el) el.classList.toggle('has-error', err); };
+const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v||'').trim());
 
 function showAlert(msg) {
   document.getElementById('alert-text').textContent = msg;
@@ -804,7 +647,7 @@ function showAlert(msg) {
 }
 function hideAlert() { document.getElementById('alert-global').classList.remove('show'); }
 
-/* ── VALIDATION ÉTAPE 1 ── */
+/* ── VALIDATION ── */
 function validateStep1() {
   hideAlert();
   let ok = true;
@@ -817,34 +660,34 @@ function validateStep1() {
   const prof   = document.getElementById('profession').value.trim();
   const sit    = document.querySelector('input[name="situation"]:checked');
 
-  if (!isEmail(email))  { showErr('err-email',  true); markInp('email',  true); ok = false; }
-  if (pw.length < 8)    { showErr('err-password', true); markInp('password', true); ok = false; }
-  if (pw !== pwConf)    { showErr('err-password-confirm', true); markInp('password-confirm', true); ok = false; }
-  if (!prenom)          { showErr('err-prenom', true); markInp('prenom', true); ok = false; }
-  if (!pays)            { showErr('err-pays',   true); markInp('pays',   true); ok = false; }
-  if (!ville)           { showErr('err-ville',  true); markInp('ville',  true); ok = false; }
-  if (!prof)            { showErr('err-profession', true); markInp('profession', true); ok = false; }
-  if (!sit)             { showErr('err-situation', true); ok = false; }
+  if (!isEmail(email)) { showErr('err-email', true);            markInp('email', true);            ok = false; }
+  if (pw.length < 8)   { showErr('err-password', true);         markInp('password', true);         ok = false; }
+  if (pw !== pwConf)   { showErr('err-password-confirm', true); markInp('password-confirm', true); ok = false; }
+  if (!prenom)         { showErr('err-prenom', true);           markInp('prenom', true);           ok = false; }
+  if (!pays)           { showErr('err-pays', true);             markInp('pays', true);             ok = false; }
+  if (!ville)          { showErr('err-ville', true);            markInp('ville', true);            ok = false; }
+  if (!prof)           { showErr('err-profession', true);       markInp('profession', true);       ok = false; }
+  if (!sit)            { showErr('err-situation', true);                                           ok = false; }
   return ok;
 }
-
 function validateStep2() {
   const rel = document.querySelector('input[name="religion"]:checked');
   showErr('err-religion', !rel);
   return !!rel;
 }
-
 function validateStep3() {
   let ok = true;
   const desc = document.getElementById('description').value.trim();
   if (desc.length < 60) { showErr('err-description', true); markInp('description', true); ok = false; }
-  const cguErr = !document.getElementById('cgu').checked || !document.getElementById('charte').checked || !document.getElementById('sincere').checked;
+  const cguErr = !document.getElementById('cgu').checked
+              || !document.getElementById('charte').checked
+              || !document.getElementById('sincere').checked;
   showErr('err-cgu', cguErr);
   if (cguErr) ok = false;
   return ok;
 }
 
-/* ── NAVIGATION BOUTONS ── */
+/* ── BOUTONS ── */
 document.getElementById('next-1').addEventListener('click', () => { if (validateStep1()) goToStep(2); });
 document.getElementById('prev-2').addEventListener('click', () => goToStep(1));
 document.getElementById('next-2').addEventListener('click', () => { if (validateStep2()) goToStep(3); });
@@ -862,8 +705,8 @@ document.querySelectorAll('.sidebar-nav-item').forEach(item => {
 });
 
 /* ── PHOTO ── */
-const photoInput = document.getElementById('photo-input');
-const photoDrop  = document.getElementById('photo-drop');
+const photoInput   = document.getElementById('photo-input');
+const photoDrop    = document.getElementById('photo-drop');
 const photoPreview = document.getElementById('photo-preview');
 
 function handlePhoto(file) {
@@ -891,12 +734,13 @@ photoDrop.addEventListener('drop', e => { e.preventDefault(); photoDrop.classLis
   if (inp && ctr) inp.addEventListener('input', () => {
     const l = inp.value.length;
     ctr.textContent = l + ' / ' + max;
-    ctr.className = 'char-counter' + (l > max*.9 ? ' warn' : '') + (l >= max ? ' over' : '');
+    ctr.className = 'char-counter' + (l > max*.9 ? ' warn':'') + (l >= max ? ' over':'');
   });
 });
 
 /* ── TAGS ── */
-const tagsWrap = document.getElementById('tags-wrap'), tagsInput = document.getElementById('tags-input');
+const tagsWrap = document.getElementById('tags-wrap');
+const tagsInput = document.getElementById('tags-input');
 let tags = [];
 function renderTags() {
   tagsWrap.querySelectorAll('.tag-chip').forEach(c => c.remove());
@@ -924,175 +768,126 @@ tagsWrap.addEventListener('click', () => tagsInput.focus());
 });
 document.querySelectorAll('input[name="situation"]').forEach(r => r.addEventListener('change', () => showErr('err-situation', false)));
 document.querySelectorAll('input[name="religion"]').forEach(r => r.addEventListener('change', () => showErr('err-religion', false)));
-document.getElementById('description').addEventListener('input', () => { document.getElementById('description').classList.remove('has-error'); showErr('err-description', false); });
+document.getElementById('description').addEventListener('input', () => {
+  document.getElementById('description').classList.remove('has-error');
+  showErr('err-description', false);
+});
 
 /* ══════════════════════════════════════════════════
-   SOUMISSION FINALE → SUPABASE
+   SOUMISSION — CORRIGÉ : on ne fait PAS d'INSERT
+   dans `utilisateurs` si un trigger Supabase existe.
+   On utilise upsert avec onConflict pour être
+   resilient dans les deux cas (trigger ou pas).
 ══════════════════════════════════════════════════ */
 document.getElementById('submit-btn').addEventListener('click', async () => {
   if (!validateStep3()) return;
 
   const submitBtn  = document.getElementById('submit-btn');
   const submitText = document.getElementById('submit-text');
-
   submitBtn.disabled = true;
-  submitText.innerHTML = "Création...";
+  submitText.textContent = 'Création…';
 
   try {
-    /* ───────────────
-       1. Récup data form
-    ─────────────── */
+    /* 1. Données formulaire */
     const email    = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
-
     const prenom   = document.getElementById('prenom').value.trim();
     const age      = +document.getElementById('age').value;
     const pays     = document.getElementById('pays').value;
     const ville    = document.getElementById('ville').value.trim();
-    const profession = document.getElementById('profession').value.trim();
-    const nationalite = document.getElementById('nationalite').value.trim();
-
-    const situation = document.querySelector('input[name="situation"]:checked')?.value;
-    const nb_enfants = +document.getElementById('enfants').value;
-
+    const profession      = document.getElementById('profession').value.trim();
+    const nationalite     = document.getElementById('nationalite').value.trim();
+    const situation       = document.querySelector('input[name="situation"]:checked')?.value;
+    const nb_enfants      = +document.getElementById('enfants').value;
     const niveau_pratique = document.querySelector('input[name="religion"]:checked')?.value;
     const ecole_juridique = document.getElementById('courant').value;
-
-    const pratiques = [...document.querySelectorAll('input[name="pratique"]:checked')].map(r => r.value);
-
-    const description = document.getElementById('description').value.trim();
-
+    const pratiques       = [...document.querySelectorAll('input[name="pratique"]:checked')].map(r => r.value);
+    const description     = document.getElementById('description').value.trim();
     const critere_age_min = +document.getElementById('age-min').value;
     const critere_age_max = +document.getElementById('age-max').value;
-    const critere_pays = document.getElementById('critere-pays').value;
-    const critere_niveau = document.getElementById('critere-niveau').value;
-
+    const critere_pays    = document.getElementById('critere-pays').value;
+    const critere_niveau  = document.getElementById('critere-niveau').value;
     const criteres_coches = [...document.querySelectorAll('input[name="criteres"]:checked')].map(r => r.value);
     const criteres_libres = document.getElementById('criteres-libres').value.trim();
-
-    const role_foyer = document.getElementById('role-femme').value;
+    const role_foyer      = document.getElementById('role-femme').value;
     const nb_enfants_souhaites = document.getElementById('enfants-souhaites').value;
 
-    /* ───────────────
-       2. AUTH SUPABASE
-    ─────────────── */
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email,
-      password
-    });
-
+    /* 2. Création compte Auth */
+    const { data: authData, error: authError } = await supabase.auth.signUp({ email, password });
     if (authError) throw authError;
 
-    const user = authData.user;
+    const user = authData?.user;
+    if (!user) throw new Error('Création du compte impossible. Vérifiez votre e-mail.');
 
-    if (!user) {
-      throw new Error("Création utilisateur impossible");
-    }
+    /* ── FIX BUG HOMME : on attend que la session soit prête ── */
+    await new Promise(r => setTimeout(r, 500));
 
-    /* ───────────────
-       3. INSERT utilisateur
-    ─────────────── */
+    /* 3. UPSERT utilisateurs — résistant au trigger ET à son absence
+          onConflict:'auth_id' → si le trigger a déjà inséré la ligne,
+          on met juste à jour le genre au lieu de planter. */
     const { data: userRow, error: userError } = await supabase
       .from('utilisateurs')
-      .insert({
-        auth_id: user.id,
-        email,
-        genre: 'homme'
-      })
-      .select()
+      .upsert(
+        { auth_id: user.id, email, genre: 'homme' },
+        { onConflict: 'auth_id', ignoreDuplicates: false }
+      )
+      .select('id')
       .single();
 
     if (userError) throw userError;
 
     const userId = userRow.id;
 
-    /* ───────────────
-       4. PHOTO (optionnel)
-    ─────────────── */
+    /* 4. Photo (optionnel) */
     let photoUrl = null;
-
     if (photoFile) {
-      const ext = photoFile.name.split('.').pop();
+      const ext  = photoFile.name.split('.').pop();
       const path = `photos/${userId}/${Date.now()}.${ext}`;
-
       const { error: upErr } = await supabase.storage
         .from('photos')
-        .upload(path, photoFile, {
-          contentType: photoFile.type
-        });
-
+        .upload(path, photoFile, { contentType: photoFile.type });
       if (!upErr) {
-        const { data } = supabase.storage
-          .from('photos')
-          .getPublicUrl(path);
-
+        const { data } = supabase.storage.from('photos').getPublicUrl(path);
         photoUrl = data.publicUrl;
       }
     }
 
-    /* ───────────────
-       5. INSERT PROFIL
-    ─────────────── */
+    /* 5. Insert profil */
     const { error: profilError } = await supabase.from('profils').insert({
       utilisateur_id: userId,
-      prenom,
-      age,
-      pays,
-      ville,
-      nationalite,
-      profession,
-      situation,
-      nb_enfants,
-      niveau_pratique,
-      ecole_juridique,
-      pratiques,
-      description,
-      mots_cles: tags,
-
-      critere_age_min,
-      critere_age_max,
+      prenom, age, pays, ville, nationalite, profession,
+      situation, nb_enfants,
+      niveau_pratique, ecole_juridique, pratiques,
+      description, mots_cles: tags,
+      critere_age_min, critere_age_max,
       critere_pays,
       critere_niveau_pratique: critere_niveau,
-      criteres_coches,
-      criteres_libres,
-
+      criteres_coches, criteres_libres,
       role_foyer_souhaite: role_foyer,
       nb_enfants_souhaites,
-
       photo_url: photoUrl,
-
       profil_en_revue: true,
-      profil_valide: false
+      profil_valide: false,
     });
-
     if (profilError) throw profilError;
 
-    /* ───────────────
-       6. SUCCESS
-    ─────────────── */
+    /* 6. Succès */
     document.getElementById('form-shell').style.display = 'none';
     document.getElementById('confirm-screen').style.display = 'block';
-
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
   } catch (err) {
     console.error(err);
-
-    let msg = "Erreur inconnue";
-
-    if (err.message?.includes("User already registered")) {
-      msg = "Cet email est déjà utilisé";
-    }
-
+    let msg = err.message || 'Erreur inconnue. Veuillez réessayer.';
+    if (msg.includes('User already registered')) msg = 'Cet e-mail est déjà utilisé. Connectez-vous ou réinitialisez votre mot de passe.';
+    if (msg.includes('duplicate key'))           msg = 'Un compte existe déjà avec cet e-mail.';
     showAlert(msg);
-
     submitBtn.disabled = false;
-    submitText.innerHTML = "Créer mon profil";
-
+    submitText.textContent = 'Créer mon profil';
     goToStep(1);
   }
 });
-});
+/* ── FIN DU SCRIPT — pas de parenthèse orpheline ici ── */
 </script>
 </body>
 </html>

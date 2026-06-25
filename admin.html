@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panel Admin - Nour Al Zawwaj</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm" type="module"></script>
   <style>
     * {
       margin: 0;
@@ -21,7 +20,7 @@
       justify-content: center;
     }
 
-    /* ════ LOGIN PAGE ════ */
+    /* LOGIN */
     .login-container {
       width: 100%;
       max-width: 450px;
@@ -29,18 +28,6 @@
       background: white;
       border-radius: 12px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      animation: slideUp 0.5s ease-out;
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .login-header {
@@ -52,11 +39,6 @@
       font-size: 28px;
       color: #0F4C5C;
       margin-bottom: 8px;
-    }
-
-    .login-header p {
-      color: #666;
-      font-size: 14px;
     }
 
     .form-group {
@@ -77,7 +59,6 @@
       border: 1.5px solid #ddd;
       border-radius: 6px;
       font-size: 14px;
-      transition: border-color 0.3s;
     }
 
     input:focus {
@@ -94,9 +75,7 @@
       border: none;
       border-radius: 6px;
       font-weight: 600;
-      font-size: 15px;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
       margin-top: 10px;
     }
 
@@ -119,12 +98,13 @@
       display: block;
     }
 
-    /* ════ ADMIN DASHBOARD ════ */
+    /* ADMIN */
     .admin-container {
       display: none;
       width: 100%;
       background: #f5f5f5;
       min-height: 100vh;
+      flex-wrap: wrap;
     }
 
     .admin-container.active {
@@ -137,9 +117,7 @@
       color: white;
       padding: 30px 0;
       box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-      position: fixed;
-      height: 100vh;
-      overflow-y: auto;
+      min-height: 100vh;
     }
 
     .admin-logo {
@@ -154,22 +132,12 @@
       margin-bottom: 4px;
     }
 
-    .admin-logo p {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.6);
-    }
-
     .admin-menu {
       list-style: none;
     }
 
-    .admin-menu li {
-      margin: 0;
-    }
-
     .admin-menu a {
-      display: flex;
-      align-items: center;
+      display: block;
       padding: 16px 20px;
       color: rgba(255, 255, 255, 0.8);
       text-decoration: none;
@@ -189,7 +157,6 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      margin-left: 260px;
     }
 
     .admin-header {
@@ -206,12 +173,6 @@
       font-size: 24px;
     }
 
-    .admin-user {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
     .btn-logout {
       padding: 8px 16px;
       background: #e74c3c;
@@ -221,7 +182,6 @@
       cursor: pointer;
       font-size: 13px;
       font-weight: 600;
-      transition: background 0.3s;
     }
 
     .btn-logout:hover {
@@ -246,7 +206,6 @@
       padding: 30px;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      animation: slideUp 0.5s ease-out;
     }
 
     .stat-card h3 {
@@ -254,7 +213,6 @@
       font-size: 13px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
       margin-bottom: 12px;
     }
 
@@ -262,11 +220,6 @@
       font-size: 32px;
       font-weight: 700;
       color: #0F4C5C;
-    }
-
-    .stat-card .loading {
-      font-size: 14px;
-      color: #999;
     }
 
     .content-section {
@@ -307,6 +260,7 @@
     table td {
       padding: 15px;
       border-bottom: 1px solid #eee;
+      word-break: break-word;
     }
 
     table tr:hover {
@@ -331,7 +285,7 @@
       color: #e74c3c;
     }
 
-    .badge-en-attente {
+    .badge-pending {
       background: #fef5e7;
       color: #f39c12;
     }
@@ -339,6 +293,7 @@
     .action-buttons {
       display: flex;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .btn-small {
@@ -378,83 +333,81 @@
       background: #d35400;
     }
 
-    .success-message,
-    .error-msg {
+    .message {
       padding: 15px;
       border-radius: 6px;
       margin-bottom: 20px;
       display: none;
     }
 
-    .success-message {
+    .message.success {
       background: #d5f4e6;
       color: #27ae60;
     }
 
-    .error-msg {
+    .message.error {
       background: #fadbd8;
       color: #e74c3c;
     }
 
-    .success-message.show,
-    .error-msg.show {
+    .message.show {
       display: block;
-    }
-
-    .loading-spinner {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid #C9A227;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
     }
 
     .profile-card {
       background: #f9f9f9;
-      padding: 15px;
+      padding: 20px;
       border-radius: 6px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       border-left: 4px solid #C9A227;
     }
 
     .profile-card h4 {
       color: #0F4C5C;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      font-size: 16px;
     }
 
     .profile-card p {
       font-size: 13px;
       color: #666;
-      margin: 4px 0;
+      margin: 5px 0;
+    }
+
+    .profile-card .action-buttons {
+      margin-top: 15px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #999;
     }
 
     @media (max-width: 768px) {
       .admin-sidebar {
-        width: 0;
-        position: fixed;
-        height: 100vh;
-        z-index: 100;
-        overflow-x: hidden;
-        transition: width 0.3s;
-      }
-
-      .admin-sidebar.open {
-        width: 260px;
+        width: 100%;
+        min-height: auto;
       }
 
       .admin-main {
-        margin-left: 0;
+        width: 100%;
+      }
+
+      .admin-content {
+        padding: 20px;
       }
 
       .dashboard-grid {
         grid-template-columns: 1fr;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      table td, table th {
+        padding: 10px;
       }
     }
   </style>
@@ -464,26 +417,16 @@
   <div class="login-container" id="loginForm">
     <div class="login-header">
       <h1>🔐 Panel Admin</h1>
-      <p>Nour Al Zawwaj - Gestion</p>
+      <p>Nour Al Zawwaj</p>
     </div>
-    <form onsubmit="handleLogin(event)">
+    <form onsubmit="window.handleLogin(event)">
       <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="admin@nouralzawwaj.com"
-          required
-        />
+        <label>Email</label>
+        <input type="email" id="email" placeholder="admin@nouralzawwaj.com" required />
       </div>
       <div class="form-group">
-        <label for="password">Mot de passe</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="••••••••"
-          required
-        />
+        <label>Mot de passe</label>
+        <input type="password" id="password" placeholder="••••••••" required />
       </div>
       <button type="submit" class="btn-login">Se connecter</button>
       <div class="error-message" id="errorMessage"></div>
@@ -493,87 +436,79 @@
   <!-- ADMIN DASHBOARD -->
   <div class="admin-container" id="adminDashboard">
     <!-- SIDEBAR -->
-    <div class="admin-sidebar" id="sidebar">
+    <div class="admin-sidebar">
       <div class="admin-logo">
         <h2>Nour Al Zawwaj</h2>
-        <p>Panel d'administration</p>
+        <p style="font-size: 12px; color: rgba(255,255,255,0.6);">Admin</p>
       </div>
       <ul class="admin-menu">
         <li><a class="menu-link active" data-section="dashboard">📊 Tableau de bord</a></li>
-        <li><a class="menu-link" data-section="members">👥 Membres</a></li>
+        <li><a class="menu-link" data-section="members">👥 Tous les membres</a></li>
         <li><a class="menu-link" data-section="profiles">✓ Profils en attente</a></li>
       </ul>
     </div>
 
-    <!-- MAIN CONTENT -->
+    <!-- MAIN -->
     <div class="admin-main">
       <!-- HEADER -->
       <div class="admin-header">
         <h1 id="pageTitle">Tableau de bord</h1>
-        <div class="admin-user">
-          <button class="btn-logout" onclick="handleLogout()">Déconnexion</button>
-        </div>
+        <button class="btn-logout" onclick="window.handleLogout()">Déconnexion</button>
       </div>
 
       <!-- CONTENT -->
       <div class="admin-content">
         <!-- DASHBOARD -->
         <div class="content-section active" id="dashboard">
-          <h2>Tableau de bord</h2>
+          <h2>📊 Tableau de bord</h2>
           <div class="dashboard-grid">
             <div class="stat-card">
               <h3>Membres Actifs</h3>
-              <div class="value" id="statsActiveMembers"><span class="loading-spinner"></span></div>
+              <div class="value" id="statActiveMembers">0</div>
             </div>
             <div class="stat-card">
               <h3>Profils en Attente</h3>
-              <div class="value" id="statsPendingProfiles"><span class="loading-spinner"></span></div>
+              <div class="value" id="statPendingProfiles">0</div>
             </div>
             <div class="stat-card">
               <h3>Profils Validés</h3>
-              <div class="value" id="statsValidatedProfiles"><span class="loading-spinner"></span></div>
+              <div class="value" id="statValidatedProfiles">0</div>
             </div>
             <div class="stat-card">
               <h3>Membres Premium</h3>
-              <div class="value" id="statsPremiumMembers"><span class="loading-spinner"></span></div>
+              <div class="value" id="statPremiumMembers">0</div>
             </div>
           </div>
         </div>
 
-        <!-- MEMBERS -->
+        <!-- ALL MEMBERS -->
         <div class="content-section" id="members">
-          <h2>Gestion des Membres</h2>
-          <div class="success-message" id="successMsg"></div>
-          <div class="error-msg" id="errorMsg"></div>
-          <table>
-            <thead>
-              <tr>
-                <th>Email</th>
-                <th>Genre</th>
-                <th>Identité Vérifiée</th>
-                <th>Compte Actif</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="membersTable">
-              <tr>
-                <td colspan="5" style="text-align: center; padding: 40px;">
-                  <span class="loading-spinner"></span> Chargement...
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <h2>👥 Tous les Membres</h2>
+          <div class="message" id="msgMembers"></div>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Genre</th>
+                  <th>ID Vérifié</th>
+                  <th>Statut</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="membersTable">
+                <tr><td colspan="5" style="text-align: center; padding: 40px;">Chargement...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <!-- PROFILES EN ATTENTE -->
+        <!-- PENDING PROFILES -->
         <div class="content-section" id="profiles">
-          <h2>Profils en Attente de Validation</h2>
-          <div class="success-message" id="successMsg2"></div>
-          <div class="error-msg" id="errorMsg2"></div>
+          <h2>✓ Profils en Attente de Validation</h2>
+          <div class="message" id="msgProfiles"></div>
           <div id="profilesList">
-            <div style="text-align: center; padding: 40px;">
-              <span class="loading-spinner"></span> Chargement des profils...
-            </div>
+            <div class="empty-state">Chargement...</div>
           </div>
         </div>
       </div>
@@ -583,237 +518,212 @@
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-    // Configuration Supabase
     const SUPABASE_URL = 'https://hozxklpzfzmrswzbamye.supabase.co';
-    const SUPABASE_ANON = 'sb_publishable_MurlKY4clW48vcHYcuXCMw_WrbuhDIA';
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
+    const SUPABASE_KEY = 'sb_publishable_MurlKY4clW48vcHYcuXCMw_WrbuhDIA';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // Admin credentials
     const ADMIN_EMAIL = 'admin@nouralzawwaj.com';
     const ADMIN_PASSWORD = 'Admin@2024!';
 
-    // ════ AUTHENTIFICATION ════
+    // ════ LOGIN ════
     window.handleLogin = async (event) => {
       event.preventDefault();
-
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
-      const errorMessage = document.getElementById('errorMessage');
 
       if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
         localStorage.setItem('adminLogged', 'true');
-        localStorage.setItem('adminEmail', email);
-
-        document.getElementById('loginForm').style.display = 'none';
-        document.getElementById('adminDashboard').classList.add('active');
-
-        loadDashboard();
-        errorMessage.classList.remove('show');
+        showAdmin();
+        loadAllData();
       } else {
-        errorMessage.textContent = '❌ Email ou mot de passe incorrect';
-        errorMessage.classList.add('show');
+        document.getElementById('errorMessage').textContent = '❌ Identifiants incorrects';
+        document.getElementById('errorMessage').classList.add('show');
       }
     };
 
     window.handleLogout = () => {
-      if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+      if (confirm('Déconnexion ?')) {
         localStorage.removeItem('adminLogged');
-        localStorage.removeItem('adminEmail');
-        document.getElementById('loginForm').style.display = 'block';
-        document.getElementById('adminDashboard').classList.remove('active');
-        document.getElementById('email').value = '';
-        document.getElementById('password').value = '';
+        location.reload();
       }
     };
 
-    // ════ NAVIGATION ════
+    // ════ UI ════
+    function showAdmin() {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('adminDashboard').classList.add('active');
+    }
+
+    function showMessage(elementId, message, type) {
+      const el = document.getElementById(elementId);
+      el.textContent = message;
+      el.className = `message ${type} show`;
+      setTimeout(() => el.classList.remove('show'), 4000);
+    }
+
+    // ════ MENU ════
     document.querySelectorAll('.menu-link').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
-
         document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
         link.classList.add('active');
-
-        document.querySelectorAll('.content-section').forEach(section => {
-          section.classList.remove('active');
-        });
-
-        const sectionId = link.getAttribute('data-section');
-        document.getElementById(sectionId).classList.add('active');
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        
+        const section = link.dataset.section;
+        document.getElementById(section).classList.add('active');
         document.getElementById('pageTitle').textContent = link.textContent.trim();
 
-        if (sectionId === 'members') {
-          loadMembers();
-        } else if (sectionId === 'profiles') {
-          loadPendingProfiles();
-        }
+        if (section === 'members') loadMembers();
+        if (section === 'profiles') loadProfiles();
       });
     });
 
-    // ════ CHARGER LE DASHBOARD ════
+    // ════ LOAD DATA ════
+    async function loadAllData() {
+      loadDashboard();
+      loadMembers();
+      loadProfiles();
+    }
+
     async function loadDashboard() {
       try {
-        // Membres actifs
-        const { count: activeCount } = await supabase
+        const { count: active } = await supabase
           .from('utilisateurs')
-          .select('*', { count: 'exact', head: true })
-          .eq('compte_actif', true)
-          .eq('compte_suspendu', false);
+          .select('id', { count: 'exact', head: true })
+          .eq('compte_actif', true);
 
-        // Profils en attente
-        const { count: pendingCount } = await supabase
+        const { count: pending } = await supabase
           .from('profils')
-          .select('*', { count: 'exact', head: true })
-          .eq('profil_en_revue', true)
-          .eq('profil_valide', false);
+          .select('id', { count: 'exact', head: true })
+          .eq('profil_en_revue', true);
 
-        // Profils validés
-        const { count: validatedCount } = await supabase
+        const { count: validated } = await supabase
           .from('profils')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .eq('profil_valide', true);
 
-        // Membres Premium
-        const { count: premiumCount } = await supabase
+        const { count: premium } = await supabase
           .from('abonnements')
-          .select('*', { count: 'exact', head: true })
-          .neq('plan', 'gratuit')
-          .eq('statut', 'actif');
+          .select('id', { count: 'exact', head: true })
+          .neq('plan', 'gratuit');
 
-        document.getElementById('statsActiveMembers').textContent = activeCount || 0;
-        document.getElementById('statsPendingProfiles').textContent = pendingCount || 0;
-        document.getElementById('statsValidatedProfiles').textContent = validatedCount || 0;
-        document.getElementById('statsPremiumMembers').textContent = premiumCount || 0;
-      } catch (error) {
-        console.error('Erreur chargement dashboard:', error);
+        document.getElementById('statActiveMembers').textContent = active || 0;
+        document.getElementById('statPendingProfiles').textContent = pending || 0;
+        document.getElementById('statValidatedProfiles').textContent = validated || 0;
+        document.getElementById('statPremiumMembers').textContent = premium || 0;
+      } catch (err) {
+        console.error('Dashboard error:', err);
       }
     }
 
-    // ════ CHARGER LES MEMBRES ════
     async function loadMembers() {
       try {
-        const { data: members, error } = await supabase
+        const { data, error } = await supabase
           .from('utilisateurs')
           .select('*')
           .order('created_at', { ascending: false })
-          .limit(50);
+          .limit(100);
 
         if (error) throw error;
 
         const tbody = document.getElementById('membersTable');
-        tbody.innerHTML = members.map(member => `
+        if (!data || data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Aucun membre</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = data.map(u => `
           <tr>
-            <td>${member.email}</td>
-            <td>${member.genre === 'homme' ? '👨 Homme' : '👩 Femme'}</td>
-            <td><span class="badge ${member.identite_verifiee ? 'badge-active' : 'badge-inactive'}">
-              ${member.identite_verifiee ? '✓ Vérifiée' : '✗ Non vérifiée'}
+            <td>${u.email}</td>
+            <td>${u.genre === 'homme' ? '👨 H' : '👩 F'}</td>
+            <td><span class="badge ${u.identite_verifiee ? 'badge-active' : 'badge-inactive'}">
+              ${u.identite_verifiee ? '✓' : '✗'}
             </span></td>
-            <td><span class="badge ${member.compte_actif && !member.compte_suspendu ? 'badge-active' : 'badge-inactive'}">
-              ${member.compte_actif && !member.compte_suspendu ? '✓ Actif' : '✗ Inactif'}
+            <td><span class="badge ${u.compte_actif ? 'badge-active' : 'badge-inactive'}">
+              ${u.compte_actif ? 'Actif' : 'Inactif'}
             </span></td>
             <td>
               <div class="action-buttons">
-                <button class="btn-small btn-delete" onclick="deleteMember('${member.id}')">Supprimer</button>
+                <button class="btn-small btn-delete" onclick="window.deleteMember('${u.id}')">Supprimer</button>
               </div>
             </td>
           </tr>
         `).join('');
-      } catch (error) {
-        showError('members', 'Erreur lors du chargement des membres: ' + error.message);
+      } catch (err) {
+        console.error('Load members error:', err);
+        showMessage('msgMembers', 'Erreur: ' + err.message, 'error');
       }
     }
 
-    // ════ CHARGER LES PROFILS EN ATTENTE ════
-    async function loadPendingProfiles() {
+    async function loadProfiles() {
       try {
-        const { data: profiles, error } = await supabase
+        const { data, error } = await supabase
           .from('profils')
-          .select(`
-            *,
-            utilisateurs (email, genre)
-          `)
+          .select('id, prenom, age, ville, pays, profession, niveau_pratique, completude, utilisateur_id, utilisateurs!inner(email)')
           .eq('profil_en_revue', true)
-          .eq('profil_valide', false)
           .order('created_at', { ascending: false });
 
         if (error) throw error;
 
-        const profilesList = document.getElementById('profilesList');
-        
-        if (profiles.length === 0) {
-          profilesList.innerHTML = '<p style="text-align: center; padding: 40px; color: #999;">Aucun profil en attente de validation</p>';
+        const div = document.getElementById('profilesList');
+        if (!data || data.length === 0) {
+          div.innerHTML = '<div class="empty-state">Aucun profil en attente ✓</div>';
           return;
         }
 
-        profilesList.innerHTML = profiles.map(profile => `
+        div.innerHTML = data.map(p => `
           <div class="profile-card">
-            <h4>${profile.prenom}, ${profile.age} ans</h4>
-            <p><strong>Email:</strong> ${profile.utilisateurs.email}</p>
-            <p><strong>Genre:</strong> ${profile.utilisateurs.genre}</p>
-            <p><strong>Localisation:</strong> ${profile.ville}, ${profile.pays}</p>
-            <p><strong>Profession:</strong> ${profile.profession}</p>
-            <p><strong>Niveau de pratique:</strong> ${profile.niveau_pratique}</p>
-            <p><strong>Complétude du profil:</strong> ${profile.completude}%</p>
-            <p><strong>Description:</strong> ${profile.description?.substring(0, 100)}...</p>
-            <div class="action-buttons" style="margin-top: 15px;">
-              <button class="btn-small btn-accept" onclick="approveProfile('${profile.id}')">✓ Accepter</button>
-              <button class="btn-small btn-reject" onclick="rejectProfile('${profile.id}')">✗ Rejeter</button>
+            <h4>${p.prenom}, ${p.age} ans</h4>
+            <p><strong>Email:</strong> ${p.utilisateurs?.email || 'N/A'}</p>
+            <p><strong>Ville:</strong> ${p.ville}, ${p.pays}</p>
+            <p><strong>Profession:</strong> ${p.profession}</p>
+            <p><strong>Niveau pratique:</strong> ${p.niveau_pratique}</p>
+            <p><strong>Complétude:</strong> ${p.completude}%</p>
+            <div class="action-buttons">
+              <button class="btn-small btn-accept" onclick="window.approveProfile('${p.id}')">✓ Accepter</button>
+              <button class="btn-small btn-reject" onclick="window.rejectProfile('${p.id}')">✗ Rejeter</button>
             </div>
           </div>
         `).join('');
-      } catch (error) {
-        showError('profiles', 'Erreur lors du chargement des profils: ' + error.message);
+      } catch (err) {
+        console.error('Load profiles error:', err);
+        showMessage('msgProfiles', 'Erreur: ' + err.message, 'error');
       }
     }
 
-    // ════ ACCEPTER UN PROFIL ════
+    // ════ ACTIONS ════
     window.approveProfile = async (profileId) => {
       try {
         const { error } = await supabase
           .from('profils')
-          .update({
-            profil_valide: true,
-            profil_en_revue: false,
-            updated_at: new Date().toISOString()
-          })
+          .update({ profil_valide: true, profil_en_revue: false })
           .eq('id', profileId);
 
         if (error) throw error;
-
-        showSuccess('profiles', '✅ Profil accepté avec succès !');
-        loadPendingProfiles();
-      } catch (error) {
-        showError('profiles', 'Erreur: ' + error.message);
+        showMessage('msgProfiles', '✅ Profil accepté!', 'success');
+        loadAllData();
+      } catch (err) {
+        showMessage('msgProfiles', '❌ Erreur: ' + err.message, 'error');
       }
     };
 
-    // ════ REJETER UN PROFIL ════
     window.rejectProfile = async (profileId) => {
-      const reason = prompt('Raison du rejet (optionnel):');
       try {
         const { error } = await supabase
           .from('profils')
-          .update({
-            profil_valide: false,
-            profil_en_revue: false,
-            note_moderation: reason,
-            updated_at: new Date().toISOString()
-          })
+          .update({ profil_valide: false, profil_en_revue: false })
           .eq('id', profileId);
 
         if (error) throw error;
-
-        showSuccess('profiles', '✅ Profil rejeté avec succès !');
-        loadPendingProfiles();
-      } catch (error) {
-        showError('profiles', 'Erreur: ' + error.message);
+        showMessage('msgProfiles', '✅ Profil rejeté!', 'success');
+        loadAllData();
+      } catch (err) {
+        showMessage('msgProfiles', '❌ Erreur: ' + err.message, 'error');
       }
     };
 
-    // ════ SUPPRIMER UN UTILISATEUR ════
     window.deleteMember = async (memberId) => {
-      if (!confirm('Êtes-vous sûr ? Cette action est irréversible !')) return;
-
+      if (!confirm('Supprimer ce membre ? (irréversible)')) return;
       try {
         const { error } = await supabase
           .from('utilisateurs')
@@ -821,36 +731,19 @@
           .eq('id', memberId);
 
         if (error) throw error;
-
-        showSuccess('members', '✅ Utilisateur supprimé avec succès !');
+        showMessage('msgMembers', '✅ Membre supprimé!', 'success');
         loadMembers();
-      } catch (error) {
-        showError('members', 'Erreur: ' + error.message);
+        loadAllData();
+      } catch (err) {
+        showMessage('msgMembers', '❌ Erreur: ' + err.message, 'error');
       }
     };
 
-    // ════ AFFICHER LES MESSAGES ════
-    function showSuccess(section, message) {
-      const element = document.getElementById(`successMsg${section === 'profiles' ? '2' : ''}`);
-      element.textContent = message;
-      element.classList.add('show');
-      setTimeout(() => element.classList.remove('show'), 3000);
-    }
-
-    function showError(section, message) {
-      const element = document.getElementById(`errorMsg${section === 'profiles' ? '2' : ''}`);
-      element.textContent = message;
-      element.classList.add('show');
-      setTimeout(() => element.classList.remove('show'), 5000);
-    }
-
-    // ════ VÉRIFIER LA SESSION ════
+    // ════ CHECK LOGIN ════
     window.addEventListener('load', () => {
-      const isLogged = localStorage.getItem('adminLogged');
-      if (isLogged === 'true') {
-        document.getElementById('loginForm').style.display = 'none';
-        document.getElementById('adminDashboard').classList.add('active');
-        loadDashboard();
+      if (localStorage.getItem('adminLogged') === 'true') {
+        showAdmin();
+        loadAllData();
       }
     });
   </script>

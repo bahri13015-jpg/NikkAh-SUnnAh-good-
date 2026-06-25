@@ -18,8 +18,6 @@
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-
-    /* TOPBAR */
     .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
     .logo{font-family:var(--ffd);font-size:1.3rem;font-weight:600;color:var(--gold)}
     .badge-admin{font-size:.6rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.25);color:var(--gold);padding:3px 10px;border-radius:2px;margin-left:10px}
@@ -27,11 +25,7 @@
     .dot{width:8px;height:8px;border-radius:50%;background:var(--text-d);transition:background .3s,box-shadow .3s}
     .dot.ok{background:var(--green-l);box-shadow:0 0 8px rgba(34,160,99,.5)}
     .dot.err{background:var(--red-l);box-shadow:0 0 8px rgba(231,76,60,.5)}
-
-    /* LAYOUT */
     .wrap{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 57px)}
-
-    /* SIDEBAR */
     .sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;gap:4px}
     .nav-label{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-d);padding:12px 12px 6px}
     .nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:4px;cursor:pointer;font-size:.82rem;color:var(--text-m);background:none;border:none;width:100%;text-align:left;transition:background .15s,color .15s}
@@ -39,24 +33,15 @@
     .nav-btn.active{background:rgba(201,162,39,.1);color:var(--gold);border:1px solid rgba(201,162,39,.15)}
     .nav-btn svg{width:15px;height:15px;flex-shrink:0}
     .nav-count{margin-left:auto;background:var(--orange);color:#fff;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:10px}
-
-    /* CONTENT */
     .content{padding:28px;overflow-y:auto}
-
-    /* SECTIONS */
     .section{display:none}.section.active{display:block}
-
-    /* STATS */
     .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
     @media(max-width:860px){.stats{grid-template-columns:1fr 1fr}}
     .stat{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:20px;position:relative;overflow:hidden;transition:border-color .2s}
-    .stat:hover{border-color:rgba(201,162,39,.2)}
     .stat-n{font-family:var(--ffd);font-size:2.4rem;font-weight:600;color:var(--c,var(--gold))}
     .stat-l{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-m);margin-top:6px}
     .stat-ico{position:absolute;bottom:12px;right:14px;opacity:.1;color:var(--c,var(--gold))}
     .stat-ico svg{width:34px;height:34px}
-
-    /* TABLE */
     .t-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
     .t-title{font-family:var(--ffd);font-size:1.3rem;color:var(--text)}
     .t-title em{font-style:italic;color:var(--gold)}
@@ -64,53 +49,39 @@
     .s-inp{padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:3px;font-family:var(--ff);font-size:.8rem;color:var(--text);outline:none;width:200px;transition:border-color .2s}
     .s-inp:focus{border-color:var(--gold)}.s-inp::placeholder{color:var(--text-d)}
     .f-sel{padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:3px;font-family:var(--ff);font-size:.76rem;color:var(--text);outline:none;cursor:pointer}
-
     .t-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden}
     table{width:100%;border-collapse:collapse}
     th{padding:11px 16px;text-align:left;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-d);background:var(--bg3);border-bottom:1px solid var(--border);font-weight:600}
     td{padding:13px 16px;border-bottom:1px solid rgba(30,48,64,.5);font-size:.81rem;color:var(--text-m);vertical-align:middle}
     tr:last-child td{border-bottom:none}
     tr:hover td{background:rgba(26,37,48,.5);color:var(--text)}
-
-    /* BADGES */
     .b{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
     .b-wait{background:rgba(214,137,16,.12);color:var(--orange);border:1px solid rgba(214,137,16,.2)}
     .b-ok{background:rgba(26,122,74,.12);color:var(--green-l);border:1px solid rgba(26,122,74,.2)}
     .b-h{background:rgba(15,76,92,.2);color:#5ab8d0;border:1px solid rgba(15,76,92,.3)}
     .b-f{background:rgba(196,122,122,.1);color:#d99090;border:1px solid rgba(196,122,122,.2)}
     .b-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
-
-    /* ACTION BTNS */
-    .acts{display:flex;gap:5px;flex-wrap:wrap}
-    .ab{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:3px;font-family:var(--ff);font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:none;cursor:pointer;transition:opacity .2s,transform .15s}
+    .acts{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+    .ab{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:3px;font-family:var(--ff);font-size:.7rem;font-weight:600;border:none;cursor:pointer;transition:opacity .2s,transform .15s}
     .ab:hover{opacity:.85;transform:translateY(-1px)}
-    .ab svg{width:10px;height:10px}
     .ab-val{background:var(--green);color:#fff}
     .ab-inv{background:var(--bg3);color:var(--text-m);border:1px solid var(--border)}
     .ab-del{background:rgba(192,57,43,.15);color:var(--red-l);border:1px solid rgba(192,57,43,.2)}
     .ab-del:hover{background:var(--red);color:#fff}
     .ab-eye{background:rgba(201,162,39,.1);color:var(--gold);border:1px solid rgba(201,162,39,.15)}
-
-    /* REFRESH BTN */
     .btn-ref{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:3px;font-family:var(--ff);font-size:.74rem;color:var(--text-m);cursor:pointer;transition:border-color .2s,color .2s}
     .btn-ref:hover{border-color:var(--gold);color:var(--gold)}
     .btn-ref svg{width:13px;height:13px}
     @keyframes spin{to{transform:rotate(360deg)}}
     .spin{animation:spin .7s linear infinite}
-
-    /* EMPTY */
     .empty{padding:40px;text-align:center;color:var(--text-d);font-size:.85rem}
     .empty svg{width:28px;height:28px;margin:0 auto 10px;display:block;opacity:.25}
-
-    /* TOAST */
     #tc{position:fixed;bottom:22px;right:22px;z-index:999;display:flex;flex-direction:column;gap:8px}
     .toast{display:flex;align-items:center;gap:9px;padding:11px 15px;border-radius:4px;font-size:.81rem;box-shadow:0 8px 32px rgba(0,0,0,.4);transform:translateX(130%);transition:transform .3s cubic-bezier(.22,1,.36,1)}
     .toast.show{transform:none}
     .t-ok{background:#0c2318;border:1px solid rgba(26,122,74,.3);color:#6fcf97}
     .t-err{background:#250c0c;border:1px solid rgba(192,57,43,.3);color:#eb5757}
     .toast svg{width:14px;height:14px;flex-shrink:0}
-
-    /* MODAL */
     .mo{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(5px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s}
     .mo.open{opacity:1;pointer-events:all}
     .mo-box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px;width:100%;max-width:500px;max-height:80vh;overflow-y:auto;transform:translateY(14px);transition:transform .3s}
@@ -121,8 +92,6 @@
     .mf:last-child{border-bottom:none}
     .mk{font-size:.63rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-d)}
     .mv{font-size:.83rem;color:var(--text);margin-top:2px;line-height:1.5;word-break:break-word}
-
-    /* CONFIRM DIALOG */
     .cd{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
     .cd.open{opacity:1;pointer-events:all}
     .cd-box{background:var(--bg2);border:1px solid rgba(192,57,43,.3);border-radius:8px;padding:28px;max-width:380px;width:100%}
@@ -131,17 +100,18 @@
     .cd-btns{display:flex;gap:10px;justify-content:flex-end}
     .cd-cancel{padding:9px 18px;background:var(--bg3);border:1px solid var(--border);border-radius:3px;font-family:var(--ff);font-size:.78rem;color:var(--text-m);cursor:pointer}
     .cd-ok{padding:9px 18px;background:var(--red);border:none;border-radius:3px;font-family:var(--ff);font-size:.78rem;font-weight:600;color:#fff;cursor:pointer}
-
     @media(max-width:720px){
       .wrap{grid-template-columns:1fr}
       .sidebar{display:none}
       .stats{grid-template-columns:1fr 1fr}
+      .content{padding:16px}
+      .s-inp{width:140px}
+      .col-loc,.col-prat{display:none}
     }
   </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <div style="display:flex;align-items:center">
     <span class="logo">Nour Al Zawwaj</span>
@@ -154,19 +124,15 @@
 </div>
 
 <div class="wrap">
-
-  <!-- SIDEBAR -->
   <nav class="sidebar">
     <div class="nav-label">Gestion</div>
     <button class="nav-btn active" onclick="nav('profils',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      Profils
-      <span class="nav-count" id="nc-pending">0</span>
+      Profils <span class="nav-count" id="nc-pending">0</span>
     </button>
     <button class="nav-btn" onclick="nav('signalements',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      Signalements
-      <span class="nav-count" id="nc-reports" style="background:var(--red)">0</span>
+      Signalements <span class="nav-count" id="nc-reports" style="background:var(--red)">0</span>
     </button>
     <div class="nav-label" style="margin-top:8px">Session</div>
     <button class="nav-btn" onclick="reconnect()">
@@ -175,31 +141,24 @@
     </button>
   </nav>
 
-  <!-- CONTENT -->
   <div class="content">
-
-    <!-- ══ PROFILS ══ -->
     <div class="section active" id="s-profils">
       <div class="stats">
         <div class="stat" style="--c:var(--gold)">
-          <div class="stat-n" id="sn-total">—</div>
-          <div class="stat-l">Total membres</div>
-          <div class="stat-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="stat-n" id="sn-total">—</div><div class="stat-l">Total membres</div>
+          <div class="stat-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
         </div>
         <div class="stat" style="--c:var(--orange)">
-          <div class="stat-n" id="sn-pend">—</div>
-          <div class="stat-l">En attente</div>
+          <div class="stat-n" id="sn-pend">—</div><div class="stat-l">En attente</div>
           <div class="stat-ico"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         </div>
         <div class="stat" style="--c:var(--green-l)">
-          <div class="stat-n" id="sn-valid">—</div>
-          <div class="stat-l">Validés</div>
-          <div class="stat-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div class="stat-n" id="sn-valid">—</div><div class="stat-l">Validés</div>
+          <div class="stat-ico"><svg viewBox="0 0 24 24" fill="currentColor"><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
         </div>
         <div class="stat" style="--c:#5ab8d0">
-          <div class="stat-n" id="sn-f">—</div>
-          <div class="stat-l">Frères</div>
-          <div class="stat-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="stat-n" id="sn-f">—</div><div class="stat-l">Frères</div>
+          <div class="stat-ico"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="4"/></svg></div>
         </div>
       </div>
 
@@ -228,21 +187,20 @@
         <table>
           <thead>
             <tr>
-              <th>Membre</th><th>Genre</th><th>Localisation</th>
-              <th>Pratique</th><th>Statut</th><th>Actions</th>
+              <th>Membre</th>
+              <th>Genre</th>
+              <th class="col-loc">Localisation</th>
+              <th class="col-prat">Pratique</th>
+              <th>Statut</th>
             </tr>
           </thead>
           <tbody id="tb-profils">
-            <tr><td colspan="6" class="empty">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Chargement des profils…
-            </td></tr>
+            <tr><td colspan="5" class="empty">Chargement…</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- ══ SIGNALEMENTS ══ -->
     <div class="section" id="s-signalements">
       <div class="t-head">
         <div class="t-title">Signalements <em>en cours</em></div>
@@ -256,20 +214,15 @@
       <div class="t-wrap">
         <table>
           <thead><tr><th>Motif</th><th>Description</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead>
-          <tbody id="tb-reports">
-            <tr><td colspan="5" class="empty">Aucun signalement</td></tr>
-          </tbody>
+          <tbody id="tb-reports"><tr><td colspan="5" class="empty">Aucun signalement</td></tr></tbody>
         </table>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- TOAST -->
 <div id="tc"></div>
 
-<!-- MODAL DÉTAIL -->
 <div class="mo" id="mo" onclick="if(event.target===this)closeMo()">
   <div class="mo-box">
     <button class="mo-close" onclick="closeMo()">✕</button>
@@ -277,7 +230,6 @@
   </div>
 </div>
 
-<!-- CONFIRM DELETE -->
 <div class="cd" id="cd">
   <div class="cd-box">
     <div class="cd-title">Supprimer ce profil ?</div>
@@ -289,25 +241,31 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     SDK SUPABASE — on essaie v3 d'abord, fallback v2
-══════════════════════════════════════════════ -->
+<!-- SDK Supabase v2 uniquement — v2 est stable sur iOS Safari -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
 <script>
-// ── CONFIG ──────────────────────────────────────
 const SB_URL = "https://hozxklpzfzmrswzbamye.supabase.co";
 const SB_KEY = "sb_publishable_MurlKY4clW48vcHYcuXCMw_WrbuhDIA";
-// ────────────────────────────────────────────────
+
+// ── Faux storage en mémoire — évite tout accès localStorage/IndexedDB sur iOS ──
+const memoryStorage = {
+  _data: {},
+  getItem(k)       { return this._data[k] ?? null; },
+  setItem(k, v)    { this._data[k] = v; },
+  removeItem(k)    { delete this._data[k]; }
+};
 
 let sb = null;
 let allProfils = [];
-let pendingDeleteId = null;
 
-// ── UI helpers ───────────────────────────────────
 const $ = id => document.getElementById(id);
+
 function setStatus(ok, txt) {
   $('dot').className = 'dot ' + (ok ? 'ok' : 'err');
   $('status-txt').textContent = txt;
 }
+
 function toast(msg, type='ok') {
   const tc = $('tc'), el = document.createElement('div');
   el.className = `toast t-${type}`;
@@ -319,82 +277,58 @@ function toast(msg, type='ok') {
   requestAnimationFrame(() => el.classList.add('show'));
   setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 350); }, 3500);
 }
+
 function nav(name, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   $('s-' + name).classList.add('active');
   if (btn) btn.classList.add('active');
 }
+
 function closeMo() { $('mo').classList.remove('open'); }
-function closeCd() { $('cd').classList.remove('open'); pendingDeleteId = null; }
-document.addEventListener('keydown', e => { if (e.key==='Escape') { closeMo(); closeCd(); } });
+function closeCd() { $('cd').classList.remove('open'); }
+document.addEventListener('keydown', e => { if(e.key==='Escape'){closeMo();closeCd();} });
 
-// ── INIT SUPABASE ────────────────────────────────
-function initClient(url, key) {
-  // Le SDK v3 expose supabase.createClient OU window.supabase.createClient
-  const factory = (typeof supabase !== 'undefined')
-    ? (supabase.createClient || supabase.default?.createClient)
-    : null;
-  if (!factory) throw new Error("SDK Supabase non chargé");
-  return factory(url, key);
-}
-
-async function boot() {
-  setStatus(false, 'Connexion à Supabase…');
+function boot() {
+  setStatus(false, 'Connexion…');
   try {
-    sb = initClient(SB_URL, SB_KEY);
-
-    // Test connexion — simple health ping
-    const { error } = await sb.from('profils').select('id').limit(1);
-
-    if (error) {
-      // RLS peut bloquer — on vérifie si c'est un 403 RLS ou une vraie erreur d'auth
-      if (error.code === 'PGRST301' || error.message?.includes('JWT') || error.message?.includes('apikey')) {
-        throw new Error('Clé invalide : ' + error.message);
+    sb = supabase.createClient(SB_URL, SB_KEY, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+        storage: memoryStorage   // ← faux storage, aucun accès natif au navigateur
       }
-      // Sinon RLS — connexion OK quand même
-      console.warn('RLS note:', error.message);
-    }
-
+    });
     setStatus(true, 'Connecté · ' + SB_URL.replace('https://','').split('.')[0]);
-    toast('Connecté à Supabase ✓', 'ok');
-    await loadProfils();
-    await loadSignalements();
+    toast('Connecté ✓', 'ok');
+    loadProfils();
+    loadSignalements();
   } catch(e) {
     setStatus(false, 'Erreur : ' + e.message);
-    toast('Connexion échouée : ' + e.message, 'err');
-    $('tb-profils').innerHTML = `<tr><td colspan="6" class="empty">${e.message}</td></tr>`;
-    console.error('Supabase boot error:', e);
+    toast('Erreur : ' + e.message, 'err');
   }
 }
 
 function reconnect() { boot(); }
 
-// ── CHARGER PROFILS ──────────────────────────────
-async function loadProfils() {
-  if (!sb) { toast('Non connecté', 'err'); return; }
-  const icon = $('ri'); icon.classList.add('spin');
+const pratiquesLabel = {
+  en_cheminement:'🌱 Cheminement', pratiquant:'⭐ Pratiquant',
+  pratiquant_assidu:'⭐⭐ Assidu', tres_pratiquant:'⭐⭐⭐ Sounnah',
+};
 
+async function loadProfils() {
+  if (!sb) return;
+  const icon = $('ri'); icon.classList.add('spin');
   const { data, error } = await sb
     .from('profils')
-    .select(`
-      utilisateur_id, prenom, age, pays, ville,
-      profession, situation, niveau_pratique,
-      profil_valide, profil_en_revue,
-      description, mots_cles, pratiques,
-      created_at,
-      utilisateurs ( genre, email, compte_actif )
-    `)
+    .select(`utilisateur_id,prenom,age,pays,ville,profession,situation,
+             niveau_pratique,profil_valide,profil_en_revue,
+             description,mots_cles,pratiques,created_at,
+             utilisateurs(genre,email,compte_actif)`)
     .order('created_at', { ascending: false });
-
   icon.classList.remove('spin');
-
-  if (error) {
-    toast('Erreur : ' + error.message, 'err');
-    $('tb-profils').innerHTML = `<tr><td colspan="6" class="empty">${error.message}</td></tr>`;
-    return;
-  }
-
+  if (error) { toast('Erreur : ' + error.message, 'err'); return; }
   allProfils = data || [];
   renderProfils(allProfils);
   updateStats(allProfils);
@@ -403,76 +337,54 @@ async function loadProfils() {
 function updateStats(data) {
   $('sn-total').textContent = data.length;
   $('sn-pend').textContent  = data.filter(p => !p.profil_valide).length;
-  $('sn-valid').textContent = data.filter(p => p.profil_valide).length;
+  $('sn-valid').textContent = data.filter(p =>  p.profil_valide).length;
   $('sn-f').textContent     = data.filter(p => p.utilisateurs?.genre === 'homme').length;
   $('nc-pending').textContent = data.filter(p => !p.profil_valide).length;
 }
 
-const pratiquesLabel = {
-  en_cheminement:    '🌱 Cheminement',
-  pratiquant:        '⭐ Pratiquant',
-  pratiquant_assidu: '⭐⭐ Assidu',
-  tres_pratiquant:   '⭐⭐⭐ Sounnah',
-};
-
 function renderProfils(data) {
   const tb = $('tb-profils');
-  if (!data.length) {
-    tb.innerHTML = '<tr><td colspan="6" class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Aucun profil</td></tr>';
-    return;
-  }
+  if (!data.length) { tb.innerHTML = '<tr><td colspan="5" class="empty">Aucun profil</td></tr>'; return; }
   tb.innerHTML = data.map(p => {
     const genre = p.utilisateurs?.genre || '';
     const val   = p.profil_valide;
     const prat  = pratiquesLabel[p.niveau_pratique] || p.niveau_pratique || '—';
+    const id    = p.utilisateur_id;
     return `<tr>
       <td>
-        <div style="font-weight:500;color:var(--text)">${p.prenom || '—'}</div>
-        <div style="font-size:.7rem;color:var(--text-d);margin-top:1px">${p.utilisateurs?.email || ''}</div>
-      </td>
-      <td><span class="b ${genre==='homme'?'b-h':'b-f'}"><span class="b-dot"></span>${genre==='homme'?'Frère':'Sœur'}</span></td>
-      <td style="color:var(--text-m)">${p.ville||'—'}, ${p.pays||'—'}</td>
-      <td style="font-size:.76rem">${prat}</td>
-      <td><span class="b ${val?'b-ok':'b-wait'}"><span class="b-dot"></span>${val?'Validé':'En attente'}</span></td>
-      <td>
+        <div style="font-weight:500;color:var(--text)">${p.prenom||'—'}</div>
+        <div style="font-size:.7rem;color:var(--text-d);margin-top:1px">${p.utilisateurs?.email||''}</div>
         <div class="acts">
           ${!val
-            ? `<button class="ab ab-val" onclick="valider('${p.utilisateur_id}')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Valider
-               </button>`
-            : `<button class="ab ab-inv" onclick="invalider('${p.utilisateur_id}')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Retirer
-               </button>`}
-          <button class="ab ab-eye" onclick="voir('${p.utilisateur_id}')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Voir
-          </button>
-          <button class="ab ab-del" onclick="confirmerSuppr('${p.utilisateur_id}')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Sup.
-          </button>
+            ? `<button class="ab ab-val" onclick="valider('${id}')">✓ Valider</button>`
+            : `<button class="ab ab-inv" onclick="invalider('${id}')">✕ Retirer</button>`}
+          <button class="ab ab-eye" onclick="voir('${id}')">👁 Voir</button>
+          <button class="ab ab-del" onclick="confirmerSuppr('${id}')">🗑</button>
         </div>
       </td>
+      <td><span class="b ${genre==='homme'?'b-h':'b-f'}"><span class="b-dot"></span>${genre==='homme'?'Frère':'Sœur'}</span></td>
+      <td class="col-loc">${p.ville||'—'}, ${p.pays||'—'}</td>
+      <td class="col-prat" style="font-size:.76rem">${prat}</td>
+      <td><span class="b ${val?'b-ok':'b-wait'}"><span class="b-dot"></span>${val?'Validé':'En attente'}</span></td>
     </tr>`;
   }).join('');
 }
 
-// ── FILTRES ──────────────────────────────────────
 function filter() {
   const q  = $('q-search').value.toLowerCase();
   const g  = $('q-genre').value;
   const st = $('q-status').value;
-  const res = allProfils.filter(p => {
+  renderProfils(allProfils.filter(p => {
     const genre = p.utilisateurs?.genre || '';
-    const txt   = `${p.prenom} ${p.ville} ${p.pays} ${p.utilisateurs?.email||''}`.toLowerCase();
+    const txt = `${p.prenom} ${p.ville} ${p.pays} ${p.utilisateurs?.email||''}`.toLowerCase();
     if (q && !txt.includes(q)) return false;
     if (g && genre !== g) return false;
     if (st === '0' && p.profil_valide) return false;
     if (st === '1' && !p.profil_valide) return false;
     return true;
-  });
-  renderProfils(res);
+  }));
 }
 
-// ── ACTIONS ──────────────────────────────────────
 async function valider(id) {
   const { error } = await sb.from('profils')
     .update({ profil_valide: true, profil_en_revue: false })
@@ -487,20 +399,19 @@ async function invalider(id) {
     .update({ profil_valide: false, profil_en_revue: true })
     .eq('utilisateur_id', id);
   if (error) { toast('Erreur : ' + error.message, 'err'); return; }
-  toast('Profil retiré de la validation', 'ok');
+  toast('Profil retiré', 'ok');
   loadProfils();
 }
 
 function confirmerSuppr(id) {
-  pendingDeleteId = id;
   $('cd').classList.add('open');
   $('cd-confirm').onclick = () => supprimer(id);
 }
 
 async function supprimer(id) {
   closeCd();
-  const { error: pe } = await sb.from('profils').delete().eq('utilisateur_id', id);
-  if (pe) { toast('Erreur : ' + pe.message, 'err'); return; }
+  const { error } = await sb.from('profils').delete().eq('utilisateur_id', id);
+  if (error) { toast('Erreur : ' + error.message, 'err'); return; }
   await sb.from('utilisateurs').delete().eq('id', id);
   toast('Profil supprimé', 'ok');
   loadProfils();
@@ -510,122 +421,53 @@ function voir(id) {
   const p = allProfils.find(x => x.utilisateur_id === id);
   if (!p) return;
   const rows = [
-    ['Prénom',       p.prenom],
-    ['Âge',          p.age + ' ans'],
-    ['Pays',         p.pays],
-    ['Ville',        p.ville],
-    ['Profession',   p.profession],
-    ['Situation',    p.situation],
-    ['Enfants',      p.nb_enfants ?? '—'],
-    ['Pratique',     pratiquesLabel[p.niveau_pratique] || p.niveau_pratique],
-    ['Pratiques',    (p.pratiques||[]).join(', ') || '—'],
-    ['Mots-clés',    (p.mots_cles||[]).join(', ') || '—'],
-    ['Description',  p.description],
-    ['Statut',       p.profil_valide ? '✅ Validé' : '⏳ En attente'],
-    ['E-mail',       p.utilisateurs?.email],
-    ['Créé le',      p.created_at ? new Date(p.created_at).toLocaleString('fr-FR') : '—'],
+    ['Prénom', p.prenom], ['Âge', p.age ? p.age+' ans' : null],
+    ['Pays', p.pays], ['Ville', p.ville], ['Profession', p.profession],
+    ['Situation', p.situation], ['Pratique', pratiquesLabel[p.niveau_pratique]||p.niveau_pratique],
+    ['Description', p.description], ['Statut', p.profil_valide?'✅ Validé':'⏳ En attente'],
+    ['E-mail', p.utilisateurs?.email],
+    ['Créé le', p.created_at ? new Date(p.created_at).toLocaleString('fr-FR') : '—'],
   ];
   $('mo-content').innerHTML = `
     <h3 style="font-family:var(--ffd);font-size:1.4rem;color:var(--gold);margin-bottom:16px">${p.prenom||'Profil'}</h3>
-    ${rows.filter(([,v])=>v!=null&&v!=='').map(([k,v])=>`<div class="mf"><div class="mk">${k}</div><div class="mv">${v}</div></div>`).join('')}
-  `;
+    ${rows.filter(([,v])=>v!=null&&v!=='').map(([k,v])=>`<div class="mf"><div class="mk">${k}</div><div class="mv">${v}</div></div>`).join('')}`;
   $('mo').classList.add('open');
 }
 
-// ── SIGNALEMENTS ─────────────────────────────────
 async function loadSignalements() {
   if (!sb) return;
-  const { data, error } = await sb
-    .from('signalements')
-    .select('*')
-    .order('created_at', { ascending: false })
-    .limit(50);
-
-  if (error) { $('tb-reports').innerHTML = `<tr><td colspan="5" class="empty">${error.message}</td></tr>`; return; }
-
-  const nb = (data||[]).filter(r => r.statut === 'en_cours').length;
-  $('nc-reports').textContent = nb;
-
-  if (!data?.length) { $('tb-reports').innerHTML = '<tr><td colspan="5" class="empty">Aucun signalement</td></tr>'; return; }
-
-  $('tb-reports').innerHTML = data.map(r => `
+  const { data, error } = await sb.from('signalements').select('*').order('created_at',{ascending:false}).limit(50);
+  if (error) return;
+  $('nc-reports').textContent = (data||[]).filter(r=>r.statut==='en_cours').length;
+  if (!data?.length) return;
+  $('tb-reports').innerHTML = data.map(r=>`
     <tr>
       <td><span class="b b-wait">${r.motif||'—'}</span></td>
       <td style="font-size:.78rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.description||'—'}</td>
       <td><span class="b ${r.statut==='resolu'?'b-ok':'b-wait'}">${r.statut||'—'}</span></td>
-      <td style="font-size:.72rem;color:var(--text-d)">${r.created_at ? new Date(r.created_at).toLocaleDateString('fr-FR') : '—'}</td>
-      <td>
-        <div class="acts">
-          <button class="ab ab-val" onclick="resolveRep('${r.id}')">Résoudre</button>
-          <button class="ab ab-del" onclick="rejectRep('${r.id}')">Rejeter</button>
-        </div>
-      </td>
-    </tr>
-  `).join('');
+      <td style="font-size:.72rem;color:var(--text-d)">${r.created_at?new Date(r.created_at).toLocaleDateString('fr-FR'):'—'}</td>
+      <td><div class="acts">
+        <button class="ab ab-val" onclick="resolveRep('${r.id}')">Résoudre</button>
+        <button class="ab ab-del" onclick="rejectRep('${r.id}')">Rejeter</button>
+      </div></td>
+    </tr>`).join('');
 }
 
 async function resolveRep(id) {
-  await sb.from('signalements').update({ statut:'resolu', resolu_at: new Date().toISOString() }).eq('id', id);
-  toast('Signalement résolu', 'ok');
-  loadSignalements();
+  await sb.from('signalements').update({statut:'resolu',resolu_at:new Date().toISOString()}).eq('id',id);
+  toast('Résolu','ok'); loadSignalements();
 }
 async function rejectRep(id) {
-  await sb.from('signalements').update({ statut:'rejete' }).eq('id', id);
-  toast('Signalement rejeté', 'ok');
-  loadSignalements();
+  await sb.from('signalements').update({statut:'rejete'}).eq('id',id);
+  toast('Rejeté','ok'); loadSignalements();
 }
-</script>
 
-<!--
-  On charge d'abord le SDK Supabase v3 (nouveau format sb_publishable_).
-  Si v3 non dispo, on tombe sur v2 via fallback.
-  La clé sb_publishable_ est supportée nativement par le SDK v3.
--->
-<script>
-// Chargeur dynamique : essaie v3, puis v2 si échec
-(function() {
-  function tryV3() {
-    return new Promise((res, rej) => {
-      const s = document.createElement('script');
-      // SDK v3 latest (supporte sb_publishable_)
-      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest/dist/umd/supabase.js';
-      s.onload = () => {
-        console.log('SDK Supabase v3 chargé');
-        res();
-      };
-      s.onerror = rej;
-      document.head.appendChild(s);
-    });
-  }
-
-  function tryV2() {
-    return new Promise((res, rej) => {
-      const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
-      s.onload = () => {
-        console.log('SDK Supabase v2 chargé (fallback)');
-        res();
-      };
-      s.onerror = rej;
-      document.head.appendChild(s);
-    });
-  }
-
-  tryV3()
-    .catch(() => tryV2())
-    .then(() => {
-      // Boot une fois le SDK chargé
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', boot);
-      } else {
-        boot();
-      }
-    })
-    .catch(e => {
-      document.getElementById('tb-profils').innerHTML =
-        `<tr><td colspan="6" class="empty">Impossible de charger le SDK Supabase : ${e.message}</td></tr>`;
-    });
-})();
+// Lancer après chargement du SDK
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
 </script>
 
 </body>

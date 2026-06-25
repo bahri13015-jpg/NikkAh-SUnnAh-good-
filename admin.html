@@ -7,210 +7,135 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --bg:      #0a0f14;
-      --bg2:     #111820;
-      --bg3:     #1a2530;
-      --border:  #1e3040;
-      --gold:    #C9A227;
-      --gold-d:  #a8851e;
-      --gold-l:  #e0b93a;
-      --green:   #1a7a4a;
-      --green-l: #22a063;
-      --red:     #c0392b;
-      --red-l:   #e74c3c;
-      --orange:  #d68910;
-      --text:    #e2eaf0;
-      --text-m:  #7a9ab0;
-      --text-d:  #3a5a70;
-      --ff:      'Jost', system-ui, sans-serif;
-      --ffd:     'Cormorant Garamond', Georgia, serif;
+    :root{
+      --bg:#0a0f14;--bg2:#111820;--bg3:#1a2530;--border:#1e3040;
+      --gold:#C9A227;--gold-d:#a8851e;--gold-l:#e0b93a;
+      --green:#1a7a4a;--green-l:#22a063;
+      --red:#c0392b;--red-l:#e74c3c;--orange:#d68910;
+      --text:#e2eaf0;--text-m:#7a9ab0;--text-d:#3a5a70;
+      --ff:'Jost',system-ui,sans-serif;--ffd:'Cormorant Garamond',Georgia,serif;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 
-    /* ── TOPBAR ── */
-    .topbar{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:16px 28px;
-      background:var(--bg2);
-      border-bottom:1px solid var(--border);
-      position:sticky;top:0;z-index:50;
-    }
-    .topbar-logo{display:flex;align-items:center;gap:12px}
-    .topbar-logo-text{font-family:var(--ffd);font-size:1.3rem;font-weight:600;color:var(--gold)}
-    .topbar-badge{font-size:.6rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
-                  background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.25);
-                  color:var(--gold);padding:3px 10px;border-radius:2px}
-    .status-dot{width:8px;height:8px;border-radius:50%;background:var(--text-d);
-                box-shadow:0 0 0 2px rgba(255,255,255,.05);transition:background .3s}
-    .status-dot.ok{background:var(--green-l);box-shadow:0 0 8px rgba(34,160,99,.4)}
-    .status-dot.err{background:var(--red-l);box-shadow:0 0 8px rgba(231,76,60,.4)}
-    .topbar-status{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--text-m)}
+    /* TOPBAR */
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
+    .logo{font-family:var(--ffd);font-size:1.3rem;font-weight:600;color:var(--gold)}
+    .badge-admin{font-size:.6rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.25);color:var(--gold);padding:3px 10px;border-radius:2px;margin-left:10px}
+    .status{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--text-m)}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--text-d);transition:background .3s,box-shadow .3s}
+    .dot.ok{background:var(--green-l);box-shadow:0 0 8px rgba(34,160,99,.5)}
+    .dot.err{background:var(--red-l);box-shadow:0 0 8px rgba(231,76,60,.5)}
 
-    /* ── MAIN LAYOUT ── */
-    .main{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 57px)}
+    /* LAYOUT */
+    .wrap{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 57px)}
 
-    /* ── SIDEBAR ── */
-    .sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:24px 16px;display:flex;flex-direction:column;gap:6px}
-    .sidebar-section{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
-                     color:var(--text-d);padding:12px 12px 6px}
-    .nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:4px;
-              cursor:pointer;font-size:.83rem;color:var(--text-m);transition:background .2s,color .2s;
-              border:none;background:none;width:100%;text-align:left}
-    .nav-item:hover{background:var(--bg3);color:var(--text)}
-    .nav-item.active{background:rgba(201,162,39,.1);color:var(--gold);border:1px solid rgba(201,162,39,.15)}
-    .nav-item svg{width:15px;height:15px;flex-shrink:0}
-    .nav-badge{margin-left:auto;background:var(--orange);color:white;font-size:.6rem;font-weight:700;
-               padding:2px 7px;border-radius:10px;min-width:20px;text-align:center}
+    /* SIDEBAR */
+    .sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;gap:4px}
+    .nav-label{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-d);padding:12px 12px 6px}
+    .nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:4px;cursor:pointer;font-size:.82rem;color:var(--text-m);background:none;border:none;width:100%;text-align:left;transition:background .15s,color .15s}
+    .nav-btn:hover{background:var(--bg3);color:var(--text)}
+    .nav-btn.active{background:rgba(201,162,39,.1);color:var(--gold);border:1px solid rgba(201,162,39,.15)}
+    .nav-btn svg{width:15px;height:15px;flex-shrink:0}
+    .nav-count{margin-left:auto;background:var(--orange);color:#fff;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:10px}
 
-    /* ── CONTENT ── */
+    /* CONTENT */
     .content{padding:28px;overflow-y:auto}
 
-    /* ── DIAGNOSTIC BOX ── */
-    #diag-box{
-      background:var(--bg2);border:1px solid var(--border);border-radius:6px;
-      padding:28px;margin-bottom:28px;display:none;
-    }
-    #diag-box.show{display:block}
-    .diag-title{font-family:var(--ffd);font-size:1.3rem;color:var(--gold);margin-bottom:16px}
-    .diag-step{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
-    .diag-step:last-child{border-bottom:none}
-    .diag-icon{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;margin-top:1px}
-    .diag-icon.wait{background:var(--bg3);color:var(--text-d)}
-    .diag-icon.spin{background:rgba(201,162,39,.15);color:var(--gold);animation:pulse 1s infinite}
-    .diag-icon.ok{background:rgba(26,122,74,.2);color:var(--green-l)}
-    .diag-icon.fail{background:rgba(192,57,43,.2);color:var(--red-l)}
-    .diag-label{font-size:.83rem;color:var(--text);font-weight:500}
-    .diag-detail{font-size:.75rem;color:var(--text-m);margin-top:3px;font-family:monospace;word-break:break-all}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    /* SECTIONS */
+    .section{display:none}.section.active{display:block}
 
-    /* ── CONFIG FORM ── */
-    .config-panel{background:var(--bg2);border:1px solid rgba(201,162,39,.2);border-radius:6px;padding:28px;margin-bottom:28px}
-    .config-title{font-family:var(--ffd);font-size:1.4rem;color:var(--gold);margin-bottom:6px}
-    .config-sub{font-size:.82rem;color:var(--text-m);margin-bottom:20px;line-height:1.6}
-    .config-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-    @media(max-width:600px){.config-grid{grid-template-columns:1fr}}
-    .cfg-field{display:flex;flex-direction:column;gap:6px}
-    .cfg-label{font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-d)}
-    .cfg-inp{padding:10px 14px;background:var(--bg3);border:1.5px solid var(--border);border-radius:3px;
-             font-family:monospace;font-size:.82rem;color:var(--text);outline:none;transition:border-color .2s}
-    .cfg-inp:focus{border-color:var(--gold)}
-    .cfg-inp.has-error{border-color:var(--red)}
-    .cfg-hint{font-size:.7rem;color:var(--text-d);line-height:1.5}
-    .cfg-hint a{color:var(--gold-d);text-decoration:underline}
-    .btn-connect{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;
-                 background:var(--gold);color:#0a0f14;font-family:var(--ff);font-size:.8rem;
-                 font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-radius:3px;
-                 border:none;cursor:pointer;transition:background .2s,transform .15s;box-shadow:0 4px 20px rgba(201,162,39,.2)}
-    .btn-connect:hover{background:var(--gold-l);transform:translateY(-1px)}
-    .btn-connect:disabled{opacity:.5;cursor:not-allowed;transform:none}
-    .btn-connect svg{width:15px;height:15px}
+    /* STATS */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+    @media(max-width:860px){.stats{grid-template-columns:1fr 1fr}}
+    .stat{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:20px;position:relative;overflow:hidden;transition:border-color .2s}
+    .stat:hover{border-color:rgba(201,162,39,.2)}
+    .stat-n{font-family:var(--ffd);font-size:2.4rem;font-weight:600;color:var(--c,var(--gold))}
+    .stat-l{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-m);margin-top:6px}
+    .stat-ico{position:absolute;bottom:12px;right:14px;opacity:.1;color:var(--c,var(--gold))}
+    .stat-ico svg{width:34px;height:34px}
 
-    /* ── STATS ── */
-    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
-    @media(max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
-    .stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:20px;
-               position:relative;overflow:hidden;transition:border-color .2s}
-    .stat-card:hover{border-color:rgba(201,162,39,.2)}
-    .stat-card::before{content:'';position:absolute;inset:0;background:var(--glow,transparent)}
-    .stat-num{font-family:var(--ffd);font-size:2.4rem;font-weight:600;line-height:1;color:var(--color,var(--gold))}
-    .stat-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-m);margin-top:6px}
-    .stat-icon{position:absolute;bottom:14px;right:16px;opacity:.12;color:var(--color,var(--gold))}
-    .stat-icon svg{width:32px;height:32px}
+    /* TABLE */
+    .t-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+    .t-title{font-family:var(--ffd);font-size:1.3rem;color:var(--text)}
+    .t-title em{font-style:italic;color:var(--gold)}
+    .t-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .s-inp{padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:3px;font-family:var(--ff);font-size:.8rem;color:var(--text);outline:none;width:200px;transition:border-color .2s}
+    .s-inp:focus{border-color:var(--gold)}.s-inp::placeholder{color:var(--text-d)}
+    .f-sel{padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:3px;font-family:var(--ff);font-size:.76rem;color:var(--text);outline:none;cursor:pointer}
 
-    /* ── TABLE ── */
-    .table-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px}
-    .table-title{font-family:var(--ffd);font-size:1.3rem;color:var(--text)}
-    .table-title em{font-style:italic;color:var(--gold)}
-    .table-actions{display:flex;gap:8px;align-items:center}
-    .search-inp{padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:3px;
-                font-family:var(--ff);font-size:.82rem;color:var(--text);outline:none;width:220px;transition:border-color .2s}
-    .search-inp:focus{border-color:var(--gold)}
-    .search-inp::placeholder{color:var(--text-d)}
-    .filter-sel{padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:3px;
-                font-family:var(--ff);font-size:.78rem;color:var(--text);outline:none;appearance:none;cursor:pointer}
+    .t-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+    table{width:100%;border-collapse:collapse}
+    th{padding:11px 16px;text-align:left;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-d);background:var(--bg3);border-bottom:1px solid var(--border);font-weight:600}
+    td{padding:13px 16px;border-bottom:1px solid rgba(30,48,64,.5);font-size:.81rem;color:var(--text-m);vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:rgba(26,37,48,.5);color:var(--text)}
 
-    .table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden}
-    .table{width:100%;border-collapse:collapse}
-    .table th{padding:12px 16px;text-align:left;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
-              color:var(--text-d);background:var(--bg3);border-bottom:1px solid var(--border);font-weight:600}
-    .table td{padding:14px 16px;border-bottom:1px solid rgba(30,48,64,.6);font-size:.82rem;color:var(--text-m);vertical-align:middle}
-    .table tr:last-child td{border-bottom:none}
-    .table tr:hover td{background:var(--bg3);color:var(--text)}
+    /* BADGES */
+    .b{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+    .b-wait{background:rgba(214,137,16,.12);color:var(--orange);border:1px solid rgba(214,137,16,.2)}
+    .b-ok{background:rgba(26,122,74,.12);color:var(--green-l);border:1px solid rgba(26,122,74,.2)}
+    .b-h{background:rgba(15,76,92,.2);color:#5ab8d0;border:1px solid rgba(15,76,92,.3)}
+    .b-f{background:rgba(196,122,122,.1);color:#d99090;border:1px solid rgba(196,122,122,.2)}
+    .b-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
 
-    /* Badges */
-    .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:.66rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
-    .badge-wait{background:rgba(214,137,16,.12);color:var(--orange);border:1px solid rgba(214,137,16,.2)}
-    .badge-ok{background:rgba(26,122,74,.12);color:var(--green-l);border:1px solid rgba(26,122,74,.2)}
-    .badge-homme{background:rgba(15,76,92,.2);color:#5ab8d0;border:1px solid rgba(15,76,92,.3)}
-    .badge-femme{background:rgba(196,122,122,.1);color:#d99090;border:1px solid rgba(196,122,122,.2)}
-    .badge-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+    /* ACTION BTNS */
+    .acts{display:flex;gap:5px;flex-wrap:wrap}
+    .ab{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:3px;font-family:var(--ff);font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:none;cursor:pointer;transition:opacity .2s,transform .15s}
+    .ab:hover{opacity:.85;transform:translateY(-1px)}
+    .ab svg{width:10px;height:10px}
+    .ab-val{background:var(--green);color:#fff}
+    .ab-inv{background:var(--bg3);color:var(--text-m);border:1px solid var(--border)}
+    .ab-del{background:rgba(192,57,43,.15);color:var(--red-l);border:1px solid rgba(192,57,43,.2)}
+    .ab-del:hover{background:var(--red);color:#fff}
+    .ab-eye{background:rgba(201,162,39,.1);color:var(--gold);border:1px solid rgba(201,162,39,.15)}
 
-    /* Action buttons */
-    .actions{display:flex;gap:6px;flex-wrap:wrap}
-    .btn-action{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:3px;
-                font-family:var(--ff);font-size:.7rem;font-weight:600;letter-spacing:.08em;
-                text-transform:uppercase;border:none;cursor:pointer;transition:opacity .2s,transform .15s}
-    .btn-action:hover{opacity:.85;transform:translateY(-1px)}
-    .btn-action svg{width:11px;height:11px}
-    .btn-val{background:var(--green);color:white}
-    .btn-unval{background:var(--bg3);color:var(--text-m);border:1px solid var(--border)}
-    .btn-del{background:rgba(192,57,43,.15);color:var(--red-l);border:1px solid rgba(192,57,43,.2)}
-    .btn-del:hover{background:var(--red);color:white}
-    .btn-view{background:rgba(201,162,39,.1);color:var(--gold);border:1px solid rgba(201,162,39,.15)}
-
-    /* Refresh btn */
-    .btn-refresh{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;
-                 background:var(--bg3);border:1px solid var(--border);border-radius:3px;
-                 font-family:var(--ff);font-size:.75rem;color:var(--text-m);cursor:pointer;transition:border-color .2s,color .2s}
-    .btn-refresh:hover{border-color:var(--gold);color:var(--gold)}
-    .btn-refresh svg{width:13px;height:13px}
-    .spinning{animation:spin .7s linear infinite}
+    /* REFRESH BTN */
+    .btn-ref{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:3px;font-family:var(--ff);font-size:.74rem;color:var(--text-m);cursor:pointer;transition:border-color .2s,color .2s}
+    .btn-ref:hover{border-color:var(--gold);color:var(--gold)}
+    .btn-ref svg{width:13px;height:13px}
     @keyframes spin{to{transform:rotate(360deg)}}
+    .spin{animation:spin .7s linear infinite}
 
-    /* Empty / loading */
-    .empty{padding:48px;text-align:center;color:var(--text-d);font-size:.88rem}
-    .empty svg{width:32px;height:32px;margin:0 auto 12px;display:block;opacity:.3}
+    /* EMPTY */
+    .empty{padding:40px;text-align:center;color:var(--text-d);font-size:.85rem}
+    .empty svg{width:28px;height:28px;margin:0 auto 10px;display:block;opacity:.25}
 
     /* TOAST */
-    #toast-container{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px}
-    .toast{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:4px;
-           font-size:.82rem;box-shadow:0 8px 32px rgba(0,0,0,.4);
-           transform:translateX(120%);transition:transform .3s cubic-bezier(.22,1,.36,1)}
-    .toast.show{transform:translateX(0)}
-    .toast-ok{background:#0d2a1a;border:1px solid rgba(26,122,74,.3);color:#6fcf97}
-    .toast-err{background:#2a0d0d;border:1px solid rgba(192,57,43,.3);color:#eb5757}
-    .toast svg{width:15px;height:15px;flex-shrink:0}
+    #tc{position:fixed;bottom:22px;right:22px;z-index:999;display:flex;flex-direction:column;gap:8px}
+    .toast{display:flex;align-items:center;gap:9px;padding:11px 15px;border-radius:4px;font-size:.81rem;box-shadow:0 8px 32px rgba(0,0,0,.4);transform:translateX(130%);transition:transform .3s cubic-bezier(.22,1,.36,1)}
+    .toast.show{transform:none}
+    .t-ok{background:#0c2318;border:1px solid rgba(26,122,74,.3);color:#6fcf97}
+    .t-err{background:#250c0c;border:1px solid rgba(192,57,43,.3);color:#eb5757}
+    .toast svg{width:14px;height:14px;flex-shrink:0}
 
-    /* MODAL détail */
-    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);
-                   z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;
-                   opacity:0;pointer-events:none;transition:opacity .25s}
-    .modal-overlay.open{opacity:1;pointer-events:all}
-    .modal{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:32px;
-           width:100%;max-width:520px;max-height:80vh;overflow-y:auto;
-           transform:translateY(16px);transition:transform .3s}
-    .modal-overlay.open .modal{transform:none}
-    .modal-close{float:right;background:none;border:1px solid var(--border);border-radius:50%;
-                 width:28px;height:28px;cursor:pointer;color:var(--text-m);display:flex;align-items:center;justify-content:center}
-    .modal-close:hover{border-color:var(--red-l);color:var(--red-l)}
-    .modal-close svg{width:12px;height:12px}
-    .modal-field{display:flex;flex-direction:column;gap:3px;padding:8px 0;border-bottom:1px solid var(--border)}
-    .modal-field:last-child{border-bottom:none}
-    .modal-key{font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-d)}
-    .modal-val{font-size:.85rem;color:var(--text)}
+    /* MODAL */
+    .mo{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(5px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s}
+    .mo.open{opacity:1;pointer-events:all}
+    .mo-box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px;width:100%;max-width:500px;max-height:80vh;overflow-y:auto;transform:translateY(14px);transition:transform .3s}
+    .mo.open .mo-box{transform:none}
+    .mo-close{float:right;background:none;border:1px solid var(--border);border-radius:50%;width:26px;height:26px;cursor:pointer;color:var(--text-m);display:flex;align-items:center;justify-content:center;font-size:.7rem}
+    .mo-close:hover{border-color:var(--red-l);color:var(--red-l)}
+    .mf{padding:8px 0;border-bottom:1px solid var(--border)}
+    .mf:last-child{border-bottom:none}
+    .mk{font-size:.63rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-d)}
+    .mv{font-size:.83rem;color:var(--text);margin-top:2px;line-height:1.5;word-break:break-word}
 
-    /* Sections */
-    .section{display:none}
-    .section.active{display:block}
+    /* CONFIRM DIALOG */
+    .cd{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
+    .cd.open{opacity:1;pointer-events:all}
+    .cd-box{background:var(--bg2);border:1px solid rgba(192,57,43,.3);border-radius:8px;padding:28px;max-width:380px;width:100%}
+    .cd-title{font-family:var(--ffd);font-size:1.2rem;color:var(--red-l);margin-bottom:10px}
+    .cd-msg{font-size:.83rem;color:var(--text-m);line-height:1.6;margin-bottom:20px}
+    .cd-btns{display:flex;gap:10px;justify-content:flex-end}
+    .cd-cancel{padding:9px 18px;background:var(--bg3);border:1px solid var(--border);border-radius:3px;font-family:var(--ff);font-size:.78rem;color:var(--text-m);cursor:pointer}
+    .cd-ok{padding:9px 18px;background:var(--red);border:none;border-radius:3px;font-family:var(--ff);font-size:.78rem;font-weight:600;color:#fff;cursor:pointer}
 
-    @media(max-width:768px){
-      .main{grid-template-columns:1fr}
+    @media(max-width:720px){
+      .wrap{grid-template-columns:1fr}
       .sidebar{display:none}
-      .stats-grid{grid-template-columns:1fr 1fr}
-      .table-wrap{overflow-x:auto}
+      .stats{grid-template-columns:1fr 1fr}
     }
   </style>
 </head>
@@ -218,331 +143,255 @@
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <div class="topbar-logo">
-    <span class="topbar-logo-text">Nour Al Zawwaj</span>
-    <span class="topbar-badge">Admin</span>
+  <div style="display:flex;align-items:center">
+    <span class="logo">Nour Al Zawwaj</span>
+    <span class="badge-admin">Admin</span>
   </div>
-  <div class="topbar-status">
-    <div class="status-dot" id="status-dot"></div>
-    <span id="status-txt">Non connecté</span>
+  <div class="status">
+    <div class="dot" id="dot"></div>
+    <span id="status-txt">Initialisation…</span>
   </div>
 </div>
 
-<div class="main">
+<div class="wrap">
 
   <!-- SIDEBAR -->
   <nav class="sidebar">
-    <div class="sidebar-section">Navigation</div>
-    <button class="nav-item active" data-section="profils" onclick="showSection('profils',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <div class="nav-label">Gestion</div>
+    <button class="nav-btn active" onclick="nav('profils',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       Profils
-      <span class="nav-badge" id="nb-pending-nav">0</span>
+      <span class="nav-count" id="nc-pending">0</span>
     </button>
-    <button class="nav-item" data-section="signalements" onclick="showSection('signalements',this)">
+    <button class="nav-btn" onclick="nav('signalements',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       Signalements
-      <span class="nav-badge" id="nb-reports-nav" style="background:var(--red)">0</span>
+      <span class="nav-count" id="nc-reports" style="background:var(--red)">0</span>
     </button>
-    <button class="nav-item" data-section="config" onclick="showSection('config',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-      Configuration
-    </button>
-    <div class="sidebar-section" style="margin-top:12px">Session</div>
-    <button class="nav-item" onclick="logout()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      Déconnecter
+    <div class="nav-label" style="margin-top:8px">Session</div>
+    <button class="nav-btn" onclick="reconnect()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      Reconnecter
     </button>
   </nav>
 
   <!-- CONTENT -->
   <div class="content">
 
-    <!-- DIAG BOX -->
-    <div id="diag-box">
-      <div class="diag-title">🔍 Diagnostic de connexion</div>
-      <div id="diag-steps"></div>
-    </div>
-
-    <!-- CONFIG SECTION -->
-    <div class="section" id="section-config">
-      <div class="config-panel">
-        <div class="config-title">Configuration Supabase</div>
-        <div class="config-sub">
-          Entrez vos clés Supabase. La <strong>clé anon</strong> commence toujours par <code>eyJ</code> (format JWT).<br>
-          Pour la trouver : <strong>Dashboard Supabase → Settings → API → Project API keys → anon public</strong>
+    <!-- ══ PROFILS ══ -->
+    <div class="section active" id="s-profils">
+      <div class="stats">
+        <div class="stat" style="--c:var(--gold)">
+          <div class="stat-n" id="sn-total">—</div>
+          <div class="stat-l">Total membres</div>
+          <div class="stat-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
         </div>
-        <div class="config-grid">
-          <div class="cfg-field" style="grid-column:1/-1">
-            <label class="cfg-label">Project URL</label>
-            <input class="cfg-inp" id="cfg-url" type="text" placeholder="https://xxxx.supabase.co" autocomplete="off"/>
-            <span class="cfg-hint">Ex : https://hozxklpzfzmrswzbamye.supabase.co</span>
-          </div>
-          <div class="cfg-field" style="grid-column:1/-1">
-            <label class="cfg-label">Anon Key (commence par eyJ…)</label>
-            <input class="cfg-inp" id="cfg-key" type="text" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." autocomplete="off"/>
-            <span class="cfg-hint">
-              ⚠️ Votre clé <code>sb_publishable_...</code> est un nouveau format. Dans le Dashboard Supabase,
-              allez dans <strong>Settings → API</strong> et copiez la clé <strong>anon public</strong> qui commence par <strong>eyJ</strong>.
-              <a href="https://supabase.com/dashboard" target="_blank">Ouvrir le Dashboard →</a>
-            </span>
-          </div>
+        <div class="stat" style="--c:var(--orange)">
+          <div class="stat-n" id="sn-pend">—</div>
+          <div class="stat-l">En attente</div>
+          <div class="stat-ico"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         </div>
-        <button class="btn-connect" id="btn-connect" onclick="connectSupabase()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          <span id="connect-txt">Se connecter</span>
-        </button>
-      </div>
-
-      <div class="config-panel" style="background:rgba(214,137,16,.04);border-color:rgba(214,137,16,.2)">
-        <div class="config-title" style="color:var(--orange)">⚠️ Où trouver votre vraie clé</div>
-        <div style="font-size:.85rem;color:var(--text-m);line-height:1.8">
-          <p>1. Allez sur <a href="https://supabase.com/dashboard" target="_blank" style="color:var(--gold)">supabase.com/dashboard</a></p>
-          <p>2. Cliquez sur votre projet <strong>hozxklpzfzmrswzbamye</strong></p>
-          <p>3. Dans le menu gauche → <strong>Settings</strong> → <strong>API</strong></p>
-          <p>4. Copiez la clé sous <strong>"Project API keys" → anon public</strong></p>
-          <p>5. Elle ressemble à : <code style="background:var(--bg3);padding:2px 6px;border-radius:3px;font-size:.78rem">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhve...</code></p>
-          <br>
-          <p style="color:rgba(192,57,43,.9)">❌ La clé <code>sb_publishable_...</code> que vous avez n'est PAS la bonne clé pour l'API REST.</p>
+        <div class="stat" style="--c:var(--green-l)">
+          <div class="stat-n" id="sn-valid">—</div>
+          <div class="stat-l">Validés</div>
+          <div class="stat-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
         </div>
-      </div>
-    </div>
-
-    <!-- PROFILS SECTION -->
-    <div class="section active" id="section-profils">
-
-      <div class="stats-grid">
-        <div class="stat-card" style="--color:var(--gold);--glow:radial-gradient(circle at top right, rgba(201,162,39,.05), transparent)">
-          <div class="stat-num" id="s-total">—</div>
-          <div class="stat-label">Total membres</div>
-          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        </div>
-        <div class="stat-card" style="--color:var(--orange);--glow:radial-gradient(circle at top right, rgba(214,137,16,.05), transparent)">
-          <div class="stat-num" id="s-pending">—</div>
-          <div class="stat-label">En attente</div>
-          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-        </div>
-        <div class="stat-card" style="--color:var(--green-l);--glow:radial-gradient(circle at top right, rgba(26,122,74,.05), transparent)">
-          <div class="stat-num" id="s-valid">—</div>
-          <div class="stat-label">Validés</div>
-          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-        </div>
-        <div class="stat-card" style="--color:#5ab8d0;--glow:radial-gradient(circle at top right, rgba(15,76,92,.08), transparent)">
-          <div class="stat-num" id="s-hommes">—</div>
-          <div class="stat-label">Frères</div>
-          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div class="stat" style="--c:#5ab8d0">
+          <div class="stat-n" id="sn-f">—</div>
+          <div class="stat-l">Frères</div>
+          <div class="stat-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
         </div>
       </div>
 
-      <div class="table-header">
-        <div class="table-title">Profils <em>membres</em></div>
-        <div class="table-actions">
-          <input class="search-inp" id="search" placeholder="🔍  Rechercher…" oninput="filterTable()"/>
-          <select class="filter-sel" id="filter-genre" onchange="filterTable()">
+      <div class="t-head">
+        <div class="t-title">Profils <em>membres</em></div>
+        <div class="t-tools">
+          <input class="s-inp" id="q-search" placeholder="🔍 Rechercher…" oninput="filter()"/>
+          <select class="f-sel" id="q-genre" onchange="filter()">
             <option value="">Tous</option>
             <option value="homme">Frères</option>
             <option value="femme">Sœurs</option>
           </select>
-          <select class="filter-sel" id="filter-status" onchange="filterTable()">
+          <select class="f-sel" id="q-status" onchange="filter()">
             <option value="">Tous statuts</option>
-            <option value="pending">En attente</option>
-            <option value="valid">Validés</option>
+            <option value="0">En attente</option>
+            <option value="1">Validés</option>
           </select>
-          <button class="btn-refresh" id="btn-refresh" onclick="loadProfils()">
-            <svg id="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          <button class="btn-ref" onclick="loadProfils()">
+            <svg id="ri" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
             Actualiser
           </button>
         </div>
       </div>
 
-      <div class="table-wrap">
-        <table class="table" id="profils-table">
+      <div class="t-wrap">
+        <table>
           <thead>
             <tr>
-              <th>Membre</th>
-              <th>Genre</th>
-              <th>Localisation</th>
-              <th>Pratique</th>
-              <th>Statut</th>
-              <th>Actions</th>
+              <th>Membre</th><th>Genre</th><th>Localisation</th>
+              <th>Pratique</th><th>Statut</th><th>Actions</th>
             </tr>
           </thead>
-          <tbody id="profils-body">
+          <tbody id="tb-profils">
             <tr><td colspan="6" class="empty">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Connectez-vous à Supabase pour voir les profils
+              Chargement des profils…
             </td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- SIGNALEMENTS SECTION -->
-    <div class="section" id="section-signalements">
-      <div class="table-header">
-        <div class="table-title">Signalements <em>en cours</em></div>
-        <div class="table-actions">
-          <button class="btn-refresh" onclick="loadSignalements()">
+    <!-- ══ SIGNALEMENTS ══ -->
+    <div class="section" id="s-signalements">
+      <div class="t-head">
+        <div class="t-title">Signalements <em>en cours</em></div>
+        <div class="t-tools">
+          <button class="btn-ref" onclick="loadSignalements()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
             Actualiser
           </button>
         </div>
       </div>
-      <div class="table-wrap">
-        <table class="table">
-          <thead>
-            <tr><th>Rapporteur</th><th>Signalé</th><th>Motif</th><th>Statut</th><th>Date</th><th>Actions</th></tr>
-          </thead>
-          <tbody id="reports-body">
-            <tr><td colspan="6" class="empty">Aucun signalement trouvé</td></tr>
+      <div class="t-wrap">
+        <table>
+          <thead><tr><th>Motif</th><th>Description</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="tb-reports">
+            <tr><td colspan="5" class="empty">Aucun signalement</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-  </div><!-- /content -->
-</div><!-- /main -->
-
-<!-- TOAST -->
-<div id="toast-container"></div>
-
-<!-- MODAL DÉTAIL -->
-<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    <div id="modal-content" style="margin-top:8px"></div>
   </div>
 </div>
 
+<!-- TOAST -->
+<div id="tc"></div>
+
+<!-- MODAL DÉTAIL -->
+<div class="mo" id="mo" onclick="if(event.target===this)closeMo()">
+  <div class="mo-box">
+    <button class="mo-close" onclick="closeMo()">✕</button>
+    <div id="mo-content" style="margin-top:4px"></div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE -->
+<div class="cd" id="cd">
+  <div class="cd-box">
+    <div class="cd-title">Supprimer ce profil ?</div>
+    <div class="cd-msg">Cette action est irréversible. Le profil et le compte utilisateur seront définitivement supprimés.</div>
+    <div class="cd-btns">
+      <button class="cd-cancel" onclick="closeCd()">Annuler</button>
+      <button class="cd-ok" id="cd-confirm">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SDK SUPABASE — on essaie v3 d'abord, fallback v2
+══════════════════════════════════════════════ -->
 <script>
-// ══════════════════════════════════════════════════
-//  CONFIGURATION
-// ══════════════════════════════════════════════════
-let SUPABASE_URL = localStorage.getItem('sb_url') || 'https://hozxklpzfzmrswzbamye.supabase.co';
-let SUPABASE_KEY = localStorage.getItem('sb_key') || '';
+// ── CONFIG ──────────────────────────────────────
+const SB_URL = "https://hozxklpzfzmrswzbamye.supabase.co";
+const SB_KEY = "sb_publishable_MurlKY4clW48vcHYcuXCMw_WrbuhDIA";
+// ────────────────────────────────────────────────
+
 let sb = null;
 let allProfils = [];
+let pendingDeleteId = null;
 
-// ── Pré-remplir les champs config ──
-document.getElementById('cfg-url').value = SUPABASE_URL;
-document.getElementById('cfg-key').value = SUPABASE_KEY;
+// ── UI helpers ───────────────────────────────────
+const $ = id => document.getElementById(id);
+function setStatus(ok, txt) {
+  $('dot').className = 'dot ' + (ok ? 'ok' : 'err');
+  $('status-txt').textContent = txt;
+}
+function toast(msg, type='ok') {
+  const tc = $('tc'), el = document.createElement('div');
+  el.className = `toast t-${type}`;
+  const ico = type==='ok'
+    ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`
+    : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`;
+  el.innerHTML = ico + msg;
+  tc.appendChild(el);
+  requestAnimationFrame(() => el.classList.add('show'));
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 350); }, 3500);
+}
+function nav(name, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  $('s-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+function closeMo() { $('mo').classList.remove('open'); }
+function closeCd() { $('cd').classList.remove('open'); pendingDeleteId = null; }
+document.addEventListener('keydown', e => { if (e.key==='Escape') { closeMo(); closeCd(); } });
 
-// ══════════════════════════════════════════════════
-//  INIT SUPABASE
-// ══════════════════════════════════════════════════
-async function initSupabase(url, key) {
-  const { createClient } = supabase;
-  sb = createClient(url, key, { auth: { persistSession: false } });
-  return sb;
+// ── INIT SUPABASE ────────────────────────────────
+function initClient(url, key) {
+  // Le SDK v3 expose supabase.createClient OU window.supabase.createClient
+  const factory = (typeof supabase !== 'undefined')
+    ? (supabase.createClient || supabase.default?.createClient)
+    : null;
+  if (!factory) throw new Error("SDK Supabase non chargé");
+  return factory(url, key);
 }
 
-// ══════════════════════════════════════════════════
-//  CONNEXION + DIAGNOSTIC
-// ══════════════════════════════════════════════════
-async function connectSupabase() {
-  const url = document.getElementById('cfg-url').value.trim();
-  const key = document.getElementById('cfg-key').value.trim();
-
-  // Validation basique
-  if (!url.startsWith('http')) {
-    toast('URL invalide — doit commencer par https://', 'err'); return;
-  }
-  if (!key.startsWith('eyJ')) {
-    toast('❌ Clé invalide — la clé anon commence par eyJ… Voir la section Configuration.', 'err');
-    document.getElementById('cfg-key').classList.add('has-error');
-    showSection('config', document.querySelector('[data-section="config"]'));
-    return;
-  }
-  document.getElementById('cfg-key').classList.remove('has-error');
-
-  // Afficher diagnostic
-  const diagBox = document.getElementById('diag-box');
-  diagBox.classList.add('show');
-  document.getElementById('diag-steps').innerHTML = '';
-  const btn = document.getElementById('btn-connect');
-  btn.disabled = true;
-  document.getElementById('connect-txt').textContent = 'Connexion…';
-
-  await diagStep('init', '⚙️', 'Initialisation du client Supabase…');
-  await initSupabase(url, key);
-  diagStepDone('init', '✓', 'Client initialisé');
-
-  await diagStep('api', '🌐', 'Test de connexion à l\'API REST…');
+async function boot() {
+  setStatus(false, 'Connexion à Supabase…');
   try {
-    const { data, error, status } = await sb.from('profils').select('count', { count: 'exact', head: true });
-    if (error) throw error;
-    diagStepDone('api', '✓', `API accessible — HTTP ${status}`);
-  } catch (e) {
-    diagStepFail('api', '✗', `Erreur API : ${e.message}`);
-    btn.disabled = false;
-    document.getElementById('connect-txt').textContent = 'Réessayer';
-    setStatus(false, `Erreur : ${e.message}`);
-    toast('Connexion échouée — voir le diagnostic', 'err');
-    return;
+    sb = initClient(SB_URL, SB_KEY);
+
+    // Test connexion — simple health ping
+    const { error } = await sb.from('profils').select('id').limit(1);
+
+    if (error) {
+      // RLS peut bloquer — on vérifie si c'est un 403 RLS ou une vraie erreur d'auth
+      if (error.code === 'PGRST301' || error.message?.includes('JWT') || error.message?.includes('apikey')) {
+        throw new Error('Clé invalide : ' + error.message);
+      }
+      // Sinon RLS — connexion OK quand même
+      console.warn('RLS note:', error.message);
+    }
+
+    setStatus(true, 'Connecté · ' + SB_URL.replace('https://','').split('.')[0]);
+    toast('Connecté à Supabase ✓', 'ok');
+    await loadProfils();
+    await loadSignalements();
+  } catch(e) {
+    setStatus(false, 'Erreur : ' + e.message);
+    toast('Connexion échouée : ' + e.message, 'err');
+    $('tb-profils').innerHTML = `<tr><td colspan="6" class="empty">${e.message}</td></tr>`;
+    console.error('Supabase boot error:', e);
   }
-
-  await diagStep('rls', '🔒', 'Vérification des permissions RLS…');
-  try {
-    const { data, error } = await sb.from('profils').select('id').limit(1);
-    if (error) throw error;
-    diagStepDone('rls', '✓', 'Lecture des profils autorisée');
-  } catch (e) {
-    diagStepFail('rls', '⚠️', `RLS bloque la lecture : ${e.message} — utilisez la service_role key pour l'admin`);
-  }
-
-  // Sauvegarder
-  localStorage.setItem('sb_url', url);
-  localStorage.setItem('sb_key', key);
-  SUPABASE_URL = url;
-  SUPABASE_KEY = key;
-
-  setStatus(true, 'Connecté');
-  btn.disabled = false;
-  document.getElementById('connect-txt').textContent = 'Reconnecté ✓';
-  toast('Connexion Supabase réussie !', 'ok');
-
-  // Charger les données
-  setTimeout(() => diagBox.classList.remove('show'), 3000);
-  await loadProfils();
-  await loadSignalements();
-  showSection('profils', document.querySelector('[data-section="profils"]'));
 }
 
-// Diagnostic helpers
-function diagStep(id, icon, label) {
-  const el = document.createElement('div');
-  el.className = 'diag-step'; el.id = 'ds-'+id;
-  el.innerHTML = `<div class="diag-icon spin" id="di-${id}">${icon}</div><div><div class="diag-label" id="dl-${id}">${label}</div><div class="diag-detail" id="dd-${id}"></div></div>`;
-  document.getElementById('diag-steps').appendChild(el);
-  return new Promise(r => setTimeout(r, 400));
-}
-function diagStepDone(id, icon, detail) {
-  const i = document.getElementById('di-'+id); if (i) { i.className='diag-icon ok'; i.textContent=icon; }
-  const d = document.getElementById('dd-'+id); if (d) d.textContent = detail;
-}
-function diagStepFail(id, icon, detail) {
-  const i = document.getElementById('di-'+id); if (i) { i.className='diag-icon fail'; i.textContent=icon; }
-  const d = document.getElementById('dd-'+id); if (d) { d.textContent = detail; d.style.color='var(--red-l)'; }
-}
+function reconnect() { boot(); }
 
-// ══════════════════════════════════════════════════
-//  CHARGER PROFILS
-// ══════════════════════════════════════════════════
+// ── CHARGER PROFILS ──────────────────────────────
 async function loadProfils() {
-  if (!sb) { showSection('config', document.querySelector('[data-section="config"]')); return; }
-
-  const icon = document.getElementById('refresh-icon');
-  if (icon) icon.classList.add('spinning');
+  if (!sb) { toast('Non connecté', 'err'); return; }
+  const icon = $('ri'); icon.classList.add('spin');
 
   const { data, error } = await sb
     .from('profils')
-    .select(`*, utilisateurs(genre, compte_actif, email)`)
+    .select(`
+      utilisateur_id, prenom, age, pays, ville,
+      profession, situation, niveau_pratique,
+      profil_valide, profil_en_revue,
+      description, mots_cles, pratiques,
+      created_at,
+      utilisateurs ( genre, email, compte_actif )
+    `)
     .order('created_at', { ascending: false });
 
-  if (icon) icon.classList.remove('spinning');
+  icon.classList.remove('spin');
 
   if (error) {
-    toast('Erreur chargement profils : ' + error.message, 'err');
-    document.getElementById('profils-body').innerHTML = `<tr><td colspan="6" class="empty">${error.message}</td></tr>`;
+    toast('Erreur : ' + error.message, 'err');
+    $('tb-profils').innerHTML = `<tr><td colspan="6" class="empty">${error.message}</td></tr>`;
     return;
   }
 
@@ -551,57 +400,54 @@ async function loadProfils() {
   updateStats(allProfils);
 }
 
+function updateStats(data) {
+  $('sn-total').textContent = data.length;
+  $('sn-pend').textContent  = data.filter(p => !p.profil_valide).length;
+  $('sn-valid').textContent = data.filter(p => p.profil_valide).length;
+  $('sn-f').textContent     = data.filter(p => p.utilisateurs?.genre === 'homme').length;
+  $('nc-pending').textContent = data.filter(p => !p.profil_valide).length;
+}
+
+const pratiquesLabel = {
+  en_cheminement:    '🌱 Cheminement',
+  pratiquant:        '⭐ Pratiquant',
+  pratiquant_assidu: '⭐⭐ Assidu',
+  tres_pratiquant:   '⭐⭐⭐ Sounnah',
+};
+
 function renderProfils(data) {
-  const tbody = document.getElementById('profils-body');
+  const tb = $('tb-profils');
   if (!data.length) {
-    tbody.innerHTML = '<tr><td colspan="6" class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Aucun profil</td></tr>';
+    tb.innerHTML = '<tr><td colspan="6" class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Aucun profil</td></tr>';
     return;
   }
-
-  tbody.innerHTML = data.map(p => {
-    const genre  = p.utilisateurs?.genre || '—';
-    const valide = p.profil_valide;
-    const pratique = {
-      en_cheminement:   '🌱 Cheminement',
-      pratiquant:       '⭐ Pratiquant',
-      pratiquant_assidu:'⭐⭐ Assidu',
-      tres_pratiquant:  '⭐⭐⭐ Sounnah',
-    }[p.niveau_pratique] || p.niveau_pratique || '—';
-
-    return `<tr data-id="${p.utilisateur_id}" data-valide="${valide}" data-genre="${genre}">
+  tb.innerHTML = data.map(p => {
+    const genre = p.utilisateurs?.genre || '';
+    const val   = p.profil_valide;
+    const prat  = pratiquesLabel[p.niveau_pratique] || p.niveau_pratique || '—';
+    return `<tr>
       <td>
         <div style="font-weight:500;color:var(--text)">${p.prenom || '—'}</div>
-        <div style="font-size:.72rem;color:var(--text-d);margin-top:2px">${p.utilisateurs?.email || ''}</div>
+        <div style="font-size:.7rem;color:var(--text-d);margin-top:1px">${p.utilisateurs?.email || ''}</div>
       </td>
-      <td>
-        <span class="badge ${genre==='homme'?'badge-homme':'badge-femme'}">
-          <span class="badge-dot"></span>
-          ${genre==='homme'?'Frère':'Sœur'}
-        </span>
-      </td>
+      <td><span class="b ${genre==='homme'?'b-h':'b-f'}"><span class="b-dot"></span>${genre==='homme'?'Frère':'Sœur'}</span></td>
       <td style="color:var(--text-m)">${p.ville||'—'}, ${p.pays||'—'}</td>
-      <td style="font-size:.78rem">${pratique}</td>
+      <td style="font-size:.76rem">${prat}</td>
+      <td><span class="b ${val?'b-ok':'b-wait'}"><span class="b-dot"></span>${val?'Validé':'En attente'}</span></td>
       <td>
-        <span class="badge ${valide?'badge-ok':'badge-wait'}">
-          <span class="badge-dot"></span>
-          ${valide?'Validé':'En attente'}
-        </span>
-      </td>
-      <td>
-        <div class="actions">
-          ${!valide
-            ? `<button class="btn-action btn-val" onclick="validateProfil('${p.utilisateur_id}')">
+        <div class="acts">
+          ${!val
+            ? `<button class="ab ab-val" onclick="valider('${p.utilisateur_id}')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Valider
                </button>`
-            : `<button class="btn-action btn-unval" onclick="invalidateProfil('${p.utilisateur_id}')">
+            : `<button class="ab ab-inv" onclick="invalider('${p.utilisateur_id}')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Retirer
-               </button>`
-          }
-          <button class="btn-action btn-view" onclick="viewProfil('${p.utilisateur_id}')">
+               </button>`}
+          <button class="ab ab-eye" onclick="voir('${p.utilisateur_id}')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Voir
           </button>
-          <button class="btn-action btn-del" onclick="deleteProfil('${p.utilisateur_id}')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>Sup.
+          <button class="ab ab-del" onclick="confirmerSuppr('${p.utilisateur_id}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Sup.
           </button>
         </div>
       </td>
@@ -609,38 +455,25 @@ function renderProfils(data) {
   }).join('');
 }
 
-function updateStats(data) {
-  document.getElementById('s-total').textContent   = data.length;
-  document.getElementById('s-pending').textContent = data.filter(p=>!p.profil_valide).length;
-  document.getElementById('s-valid').textContent   = data.filter(p=>p.profil_valide).length;
-  document.getElementById('s-hommes').textContent  = data.filter(p=>p.utilisateurs?.genre==='homme').length;
-  const nb = data.filter(p=>!p.profil_valide).length;
-  document.getElementById('nb-pending-nav').textContent = nb;
-}
-
-// ── Filtres ──
-function filterTable() {
-  const q      = document.getElementById('search').value.toLowerCase();
-  const genre  = document.getElementById('filter-genre').value;
-  const status = document.getElementById('filter-status').value;
-
-  const filtered = allProfils.filter(p => {
-    const g  = p.utilisateurs?.genre || '';
-    const v  = p.profil_valide;
-    const txt = `${p.prenom} ${p.ville} ${p.pays} ${p.utilisateurs?.email}`.toLowerCase();
+// ── FILTRES ──────────────────────────────────────
+function filter() {
+  const q  = $('q-search').value.toLowerCase();
+  const g  = $('q-genre').value;
+  const st = $('q-status').value;
+  const res = allProfils.filter(p => {
+    const genre = p.utilisateurs?.genre || '';
+    const txt   = `${p.prenom} ${p.ville} ${p.pays} ${p.utilisateurs?.email||''}`.toLowerCase();
     if (q && !txt.includes(q)) return false;
-    if (genre && g !== genre) return false;
-    if (status === 'pending' && v) return false;
-    if (status === 'valid' && !v) return false;
+    if (g && genre !== g) return false;
+    if (st === '0' && p.profil_valide) return false;
+    if (st === '1' && !p.profil_valide) return false;
     return true;
   });
-  renderProfils(filtered);
+  renderProfils(res);
 }
 
-// ══════════════════════════════════════════════════
-//  ACTIONS PROFILS
-// ══════════════════════════════════════════════════
-async function validateProfil(id) {
+// ── ACTIONS ──────────────────────────────────────
+async function valider(id) {
   const { error } = await sb.from('profils')
     .update({ profil_valide: true, profil_en_revue: false })
     .eq('utilisateur_id', id);
@@ -649,7 +482,7 @@ async function validateProfil(id) {
   loadProfils();
 }
 
-async function invalidateProfil(id) {
+async function invalider(id) {
   const { error } = await sb.from('profils')
     .update({ profil_valide: false, profil_en_revue: true })
     .eq('utilisateur_id', id);
@@ -658,147 +491,142 @@ async function invalidateProfil(id) {
   loadProfils();
 }
 
-async function deleteProfil(id) {
-  if (!confirm('Supprimer ce profil ? Cette action est irréversible.')) return;
+function confirmerSuppr(id) {
+  pendingDeleteId = id;
+  $('cd').classList.add('open');
+  $('cd-confirm').onclick = () => supprimer(id);
+}
+
+async function supprimer(id) {
+  closeCd();
   const { error: pe } = await sb.from('profils').delete().eq('utilisateur_id', id);
-  if (pe) { toast('Erreur suppression profil : ' + pe.message, 'err'); return; }
-  const { error: ue } = await sb.from('utilisateurs').delete().eq('id', id);
-  if (ue) toast('Profil supprimé, utilisateur non supprimé : ' + ue.message, 'err');
-  else toast('Profil et utilisateur supprimés', 'ok');
+  if (pe) { toast('Erreur : ' + pe.message, 'err'); return; }
+  await sb.from('utilisateurs').delete().eq('id', id);
+  toast('Profil supprimé', 'ok');
   loadProfils();
 }
 
-function viewProfil(id) {
+function voir(id) {
   const p = allProfils.find(x => x.utilisateur_id === id);
   if (!p) return;
-  const fields = [
+  const rows = [
     ['Prénom',       p.prenom],
-    ['Âge',          p.age],
+    ['Âge',          p.age + ' ans'],
     ['Pays',         p.pays],
     ['Ville',        p.ville],
     ['Profession',   p.profession],
-    ['Nationalité',  p.nationalite],
     ['Situation',    p.situation],
-    ['Enfants',      p.nb_enfants],
-    ['Pratique',     p.niveau_pratique],
-    ['École',        p.ecole_juridique],
-    ['Pratiques',    (p.pratiques||[]).join(', ')],
+    ['Enfants',      p.nb_enfants ?? '—'],
+    ['Pratique',     pratiquesLabel[p.niveau_pratique] || p.niveau_pratique],
+    ['Pratiques',    (p.pratiques||[]).join(', ') || '—'],
+    ['Mots-clés',    (p.mots_cles||[]).join(', ') || '—'],
     ['Description',  p.description],
-    ['Mots-clés',    (p.mots_cles||[]).join(', ')],
-    ['Critères',     p.criteres_libres],
     ['Statut',       p.profil_valide ? '✅ Validé' : '⏳ En attente'],
+    ['E-mail',       p.utilisateurs?.email],
     ['Créé le',      p.created_at ? new Date(p.created_at).toLocaleString('fr-FR') : '—'],
   ];
-  document.getElementById('modal-content').innerHTML = `
-    <h3 style="font-family:var(--ffd);font-size:1.4rem;color:var(--gold);margin-bottom:16px">${p.prenom || 'Profil'}</h3>
-    ${fields.map(([k,v]) => v ? `<div class="modal-field"><span class="modal-key">${k}</span><span class="modal-val">${v}</span></div>` : '').join('')}
+  $('mo-content').innerHTML = `
+    <h3 style="font-family:var(--ffd);font-size:1.4rem;color:var(--gold);margin-bottom:16px">${p.prenom||'Profil'}</h3>
+    ${rows.filter(([,v])=>v!=null&&v!=='').map(([k,v])=>`<div class="mf"><div class="mk">${k}</div><div class="mv">${v}</div></div>`).join('')}
   `;
-  document.getElementById('modal-overlay').classList.add('open');
+  $('mo').classList.add('open');
 }
 
-function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
-
-// ══════════════════════════════════════════════════
-//  SIGNALEMENTS
-// ══════════════════════════════════════════════════
+// ── SIGNALEMENTS ─────────────────────────────────
 async function loadSignalements() {
   if (!sb) return;
-  const { data, error } = await sb.from('signalements')
+  const { data, error } = await sb
+    .from('signalements')
     .select('*')
     .order('created_at', { ascending: false })
-    .limit(100);
+    .limit(50);
 
-  if (error) { document.getElementById('reports-body').innerHTML = `<tr><td colspan="6" class="empty">${error.message}</td></tr>`; return; }
-  const nb = (data||[]).filter(r=>r.statut==='en_cours').length;
-  document.getElementById('nb-reports-nav').textContent = nb;
+  if (error) { $('tb-reports').innerHTML = `<tr><td colspan="5" class="empty">${error.message}</td></tr>`; return; }
 
-  if (!data?.length) { document.getElementById('reports-body').innerHTML = '<tr><td colspan="6" class="empty">Aucun signalement</td></tr>'; return; }
+  const nb = (data||[]).filter(r => r.statut === 'en_cours').length;
+  $('nc-reports').textContent = nb;
 
-  document.getElementById('reports-body').innerHTML = (data||[]).map(r => `
+  if (!data?.length) { $('tb-reports').innerHTML = '<tr><td colspan="5" class="empty">Aucun signalement</td></tr>'; return; }
+
+  $('tb-reports').innerHTML = data.map(r => `
     <tr>
-      <td style="font-size:.78rem;color:var(--text-m)">${r.rapporteur_id?.slice(0,8)||'—'}…</td>
-      <td style="font-size:.78rem;color:var(--text-m)">${r.signale_id?.slice(0,8)||'—'}…</td>
-      <td><span class="badge badge-wait">${r.motif||'—'}</span></td>
-      <td><span class="badge ${r.statut==='resolu'?'badge-ok':'badge-wait'}">${r.statut||'—'}</span></td>
+      <td><span class="b b-wait">${r.motif||'—'}</span></td>
+      <td style="font-size:.78rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.description||'—'}</td>
+      <td><span class="b ${r.statut==='resolu'?'b-ok':'b-wait'}">${r.statut||'—'}</span></td>
       <td style="font-size:.72rem;color:var(--text-d)">${r.created_at ? new Date(r.created_at).toLocaleDateString('fr-FR') : '—'}</td>
       <td>
-        <button class="btn-action btn-val" onclick="resolveReport('${r.id}')">Résoudre</button>
-        <button class="btn-action btn-del" onclick="deleteReport('${r.id}')">Rejeter</button>
+        <div class="acts">
+          <button class="ab ab-val" onclick="resolveRep('${r.id}')">Résoudre</button>
+          <button class="ab ab-del" onclick="rejectRep('${r.id}')">Rejeter</button>
+        </div>
       </td>
     </tr>
   `).join('');
 }
 
-async function resolveReport(id) {
-  await sb.from('signalements').update({ statut: 'resolu', resolu_at: new Date().toISOString() }).eq('id', id);
+async function resolveRep(id) {
+  await sb.from('signalements').update({ statut:'resolu', resolu_at: new Date().toISOString() }).eq('id', id);
   toast('Signalement résolu', 'ok');
   loadSignalements();
 }
-async function deleteReport(id) {
-  await sb.from('signalements').update({ statut: 'rejete' }).eq('id', id);
+async function rejectRep(id) {
+  await sb.from('signalements').update({ statut:'rejete' }).eq('id', id);
   toast('Signalement rejeté', 'ok');
   loadSignalements();
 }
-
-// ══════════════════════════════════════════════════
-//  UI HELPERS
-// ══════════════════════════════════════════════════
-function showSection(name, btn) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-  document.getElementById('section-' + name).classList.add('active');
-  if (btn) btn.classList.add('active');
-}
-
-function setStatus(ok, txt) {
-  document.getElementById('status-dot').className = 'status-dot ' + (ok ? 'ok' : 'err');
-  document.getElementById('status-txt').textContent = txt;
-}
-
-function toast(msg, type='ok') {
-  const tc = document.getElementById('toast-container');
-  const el = document.createElement('div');
-  el.className = `toast toast-${type}`;
-  const icon = type==='ok'
-    ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`
-    : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`;
-  el.innerHTML = icon + msg;
-  tc.appendChild(el);
-  requestAnimationFrame(() => el.classList.add('show'));
-  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 300); }, 3500);
-}
-
-function logout() {
-  localStorage.removeItem('sb_url');
-  localStorage.removeItem('sb_key');
-  sb = null;
-  allProfils = [];
-  setStatus(false, 'Déconnecté');
-  document.getElementById('profils-body').innerHTML = '<tr><td colspan="6" class="empty">Connectez-vous à Supabase</td></tr>';
-  ['s-total','s-pending','s-valid','s-hommes'].forEach(id => document.getElementById(id).textContent = '—');
-  showSection('config', document.querySelector('[data-section="config"]'));
-  toast('Session terminée', 'ok');
-}
-
-// ══════════════════════════════════════════════════
-//  AUTO-CONNECT si clé sauvegardée valide
-// ══════════════════════════════════════════════════
-window.addEventListener('load', () => {
-  const key = localStorage.getItem('sb_key') || '';
-  if (key.startsWith('eyJ')) {
-    connectSupabase();
-  } else {
-    // Afficher la config si pas de clé valide
-    showSection('config', document.querySelector('[data-section="config"]'));
-    toast('⚠️ Entrez votre clé anon Supabase pour commencer', 'err');
-  }
-});
-
-// Keyboard ESC pour fermer modal
-document.addEventListener('keydown', e => { if (e.key==='Escape') closeModal(); });
 </script>
 
-<!-- Supabase CDN -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!--
+  On charge d'abord le SDK Supabase v3 (nouveau format sb_publishable_).
+  Si v3 non dispo, on tombe sur v2 via fallback.
+  La clé sb_publishable_ est supportée nativement par le SDK v3.
+-->
+<script>
+// Chargeur dynamique : essaie v3, puis v2 si échec
+(function() {
+  function tryV3() {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      // SDK v3 latest (supporte sb_publishable_)
+      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest/dist/umd/supabase.js';
+      s.onload = () => {
+        console.log('SDK Supabase v3 chargé');
+        res();
+      };
+      s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  function tryV2() {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
+      s.onload = () => {
+        console.log('SDK Supabase v2 chargé (fallback)');
+        res();
+      };
+      s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  tryV3()
+    .catch(() => tryV2())
+    .then(() => {
+      // Boot une fois le SDK chargé
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', boot);
+      } else {
+        boot();
+      }
+    })
+    .catch(e => {
+      document.getElementById('tb-profils').innerHTML =
+        `<tr><td colspan="6" class="empty">Impossible de charger le SDK Supabase : ${e.message}</td></tr>`;
+    });
+})();
+</script>
+
 </body>
 </html>

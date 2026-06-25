@@ -1,82 +1,220 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Admin Panel</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administration - Nour Al Zawwaj</title>
 
-  <style>
-    body { font-family: Arial; background:#0d1117; color:white; padding:20px; }
-    .card { background:#161b22; padding:12px; margin:10px 0; border-radius:8px; }
-    button { margin-right:8px; padding:6px 10px; cursor:pointer; }
-  </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:#0d1117;
+  color:white;
+  margin:0;
+  padding:20px;
+}
+
+h1{
+  margin-bottom:20px;
+}
+
+.stats{
+  display:flex;
+  gap:15px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+
+.stat{
+  background:#161b22;
+  padding:15px;
+  border-radius:8px;
+  min-width:180px;
+}
+
+.card{
+  background:#161b22;
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:8px;
+  border:1px solid #30363d;
+}
+
+button{
+  padding:8px 12px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  margin-right:8px;
+  margin-top:10px;
+}
+
+.validate{
+  background:green;
+  color:white;
+}
+
+.delete{
+  background:red;
+  color:white;
+}
+
+.pending{
+  color:orange;
+}
+
+.valid{
+  color:lightgreen;
+}
+</style>
 </head>
 
 <body>
 
-<h1>Admin Panel</h1>
-<div id="list"></div>
+<h1>Administration</h1>
+
+<div class="stats">
+  <div class="stat">
+    <h3 id="totalUsers">0</h3>
+    <p>Membres</p>
+  </div>
+
+  <div class="stat">
+    <h3 id="pendingUsers">0</h3>
+    <p>En attente</p>
+  </div>
+
+  <div class="stat">
+    <h3 id="validatedUsers">0</h3>
+    <p>Validés</p>
+  </div>
+</div>
+
+<div id="list">
+Chargement...
+</div>
 
 <script>
-  // ⚠️ TON SUPABASE (OK côté front)
-  const supabaseUrl = "https://hozxklpzfzmrswzbamye.supabase.co";
-  const supabaseKey = "sb_publishable_MurlKY4clW48vcHYcuXCMw_WrbuhDIA";
 
-  const client = supabase.createClient(supabaseUrl, supabaseKey);
+const supabaseUrl =
+"https://hozxklpzfzmrswzbamye.supabase.co";
 
-  async function loadUsers() {
-    const { data, error } = await client
-      .from("profils")
-      .select("*")
-      .eq("profil_en_revue", true);
+const supabaseKey =
+"sb_publishable_MurlKY4clW48vcHYcuXCMw_WrbuhDIA";
 
-    if (error) {
-      document.getElementById("list").innerHTML = error.message;
-      return;
-    }
+const client =
+supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
 
-    document.getElementById("list").innerHTML = data.map(u => `
+async function loadUsers(){
+
+  const { data, error } = await client
+    .from("profils")
+    .select("*");
+
+  if(error){
+    document.getElementById("list").innerHTML =
+      "<p>"+error.message+"</p>";
+    return;
+  }
+
+  document.getElementById("totalUsers").textContent =
+    data.length;
+
+  document.getElementById("pendingUsers").textContent =
+    data.filter(x => !x.profil_valide).length;
+
+  document.getElementById("validatedUsers").textContent =
+    data.filter(x => x.profil_valide).length;
+
+  if(data.length === 0){
+    document.getElementById("list").innerHTML =
+      "<p>Aucun profil trouvé</p>";
+    return;
+  }
+
+  document.getElementById("list").innerHTML =
+    data.map(u => `
       <div class="card">
-        <b>${u.prenom || "Sans nom"}</b><br/>
-        ${u.ville || ""} - ${u.pays || ""}<br/>
-        Statut: ${u.profil_valide ? "VALIDÉ" : "EN ATTENTE"}<br/><br/>
 
-        <button onclick="validate('${u.utilisateur_id}')">Valider</button>
-        <button onclick="ban('${u.utilisateur_id}')">Bannir</button>
-        <button onclick="remove('${u.utilisateur_id}')">Supprimer</button>
+        <h3>${u.prenom || "Sans prénom"}</h3>
+
+        <p>
+        Ville : ${u.ville || "-"}<br>
+        Pays : ${u.pays || "-"}<br>
+        Age : ${u.age || "-"}<br>
+        Profession : ${u.profession || "-"}
+        </p>
+
+        <p>
+        Statut :
+        ${
+          u.profil_valide
+          ? '<span class="valid">✅ Validé</span>'
+          : '<span class="pending">⏳ En attente</span>'
+        }
+        </p>
+
+        <button
+          class="validate"
+          onclick="validateUser('${u.utilisateur_id}')">
+          Valider
+        </button>
+
+        <button
+          class="delete"
+          onclick="deleteUser('${u.utilisateur_id}')">
+          Supprimer
+        </button>
+
       </div>
     `).join("");
+}
+
+async function validateUser(id){
+
+  const { error } = await client
+    .from("profils")
+    .update({
+      profil_valide:true,
+      profil_en_revue:false
+    })
+    .eq("utilisateur_id",id);
+
+  if(error){
+    alert(error.message);
+    return;
   }
 
-  async function validate(id) {
-    await client.from("profils")
-      .update({ profil_valide: true, profil_en_revue: false })
-      .eq("utilisateur_id", id);
+  alert("Profil validé");
+  loadUsers();
+}
 
-    loadUsers();
+async function deleteUser(id){
+
+  if(!confirm("Supprimer ce profil ?")){
+    return;
   }
 
-  async function ban(id) {
-    await client.from("utilisateurs")
-      .update({ admin_valide: false })
-      .eq("id", id);
+  await client
+    .from("profils")
+    .delete()
+    .eq("utilisateur_id",id);
 
-    loadUsers();
-  }
-
-  async function remove(id) {
-    await client.from("profils")
-      .delete()
-      .eq("utilisateur_id", id);
-
-    await client.from("utilisateurs")
-      .delete()
-      .eq("id", id);
-
-    loadUsers();
-  }
+  await client
+    .from("utilisateurs")
+    .delete()
+    .eq("id",id);
 
   loadUsers();
+}
+
+loadUsers();
+
 </script>
 
 </body>

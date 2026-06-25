@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panel Admin - Nour Al Zawwaj</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * {
       margin: 0;
@@ -39,6 +40,11 @@
       font-size: 28px;
       color: #0F4C5C;
       margin-bottom: 8px;
+    }
+
+    .login-header p {
+      color: #666;
+      font-size: 14px;
     }
 
     .form-group {
@@ -77,6 +83,7 @@
       font-weight: 600;
       cursor: pointer;
       margin-top: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .btn-login:hover {
@@ -132,6 +139,11 @@
       margin-bottom: 4px;
     }
 
+    .admin-logo p {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
     .admin-menu {
       list-style: none;
     }
@@ -182,6 +194,7 @@
       cursor: pointer;
       font-size: 13px;
       font-weight: 600;
+      transition: background 0.2s;
     }
 
     .btn-logout:hover {
@@ -245,6 +258,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
+      overflow-x: auto;
     }
 
     table th {
@@ -419,7 +433,7 @@
       <h1>🔐 Panel Admin</h1>
       <p>Nour Al Zawwaj</p>
     </div>
-    <form onsubmit="window.handleLogin(event)">
+    <form onsubmit="handleLogin(event)">
       <div class="form-group">
         <label>Email</label>
         <input type="email" id="email" placeholder="admin@nouralzawwaj.com" required />
@@ -439,7 +453,7 @@
     <div class="admin-sidebar">
       <div class="admin-logo">
         <h2>Nour Al Zawwaj</h2>
-        <p style="font-size: 12px; color: rgba(255,255,255,0.6);">Admin</p>
+        <p>Admin Panel</p>
       </div>
       <ul class="admin-menu">
         <li><a class="menu-link active" data-section="dashboard">📊 Tableau de bord</a></li>
@@ -453,7 +467,7 @@
       <!-- HEADER -->
       <div class="admin-header">
         <h1 id="pageTitle">Tableau de bord</h1>
-        <button class="btn-logout" onclick="window.handleLogout()">Déconnexion</button>
+        <button class="btn-logout" onclick="handleLogout()">Déconnexion</button>
       </div>
 
       <!-- CONTENT -->
@@ -515,18 +529,19 @@
     </div>
   </div>
 
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-
+  <script>
+    // ════ SUPABASE CONFIG ════
     const SUPABASE_URL = 'https://hozxklpzfzmrswzbamye.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_MurlKY4clW48vcHYcuXCMw_WrbuhDIA';
+    
+    const { createClient } = window.supabase;
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const ADMIN_EMAIL = 'admin@nouralzawwaj.com';
     const ADMIN_PASSWORD = 'Admin@2024!';
 
     // ════ LOGIN ════
-    window.handleLogin = async (event) => {
+    function handleLogin(event) {
       event.preventDefault();
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
@@ -539,14 +554,14 @@
         document.getElementById('errorMessage').textContent = '❌ Identifiants incorrects';
         document.getElementById('errorMessage').classList.add('show');
       }
-    };
+    }
 
-    window.handleLogout = () => {
+    function handleLogout() {
       if (confirm('Déconnexion ?')) {
         localStorage.removeItem('adminLogged');
         location.reload();
       }
-    };
+    }
 
     // ════ UI ════
     function showAdmin() {
@@ -635,16 +650,16 @@
         tbody.innerHTML = data.map(u => `
           <tr>
             <td>${u.email}</td>
-            <td>${u.genre === 'homme' ? '👨 H' : '👩 F'}</td>
+            <td>${u.genre === 'homme' ? '👨 Homme' : '👩 Femme'}</td>
             <td><span class="badge ${u.identite_verifiee ? 'badge-active' : 'badge-inactive'}">
-              ${u.identite_verifiee ? '✓' : '✗'}
+              ${u.identite_verifiee ? '✓ Vérifiée' : '✗ Non vérifiée'}
             </span></td>
             <td><span class="badge ${u.compte_actif ? 'badge-active' : 'badge-inactive'}">
-              ${u.compte_actif ? 'Actif' : 'Inactif'}
+              ${u.compte_actif ? '✓ Actif' : '✗ Inactif'}
             </span></td>
             <td>
               <div class="action-buttons">
-                <button class="btn-small btn-delete" onclick="window.deleteMember('${u.id}')">Supprimer</button>
+                <button class="btn-small btn-delete" onclick="deleteMember('${u.id}')">Supprimer</button>
               </div>
             </td>
           </tr>
@@ -680,8 +695,8 @@
             <p><strong>Niveau pratique:</strong> ${p.niveau_pratique}</p>
             <p><strong>Complétude:</strong> ${p.completude}%</p>
             <div class="action-buttons">
-              <button class="btn-small btn-accept" onclick="window.approveProfile('${p.id}')">✓ Accepter</button>
-              <button class="btn-small btn-reject" onclick="window.rejectProfile('${p.id}')">✗ Rejeter</button>
+              <button class="btn-small btn-accept" onclick="approveProfile('${p.id}')">✓ Accepter</button>
+              <button class="btn-small btn-reject" onclick="rejectProfile('${p.id}')">✗ Rejeter</button>
             </div>
           </div>
         `).join('');
@@ -692,7 +707,7 @@
     }
 
     // ════ ACTIONS ════
-    window.approveProfile = async (profileId) => {
+    async function approveProfile(profileId) {
       try {
         const { error } = await supabase
           .from('profils')
@@ -705,9 +720,9 @@
       } catch (err) {
         showMessage('msgProfiles', '❌ Erreur: ' + err.message, 'error');
       }
-    };
+    }
 
-    window.rejectProfile = async (profileId) => {
+    async function rejectProfile(profileId) {
       try {
         const { error } = await supabase
           .from('profils')
@@ -720,9 +735,9 @@
       } catch (err) {
         showMessage('msgProfiles', '❌ Erreur: ' + err.message, 'error');
       }
-    };
+    }
 
-    window.deleteMember = async (memberId) => {
+    async function deleteMember(memberId) {
       if (!confirm('Supprimer ce membre ? (irréversible)')) return;
       try {
         const { error } = await supabase
@@ -737,7 +752,7 @@
       } catch (err) {
         showMessage('msgMembers', '❌ Erreur: ' + err.message, 'error');
       }
-    };
+    }
 
     // ════ CHECK LOGIN ════
     window.addEventListener('load', () => {

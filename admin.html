@@ -529,13 +529,12 @@
     </div>
   </div>
 
+  <!-- SUPABASE CONFIG & INIT -->
   <script>
-    // ════ SUPABASE CONFIG ════
-    const SUPABASE_URL = 'https://hozxklpzfzmrswzbamye.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_MurlKY4clW48vcHYcuXCMw_WrbuhDIA';
-    
-    const { createClient } = window.supabase;
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    const supabase = window.supabase.createClient(
+      "https://hozxklpzfzmrswzbamye.supabase.co",
+      "sb_publishable_MurlKY4clW48vcHYcuXCMw_WrbuhDIA"
+    );
 
     const ADMIN_EMAIL = 'admin@nouralzawwaj.com';
     const ADMIN_PASSWORD = 'Admin@2024!';

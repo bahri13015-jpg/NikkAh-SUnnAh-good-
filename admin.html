@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Admin - Nour Al Zawwaj</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0F4C5C 0%, #0a3543 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ════ LOGIN PAGE ════ */
+    .login-container {
+      width: 100%;
+      max-width: 450px;
+      padding: 40px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .login-header h1 {
+      font-size: 28px;
+      color: #0F4C5C;
+      margin-bottom: 8px;
+    }
+
+    .login-header p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #C9A227;
+      box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.1);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #C9A227 0%, #e0b93a 100%);
+      color: #0F4C5C;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 10px;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(201, 162, 39, 0.3);
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    .error-message {
+      color: #e74c3c;
+      font-size: 13px;
+      margin-top: 8px;
+      padding: 10px;
+      background: #fadbd8;
+      border-radius: 4px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    /* ════ ADMIN DASHBOARD ════ */
+    .admin-container {
+      display: none;
+      width: 100%;
+      background: #f5f5f5;
+      min-height: 100vh;
+    }
+
+    .admin-container.active {
+      display: flex;
+    }
+
+    .admin-sidebar {
+      width: 260px;
+      background: #0F4C5C;
+      color: white;
+      padding: 30px 0;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .admin-logo {
+      padding: 0 20px 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .admin-logo h2 {
+      font-size: 20px;
+      color: #C9A227;
+      margin-bottom: 4px;
+    }
+
+    .admin-logo p {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .admin-menu {
+      list-style: none;
+    }
+
+    .admin-menu li {
+      margin: 0;
+    }
+
+    .admin-menu a {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: all 0.3s;
+      border-left: 3px solid transparent;
+    }
+
+    .admin-menu a:hover,
+    .admin-menu a.active {
+      background: rgba(201, 162, 39, 0.15);
+      color: #C9A227;
+      border-left-color: #C9A227;
+    }
+
+    .admin-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-header {
+      background: white;
+      padding: 20px 40px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .admin-header h1 {
+      color: #0F4C5C;
+      font-size: 24px;
+    }
+
+    .admin-user {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .admin-user-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #C9A227, #e0b93a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+
+    .btn-logout {
+      padding: 8px 16px;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .btn-logout:hover {
+      background: #c0392b;
+    }
+
+    .admin-content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      animation: slideUp 0.5s ease-out;
+    }
+
+    .stat-card h3 {
+      color: #666;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .stat-card .value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #0F4C5C;
+      margin-bottom: 8px;
+    }
+
+    .stat-card .change {
+      font-size: 12px;
+      color: #27ae60;
+    }
+
+    .content-section {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      display: none;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    .content-section h2 {
+      color: #0F4C5C;
+      margin-bottom: 25px;
+      font-size: 22px;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table th {
+      background: #f5f5f5;
+      color: #333;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 13px;
+      border-bottom: 2px solid #ddd;
+    }
+
+    table td {
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+    }
+
+    table tr:hover {
+      background: #f9f9f9;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-active {
+      background: #d5f4e6;
+      color: #27ae60;
+    }
+
+    .badge-inactive {
+      background: #fadbd8;
+      color: #e74c3c;
+    }
+
+    .form-add {
+      background: #f9f9f9;
+      padding: 25px;
+      border-radius: 8px;
+      margin-top: 25px;
+    }
+
+    .form-add h3 {
+      color: #0F4C5C;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+
+    .form-row.full {
+      grid-template-columns: 1fr;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #C9A227 0%, #e0b93a 100%);
+      color: #0F4C5C;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+    }
+
+    .success-message {
+      background: #d5f4e6;
+      color: #27ae60;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .admin-sidebar {
+        width: 0;
+        position: fixed;
+        height: 100vh;
+        z-index: 100;
+        overflow-x: hidden;
+        transition: width 0.3s;
+      }
+
+      .admin-sidebar.open {
+        width: 260px;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- LOGIN PAGE -->
+  <div class="login-container" id="loginForm">
+    <div class="login-header">
+      <h1>🔐 Panel Admin</h1>
+      <p>Nour Al Zawwaj - Gestion</p>
+    </div>
+    <form onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="admin@nouralzawwaj.com"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="••••••••"
+          required
+        />
+      </div>
+      <button type="submit" class="btn-login">Se connecter</button>
+      <div class="error-message" id="errorMessage"></div>
+    </form>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div class="admin-container" id="adminDashboard">
+    <!-- SIDEBAR -->
+    <div class="admin-sidebar" id="sidebar">
+      <div class="admin-logo">
+        <h2>Nour Al Zawwaj</h2>
+        <p>Panel d'administration</p>
+      </div>
+      <ul class="admin-menu">
+        <li><a href="#" class="menu-link active" data-section="dashboard">📊 Tableau de bord</a></li>
+        <li><a href="#" class="menu-link" data-section="members">👥 Membres</a></li>
+        <li><a href="#" class="menu-link" data-section="messages">💬 Messages</a></li>
+        <li><a href="#" class="menu-link" data-section="subscriptions">💳 Abonnements</a></li>
+        <li><a href="#" class="menu-link" data-section="settings">⚙️ Paramètres</a></li>
+        <li><a href="#" class="menu-link" data-section="reports">📋 Rapports</a></li>
+      </ul>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="admin-main">
+      <!-- HEADER -->
+      <div class="admin-header">
+        <h1 id="pageTitle">Tableau de bord</h1>
+        <div class="admin-user">
+          <div class="admin-user-avatar" id="userInitial">A</div>
+          <button class="btn-logout" onclick="handleLogout()">Déconnexion</button>
+        </div>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="admin-content">
+        <!-- DASHBOARD -->
+        <div class="content-section active" id="dashboard">
+          <h2>Tableau de bord</h2>
+          <div class="dashboard-grid">
+            <div class="stat-card">
+              <h3>Membres Actifs</h3>
+              <div class="value">12,450</div>
+              <div class="change">↑ 12% cette semaine</div>
+            </div>
+            <div class="stat-card">
+              <h3>Nouveaux Profils</h3>
+              <div class="value">487</div>
+              <div class="change">↑ 8% cette semaine</div>
+            </div>
+            <div class="stat-card">
+              <h3>Mariages Réalisés</h3>
+              <div class="value">127</div>
+              <div class="change">↑ 5% cette semaine</div>
+            </div>
+            <div class="stat-card">
+              <h3>Abonnements Premium</h3>
+              <div class="value">3,240</div>
+              <div class="change">↑ 15% cette semaine</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MEMBERS -->
+        <div class="content-section" id="members">
+          <h2>Gestion des Membres</h2>
+          <div class="success-message" id="successMessage"></div>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Profil</th>
+                <th>Statut</th>
+                <th>Inscription</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#001</td>
+                <td>Amina K.</td>
+                <td>amina@example.com</td>
+                <td>Femme, 27 ans</td>
+                <td><span class="badge badge-active">Actif</span></td>
+                <td>15/06/2024</td>
+              </tr>
+              <tr>
+                <td>#002</td>
+                <td>Mohamed A.</td>
+                <td>mohamed@example.com</td>
+                <td>Homme, 30 ans</td>
+                <td><span class="badge badge-active">Actif</span></td>
+                <td>14/06/2024</td>
+              </tr>
+              <tr>
+                <td>#003</td>
+                <td>Fatima R.</td>
+                <td>fatima@example.com</td>
+                <td>Femme, 25 ans</td>
+                <td><span class="badge badge-inactive">Inactif</span></td>
+                <td>10/06/2024</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="form-add">
+            <h3>➕ Ajouter un Membre</h3>
+            <div class="form-row">
+              <input type="text" placeholder="Nom complet" />
+              <input type="email" placeholder="Email" />
+            </div>
+            <div class="form-row">
+              <input type="text" placeholder="Profil (Homme/Femme)" />
+              <input type="number" placeholder="Âge" />
+            </div>
+            <button class="btn-submit" onclick="addMember()">Ajouter</button>
+          </div>
+        </div>
+
+        <!-- MESSAGES -->
+        <div class="content-section" id="messages">
+          <h2>Messages</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>De</th>
+                <th>À</th>
+                <th>Message</th>
+                <th>Date</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Amina K.</td>
+                <td>Mohamed A.</td>
+                <td>Salam, comment allez-vous ?</td>
+                <td>25/06/2024 14:30</td>
+                <td><span class="badge badge-active">Lu</span></td>
+              </tr>
+              <tr>
+                <td>Fatima R.</td>
+                <td>Omar S.</td>
+                <td>Intéressée par votre profil</td>
+                <td>25/06/2024 10:15</td>
+                <td><span class="badge badge-inactive">Non lu</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- SUBSCRIPTIONS -->
+        <div class="content-section" id="subscriptions">
+          <h2>Abonnements</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Membre</th>
+                <th>Type d'Abonnement</th>
+                <th>Prix</th>
+                <th>Date d'Expiration</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Amina K.</td>
+                <td>Premium 3 mois</td>
+                <td>24,99 €</td>
+                <td>15/09/2024</td>
+                <td><span class="badge badge-active">Actif</span></td>
+              </tr>
+              <tr>
+                <td>Mohamed A.</td>
+                <td>Premium 1 mois</td>
+                <td>9,99 €</td>
+                <td>25/07/2024</td>
+                <td><span class="badge badge-active">Actif</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- SETTINGS -->
+        <div class="content-section" id="settings">
+          <h2>Paramètres Généraux</h2>
+          <div class="form-add">
+            <div class="form-row full">
+              <label>Nom du Site</label>
+              <input type="text" value="Nour Al Zawwaj" />
+            </div>
+            <div class="form-row">
+              <div>
+                <label>Email Support</label>
+                <input type="email" value="support@nouralzawwaj.com" />
+              </div>
+              <div>
+                <label>Téléphone</label>
+                <input type="tel" value="+33 1 23 45 67 89" />
+              </div>
+            </div>
+            <div class="form-row full">
+              <label>Description</label>
+              <input type="text" value="La plateforme de mariage halal n°1 en France" />
+            </div>
+            <button class="btn-submit" onclick="saveSettings()">Enregistrer les paramètres</button>
+          </div>
+        </div>
+
+        <!-- REPORTS -->
+        <div class="content-section" id="reports">
+          <h2>Rapports & Statistiques</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Période</th>
+                <th>Nouveaux Membres</th>
+                <th>Mariages</th>
+                <th>Revenus</th>
+                <th>Note Globale</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Juin 2024</td>
+                <td>487</td>
+                <td>45</td>
+                <td>12,500 €</td>
+                <td>9.2/10</td>
+              </tr>
+              <tr>
+                <td>Mai 2024</td>
+                <td>432</td>
+                <td>38</td>
+                <td>11,200 €</td>
+                <td>9.0/10</td>
+              </tr>
+              <tr>
+                <td>Avril 2024</td>
+                <td>398</td>
+                <td>35</td>
+                <td>10,100 €</td>
+                <td>8.8/10</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ════ AUTHENTIFICATION ════
+    const ADMIN_EMAIL = 'admin@nouralzawwaj.com';
+    const ADMIN_PASSWORD = 'Admin@2024!'; // À changer en production
+
+    function handleLogin(event) {
+      event.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('errorMessage');
+
+      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+        // Connexion réussie
+        localStorage.setItem('adminLogged', 'true');
+        localStorage.setItem('adminEmail', email);
+
+        // Mettre à jour le nom d'utilisateur
+        const initial = email.charAt(0).toUpperCase();
+        document.getElementById('userInitial').textContent = initial;
+
+        // Afficher le dashboard
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('adminDashboard').classList.add('active');
+
+        errorMessage.classList.remove('show');
+      } else {
+        // Erreur de connexion
+        errorMessage.textContent = '❌ Email ou mot de passe incorrect';
+        errorMessage.classList.add('show');
+      }
+    }
+
+    function handleLogout() {
+      if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+        localStorage.removeItem('adminLogged');
+        localStorage.removeItem('adminEmail');
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('adminDashboard').classList.remove('active');
+        document.getElementById('email').value = '';
+        document.getElementById('password').value = '';
+      }
+    }
+
+    // ════ NAVIGATION ════
+    document.querySelectorAll('.menu-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Retirer la classe active de tous les liens
+        document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+
+        // Cacher toutes les sections
+        document.querySelectorAll('.content-section').forEach(section => {
+          section.classList.remove('active');
+        });
+
+        // Afficher la section sélectionnée
+        const sectionId = link.getAttribute('data-section');
+        document.getElementById(sectionId).classList.add('active');
+
+        // Mettre à jour le titre
+        document.getElementById('pageTitle').textContent = link.textContent.trim();
+      });
+    });
+
+    // ════ FONCTIONS ════
+    function addMember() {
+      const successMessage = document.getElementById('successMessage');
+      successMessage.textContent = '✅ Membre ajouté avec succès !';
+      successMessage.classList.add('show');
+      setTimeout(() => {
+        successMessage.classList.remove('show');
+      }, 3000);
+    }
+
+    function saveSettings() {
+      const successMessage = document.getElementById('successMessage');
+      successMessage.textContent = '✅ Paramètres enregistrés avec succès !';
+      successMessage.classList.add('show');
+      setTimeout(() => {
+        successMessage.classList.remove('show');
+      }, 3000);
+    }
+
+    // ════ VÉRIFIER SI CONNECTÉ ════
+    window.addEventListener('load', () => {
+      const isLogged = localStorage.getItem('adminLogged');
+      if (isLogged === 'true') {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('adminDashboard').classList.add('active');
+        const email = localStorage.getItem('adminEmail');
+        const initial = email.charAt(0).toUpperCase();
+        document.getElementById('userInitial').textContent = initial;
+      }
+    });
+  </script>
+</body>
+</html>

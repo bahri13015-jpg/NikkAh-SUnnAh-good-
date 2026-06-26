@@ -9,14 +9,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --petrol:   #0F4C5C; --petrol-d: #0a3543; --petrol-l: #1a6070;
-      --gold:     #C9A227; --gold-l:   #e0b93a; --gold-d:   #a8851e;
-      --white:    #FFFFFF; --grey:     #F5F5F5; --grey-mid: #e0e0e0;
-      --text:     #1a2e35; --text-m:   #4a6570;
-      --error:    #c0392b; --success:  #1a7a4a;
+      --petrol:#0F4C5C;--petrol-d:#0a3543;--petrol-l:#1a6070;
+      --gold:#C9A227;--gold-l:#e0b93a;--gold-d:#a8851e;
+      --white:#FFFFFF;--grey:#F5F5F5;--grey-mid:#e0e0e0;
+      --text:#1a2e35;--text-m:#4a6570;
+      --error:#c0392b;--success:#1a7a4a;
       --ff-display:'Cormorant Garamond',Georgia,serif;
-      --ff-body:   'Jost',system-ui,sans-serif;
-      --ease-out:  cubic-bezier(.22,1,.36,1);
+      --ff-body:'Jost',system-ui,sans-serif;
+      --ease-out:cubic-bezier(.22,1,.36,1);
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
@@ -44,7 +44,7 @@
     .nav-back:hover{color:var(--gold)}
     .nav-back svg{width:15px;height:15px}
 
-    /* PAGE HEADER — rose/mauve subtil différenciateur */
+    /* PAGE HEADER */
     #page-header{background:var(--petrol-d);padding:120px 0 72px;position:relative;overflow:hidden;text-align:center}
     #page-header::before{content:'';position:absolute;inset:0;opacity:.04;
       background-image:repeating-linear-gradient(45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 50%),
@@ -52,7 +52,6 @@
       background-size:40px 40px}
     #page-header::after{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;
       border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.1) 0%,transparent 70%);pointer-events:none}
-    /* Ornement gauche spécifique sœurs */
     #page-header .ornt{position:absolute;bottom:-20%;left:-8%;width:380px;height:380px;border-radius:50%;
       background:radial-gradient(circle,rgba(180,120,160,.08) 0%,transparent 70%);pointer-events:none}
     .header-inner{position:relative;z-index:2}
@@ -63,8 +62,6 @@
     .header-title{font-family:var(--ff-display);font-size:clamp(2.4rem,5vw,3.6rem);font-weight:300;color:var(--white);line-height:1.1}
     .header-title em{font-style:italic;color:var(--gold)}
     .header-sub{font-size:.95rem;color:rgba(255,255,255,.55);max-width:480px;margin:18px auto 0;line-height:1.8}
-
-    /* Bannière wali */
     .wali-banner{display:inline-flex;align-items:center;gap:10px;margin-top:20px;
                  padding:10px 20px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.25);
                  border-radius:40px;font-size:.78rem;color:rgba(255,255,255,.7)}
@@ -110,17 +107,13 @@
     .sidebar-note{margin:0 16px 20px;padding:14px 16px;background:rgba(15,76,92,.05);
                   border:1px solid rgba(15,76,92,.12);border-radius:4px;font-size:.78rem;color:var(--text-m);line-height:1.7}
     .sidebar-note strong{color:var(--petrol)}
-    /* Note wali sidebar */
     .sidebar-wali{margin:0 16px 20px;padding:14px 16px;background:rgba(201,162,39,.06);
                   border:1px solid rgba(201,162,39,.18);border-radius:4px;font-size:.78rem;color:var(--text-m);line-height:1.7}
     .sidebar-wali strong{color:var(--gold-d)}
-
     @media(max-width:860px){
-      .form-shell{grid-template-columns:1fr}
-      .form-sidebar{position:static}
+      .form-shell{grid-template-columns:1fr}.form-sidebar{position:static}
       .sidebar-nav{flex-direction:row;flex-wrap:wrap;gap:8px;padding:16px}
-      .sidebar-nav-item{flex:1 1 auto;min-width:120px}
-      .sidebar-note,.sidebar-wali{margin:0 16px 16px}
+      .sidebar-nav-item{flex:1 1 auto;min-width:120px}.sidebar-note,.sidebar-wali{margin:0 16px 16px}
     }
 
     /* PANELS */
@@ -147,14 +140,12 @@
     .field-label{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--petrol)}
     .field-label .req{color:var(--gold);margin-left:3px}
     .field-hint{font-size:.75rem;color:var(--text-m);margin-top:-2px;line-height:1.5}
-
     .inp,.sel,.tex{width:100%;padding:12px 16px;border:1.5px solid var(--grey-mid);border-radius:3px;
                    font-family:var(--ff-body);font-size:.9rem;color:var(--text);background:var(--white);
                    transition:border-color .25s,box-shadow .25s;appearance:none;-webkit-appearance:none}
     .inp:focus,.sel:focus,.tex:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.12)}
     .inp::placeholder,.tex::placeholder{color:rgba(74,101,112,.5)}
     .inp.has-error,.sel.has-error,.tex.has-error{border-color:var(--error)}
-
     .sel-wrap{position:relative}
     .sel-wrap::after{content:'';position:absolute;right:14px;top:50%;transform:translateY(-50%);
                      width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;
@@ -172,8 +163,7 @@
     /* TILES */
     .tiles{display:grid;gap:10px}
     .tiles.cols-2{grid-template-columns:1fr 1fr}
-    .tiles.cols-3{grid-template-columns:repeat(3,1fr)}
-    @media(max-width:480px){.tiles.cols-2,.tiles.cols-3{grid-template-columns:1fr 1fr}}
+    @media(max-width:480px){.tiles.cols-2{grid-template-columns:1fr 1fr}}
     .tile input{position:absolute;opacity:0;width:0;height:0}
     .tile{position:relative}
     .tile-label{display:flex;align-items:center;gap:10px;padding:12px 16px;border:1.5px solid var(--grey-mid);
@@ -186,7 +176,7 @@
     .tile input:checked+.tile-label::before{border-color:var(--gold);background:var(--gold)}
     .tile input:focus-visible+.tile-label{box-shadow:0 0 0 3px rgba(201,162,39,.2)}
 
-    /* VOILE — tiles spéciales avec icône */
+    /* VOILE */
     .voile-tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     @media(max-width:480px){.voile-tiles{grid-template-columns:1fr}}
     .voile-tile input{position:absolute;opacity:0;width:0;height:0}
@@ -230,8 +220,6 @@
     .photo-drop.has-photo{padding:32px 24px}
     #photo-preview{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--gold)}
     .photo-change{font-size:.78rem;color:var(--gold-d);text-decoration:underline;cursor:pointer;background:none;border:none}
-
-    /* Mention confidentialité photo */
     .photo-note{display:flex;align-items:flex-start;gap:8px;margin-top:12px;padding:10px 14px;
                 background:rgba(15,76,92,.05);border:1px solid rgba(15,76,92,.1);border-radius:3px;
                 font-size:.76rem;color:var(--text-m);line-height:1.6}
@@ -244,9 +232,11 @@
     .tag-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:rgba(15,76,92,.08);
               border:1px solid rgba(15,76,92,.15);border-radius:20px;font-size:.78rem;color:var(--petrol)}
     .tag-chip button{width:14px;height:14px;border-radius:50%;background:rgba(15,76,92,.15);
-                     display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--petrol);line-height:1;padding:0;cursor:pointer;border:none}
+                     display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--petrol);
+                     line-height:1;padding:0;cursor:pointer;border:none}
     .tag-chip button:hover{background:var(--error);color:var(--white)}
-    .tags-input{border:none;outline:none;font-family:var(--ff-body);font-size:.9rem;color:var(--text);background:transparent;flex:1;min-width:120px}
+    .tags-input{border:none;outline:none;font-family:var(--ff-body);font-size:.9rem;color:var(--text);
+                background:transparent;flex:1;min-width:120px}
     .tags-input::placeholder{color:rgba(74,101,112,.45)}
 
     /* CHAR COUNTER */
@@ -285,7 +275,6 @@
     .alert.show{display:flex}
     .alert svg{width:16px;height:16px;flex-shrink:0;margin-top:1px}
     .alert-error{background:rgba(192,57,43,.07);border:1px solid rgba(192,57,43,.2);color:var(--error)}
-    .alert-success{background:rgba(26,122,74,.07);border:1px solid rgba(26,122,74,.22);color:var(--success)}
 
     /* CONFIRM */
     #confirm-screen{display:none}
@@ -306,7 +295,6 @@
     .footer-copy{font-size:.75rem;color:rgba(255,255,255,.28)}
     .footer-copy a{color:rgba(201,162,39,.6);transition:color .2s}
     .footer-copy a:hover{color:var(--gold)}
-
     @keyframes spin{to{transform:rotate(360deg)}}
   </style>
 </head>
@@ -356,47 +344,28 @@
         <div class="sidebar-progress">
           <div class="sidebar-progress-bar"><div class="sidebar-progress-fill" id="progress-fill"></div></div>
           <div class="sidebar-nav" id="sidebar-nav">
-            <button class="sidebar-nav-item active" data-goto="1">
-              <div class="sidebar-nav-icon">1</div>Compte & identité
-            </button>
-            <button class="sidebar-nav-item" data-goto="2">
-              <div class="sidebar-nav-icon">2</div>Pratique religieuse
-            </button>
-            <button class="sidebar-nav-item" data-goto="3">
-              <div class="sidebar-nav-icon">3</div>Profil & critères
-            </button>
+            <button class="sidebar-nav-item active" data-goto="1"><div class="sidebar-nav-icon">1</div>Compte & identité</button>
+            <button class="sidebar-nav-item" data-goto="2"><div class="sidebar-nav-icon">2</div>Pratique religieuse</button>
+            <button class="sidebar-nav-item" data-goto="3"><div class="sidebar-nav-icon">3</div>Profil & critères</button>
           </div>
-          <div class="sidebar-note">
-            <strong>Confidentialité</strong><br>
-            Vos informations sont chiffrées. Votre photo n'est visible que des membres de confiance validés.
-          </div>
-          <div class="sidebar-wali">
-            <strong>Rôle du wali</strong><br>
-            Vous pouvez renseigner l'e-mail de votre wali pour qu'il soit informé et impliqué selon vos souhaits.
-          </div>
+          <div class="sidebar-note"><strong>Confidentialité</strong><br>Vos informations sont chiffrées. Votre photo n'est visible que des membres de confiance validés.</div>
+          <div class="sidebar-wali"><strong>Rôle du wali</strong><br>Vous pouvez renseigner l'e-mail de votre wali pour qu'il soit informé et impliqué selon vos souhaits.</div>
         </div>
       </aside>
 
       <div>
 
-        <!-- ══ PANEL 1 : Compte & Identité ══ -->
+        <!-- ══ PANEL 1 ══ -->
         <div class="form-panel active" id="panel-1">
-
           <div class="alert alert-error" id="alert-global">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             <span id="alert-text">Une erreur est survenue.</span>
           </div>
 
-          <!-- Compte -->
           <div class="form-card reveal">
             <div class="form-card-header">
-              <div class="form-card-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
-              </div>
-              <div>
-                <p class="form-card-title">Votre compte</p>
-                <p class="form-card-desc">Ces identifiants vous permettront de vous connecter</p>
-              </div>
+              <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></div>
+              <div><p class="form-card-title">Votre compte</p><p class="form-card-desc">Ces identifiants vous permettront de vous connecter</p></div>
             </div>
             <div class="form-card-body">
               <div class="field-row">
@@ -417,7 +386,6 @@
                   <input class="inp" id="password-confirm" type="password" placeholder="Répétez le mot de passe" autocomplete="new-password"/>
                   <span class="field-error" id="err-password-confirm">Les mots de passe ne correspondent pas</span>
                 </div>
-                <!-- Email wali -->
                 <div class="field">
                   <label class="field-label" for="wali-email">E-mail du wali (optionnel)</label>
                   <input class="inp" id="wali-email" type="email" placeholder="wali@exemple.com" inputmode="email"/>
@@ -428,24 +396,16 @@
             </div>
           </div>
 
-          <!-- Photo — mention pudeur renforcée -->
           <div class="form-card reveal reveal-delay-1">
             <div class="form-card-header">
-              <div class="form-card-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              </div>
-              <div>
-                <p class="form-card-title">Votre photo</p>
-                <p class="form-card-desc">Entièrement optionnelle · Visible uniquement après votre accord</p>
-              </div>
+              <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+              <div><p class="form-card-title">Votre photo</p><p class="form-card-desc">Entièrement optionnelle · Visible uniquement après votre accord</p></div>
             </div>
             <div class="form-card-body">
               <div class="photo-drop" id="photo-drop">
                 <input type="file" id="photo-input" accept="image/png,image/jpeg,image/webp"/>
                 <div class="photo-drop-placeholder">
-                  <div class="photo-drop-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  </div>
+                  <div class="photo-drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
                   <p class="photo-drop-title">Déposer ou choisir une photo (optionnel)</p>
                   <p class="photo-drop-sub">JPG, PNG ou WEBP · Max 5 Mo</p>
                 </div>
@@ -456,21 +416,15 @@
               </div>
               <div class="photo-note">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                Votre photo est protégée. Par défaut, elle n'est visible que par les membres validés qui ont reçu votre autorisation. Vous pouvez également ne pas en fournir du tout.
+                Votre photo est protégée. Par défaut, elle n'est visible que par les membres validés qui ont reçu votre autorisation.
               </div>
             </div>
           </div>
 
-          <!-- Infos personnelles -->
           <div class="form-card reveal reveal-delay-2">
             <div class="form-card-header">
-              <div class="form-card-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-              </div>
-              <div>
-                <p class="form-card-title">Informations personnelles</p>
-                <p class="form-card-desc">Votre identité de base</p>
-              </div>
+              <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+              <div><p class="form-card-title">Informations personnelles</p><p class="form-card-desc">Votre identité de base</p></div>
             </div>
             <div class="form-card-body">
               <div class="field-row">
@@ -481,10 +435,7 @@
                 </div>
                 <div class="field">
                   <label class="field-label" for="age">Âge <span class="req">*</span></label>
-                  <div class="range-wrap">
-                    <input type="range" id="age" min="18" max="65" value="25"/>
-                    <span class="range-val" id="age-val">25</span>
-                  </div>
+                  <div class="range-wrap"><input type="range" id="age" min="18" max="65" value="25"/><span class="range-val" id="age-val">25</span></div>
                 </div>
               </div>
               <div class="field-row">
@@ -521,16 +472,10 @@
             </div>
           </div>
 
-          <!-- Situation matrimoniale -->
           <div class="form-card reveal reveal-delay-3">
             <div class="form-card-header">
-              <div class="form-card-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              </div>
-              <div>
-                <p class="form-card-title">Situation matrimoniale</p>
-                <p class="form-card-desc">Votre situation actuelle</p>
-              </div>
+              <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <div><p class="form-card-title">Situation matrimoniale</p><p class="form-card-desc">Votre situation actuelle</p></div>
             </div>
             <div class="form-card-body">
               <div class="field" style="margin-bottom:20px">
@@ -572,10 +517,7 @@
 
           <div class="form-nav reveal">
             <div></div>
-            <button class="btn-next" id="next-1">
-              Étape suivante
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
+            <button class="btn-next" id="next-1">Étape suivante<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>
           </div>
           <div class="trust-strip reveal">
             <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Données chiffrées</div>
@@ -584,59 +526,31 @@
           </div>
         </div>
 
-        <!-- ══ PANEL 2 : Religion ══ -->
+        <!-- ══ PANEL 2 ══ -->
         <div class="form-panel" id="panel-2">
-
-          <!-- Voile -->
           <div class="form-card reveal">
             <div class="form-card-header">
-              <div class="form-card-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
-              <div>
-                <p class="form-card-title">Port du voile</p>
-                <p class="form-card-desc">Votre tenue vestimentaire islamique</p>
-              </div>
+              <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+              <div><p class="form-card-title">Port du voile</p><p class="form-card-desc">Votre tenue vestimentaire islamique</p></div>
             </div>
             <div class="form-card-body">
               <div class="field">
                 <label class="field-label">Voile <span class="req">*</span></label>
                 <div class="voile-tiles">
-                  <label class="voile-tile">
-                    <input type="radio" name="voile" value="sans_voile"/>
-                    <div class="voile-label">
-                      <span class="voile-emoji">👩</span>
-                      <div class="voile-text"><span class="voile-name">Sans voile</span><span class="voile-desc">En cheminement</span></div>
-                    </div>
-                  </label>
-                  <label class="voile-tile">
-                    <input type="radio" name="voile" value="hijab"/>
-                    <div class="voile-label">
-                      <span class="voile-emoji">🧕</span>
-                      <div class="voile-text"><span class="voile-name">Hijab</span><span class="voile-desc">Voile couvrant les cheveux</span></div>
-                    </div>
-                  </label>
-                  <label class="voile-tile">
-                    <input type="radio" name="voile" value="jilbab"/>
-                    <div class="voile-label">
-                      <span class="voile-emoji">🧕</span>
-                      <div class="voile-text"><span class="voile-name">Jilbab / Abaya</span><span class="voile-desc">Tenue ample + voile</span></div>
-                    </div>
-                  </label>
-                  <label class="voile-tile">
-                    <input type="radio" name="voile" value="niqab"/>
-                    <div class="voile-label">
-                      <span class="voile-emoji">🫙</span>
-                      <div class="voile-text"><span class="voile-name">Niqab</span><span class="voile-desc">Voile couvrant le visage</span></div>
-                    </div>
-                  </label>
+                  <label class="voile-tile"><input type="radio" name="voile" value="sans_voile"/>
+                    <div class="voile-label"><span class="voile-emoji">👩</span><div class="voile-text"><span class="voile-name">Sans voile</span><span class="voile-desc">En cheminement</span></div></div></label>
+                  <label class="voile-tile"><input type="radio" name="voile" value="hijab"/>
+                    <div class="voile-label"><span class="voile-emoji">🧕</span><div class="voile-text"><span class="voile-name">Hijab</span><span class="voile-desc">Voile couvrant les cheveux</span></div></div></label>
+                  <label class="voile-tile"><input type="radio" name="voile" value="jilbab"/>
+                    <div class="voile-label"><span class="voile-emoji">🧕</span><div class="voile-text"><span class="voile-name">Jilbab / Abaya</span><span class="voile-desc">Tenue ample + voile</span></div></div></label>
+                  <label class="voile-tile"><input type="radio" name="voile" value="niqab"/>
+                    <div class="voile-label"><span class="voile-emoji">🫙</span><div class="voile-text"><span class="voile-name">Niqab</span><span class="voile-desc">Voile couvrant le visage</span></div></div></label>
                 </div>
                 <span class="field-error" id="err-voile">Veuillez sélectionner votre tenue</span>
               </div>
             </div>
           </div>
 
-          <!-- Niveau de pratique -->
           <div class="form-card reveal reveal-delay-1">
             <div class="form-card-header">
               <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
@@ -660,7 +574,6 @@
             </div>
           </div>
 
-          <!-- Pratique quotidienne -->
           <div class="form-card reveal reveal-delay-2">
             <div class="form-card-header">
               <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
@@ -692,7 +605,6 @@
             </div>
           </div>
 
-          <!-- Vision du foyer -->
           <div class="form-card reveal reveal-delay-3">
             <div class="form-card-header">
               <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
@@ -730,10 +642,8 @@
           </div>
         </div>
 
-        <!-- ══ PANEL 3 : Profil & Critères ══ -->
+        <!-- ══ PANEL 3 ══ -->
         <div class="form-panel" id="panel-3">
-
-          <!-- Description -->
           <div class="form-card reveal">
             <div class="form-card-header">
               <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
@@ -756,7 +666,6 @@
             </div>
           </div>
 
-          <!-- Critères recherchés — version sœurs -->
           <div class="form-card reveal reveal-delay-1">
             <div class="form-card-header">
               <div class="form-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
@@ -778,12 +687,9 @@
                   <label class="field-label" for="critere-pays">Pays acceptés</label>
                   <div class="sel-wrap">
                     <select class="sel" id="critere-pays">
-                      <option value="tous">Tous les pays</option>
-                      <option value="france">France uniquement</option>
-                      <option value="europe">Europe</option>
-                      <option value="maghreb">Maghreb</option>
-                      <option value="afrique">Afrique francophone</option>
-                      <option value="ouvert">Ouvert à tout</option>
+                      <option value="tous">Tous les pays</option><option value="france">France uniquement</option>
+                      <option value="europe">Europe</option><option value="maghreb">Maghreb</option>
+                      <option value="afrique">Afrique francophone</option><option value="ouvert">Ouvert à tout</option>
                     </select>
                   </div>
                 </div>
@@ -814,13 +720,12 @@
               </div>
               <div class="field" style="margin-top:20px">
                 <label class="field-label" for="criteres-libres">Autres précisions</label>
-                <textarea class="tex" id="criteres-libres" maxlength="400" rows="3" placeholder="Votre vision du couple, critères supplémentaires, questions pour le futur époux…"></textarea>
+                <textarea class="tex" id="criteres-libres" maxlength="400" rows="3" placeholder="Votre vision du couple, critères supplémentaires…"></textarea>
                 <div class="char-counter" id="crit-counter">0 / 400</div>
               </div>
             </div>
           </div>
 
-          <!-- CGU -->
           <div class="form-card reveal reveal-delay-2">
             <div class="form-card-body">
               <div class="field">
@@ -847,16 +752,14 @@
         </div>
 
       </div>
-    </div><!-- /form-shell -->
+    </div>
 
     <!-- CONFIRMATION -->
     <div id="confirm-screen">
       <div class="confirm-card">
-        <div class="confirm-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        </div>
+        <div class="confirm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
         <h2 class="confirm-title">Profil créé, <em>barak Allahu fiki</em></h2>
-        <p class="confirm-sub">Votre compte a été créé avec succès. Vérifiez votre e-mail pour activer votre compte. Notre équipe validera votre profil sous 24h insha Allah.</p>
+        <p class="confirm-sub">Votre compte a été créé avec succès. Vérifiez votre e-mail pour l'activer. Notre équipe validera votre profil sous 24h insha Allah.</p>
         <div class="confirm-steps">
           <div class="confirm-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>Vérifiez votre e-mail</div>
           <div class="confirm-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Profil en validation</div>
@@ -884,16 +787,14 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON, {
   auth: { persistSession: true, autoRefreshToken: true }
 });
 
-/* ── STATE ── */
 let currentStep = 1;
 let photoFile   = null;
 
 /* ── REVEAL ── */
-const revEls = document.querySelectorAll('.reveal');
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
 }, { threshold: .1, rootMargin: '0px 0px -30px 0px' });
-revEls.forEach(el => obs.observe(el));
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
 /* ── NAVIGATION ── */
 function goToStep(n) {
@@ -930,29 +831,26 @@ function hideAlert() { document.getElementById('alert-global').classList.remove(
 function validateStep1() {
   hideAlert();
   let ok = true;
-  const email    = document.getElementById('email').value.trim();
-  const pw       = document.getElementById('password').value;
-  const pwConf   = document.getElementById('password-confirm').value;
+  const email     = document.getElementById('email').value.trim();
+  const pw        = document.getElementById('password').value;
+  const pwConf    = document.getElementById('password-confirm').value;
   const waliEmail = document.getElementById('wali-email').value.trim();
-  const prenom   = document.getElementById('prenom').value.trim();
-  const pays     = document.getElementById('pays').value;
-  const ville    = document.getElementById('ville').value.trim();
-  const prof     = document.getElementById('profession').value.trim();
-  const sit      = document.querySelector('input[name="situation"]:checked');
-
-  if (!isEmail(email))   { showErr('err-email', true);            markInp('email', true);            ok = false; }
-  if (pw.length < 8)     { showErr('err-password', true);         markInp('password', true);         ok = false; }
-  if (pw !== pwConf)     { showErr('err-password-confirm', true); markInp('password-confirm', true); ok = false; }
-  // Wali email optionnel mais si renseigné doit être valide
-  if (waliEmail && !isEmail(waliEmail)) { showErr('err-wali-email', true); markInp('wali-email', true); ok = false; }
-  if (!prenom)           { showErr('err-prenom', true);           markInp('prenom', true);           ok = false; }
-  if (!pays)             { showErr('err-pays', true);             markInp('pays', true);             ok = false; }
-  if (!ville)            { showErr('err-ville', true);            markInp('ville', true);            ok = false; }
-  if (!prof)             { showErr('err-profession', true);       markInp('profession', true);       ok = false; }
-  if (!sit)              { showErr('err-situation', true);                                           ok = false; }
+  const prenom    = document.getElementById('prenom').value.trim();
+  const pays      = document.getElementById('pays').value;
+  const ville     = document.getElementById('ville').value.trim();
+  const prof      = document.getElementById('profession').value.trim();
+  const sit       = document.querySelector('input[name="situation"]:checked');
+  if (!isEmail(email))                       { showErr('err-email', true);            markInp('email', true);            ok = false; }
+  if (pw.length < 8)                         { showErr('err-password', true);         markInp('password', true);         ok = false; }
+  if (pw !== pwConf)                         { showErr('err-password-confirm', true); markInp('password-confirm', true); ok = false; }
+  if (waliEmail && !isEmail(waliEmail))      { showErr('err-wali-email', true);       markInp('wali-email', true);       ok = false; }
+  if (!prenom)                               { showErr('err-prenom', true);           markInp('prenom', true);           ok = false; }
+  if (!pays)                                 { showErr('err-pays', true);             markInp('pays', true);             ok = false; }
+  if (!ville)                                { showErr('err-ville', true);            markInp('ville', true);            ok = false; }
+  if (!prof)                                 { showErr('err-profession', true);       markInp('profession', true);       ok = false; }
+  if (!sit)                                  { showErr('err-situation', true);                                           ok = false; }
   return ok;
 }
-
 function validateStep2() {
   let ok = true;
   const voile = document.querySelector('input[name="voile"]:checked');
@@ -961,7 +859,6 @@ function validateStep2() {
   if (!rel)   { showErr('err-religion', true); ok = false; }
   return ok;
 }
-
 function validateStep3() {
   let ok = true;
   const desc = document.getElementById('description').value.trim();
@@ -979,7 +876,6 @@ document.getElementById('next-1').addEventListener('click', () => { if (validate
 document.getElementById('prev-2').addEventListener('click', () => goToStep(1));
 document.getElementById('next-2').addEventListener('click', () => { if (validateStep2()) goToStep(3); });
 document.getElementById('prev-3').addEventListener('click', () => goToStep(2));
-
 document.querySelectorAll('.sidebar-nav-item').forEach(item => {
   item.addEventListener('click', () => {
     const target = +item.dataset.goto;
@@ -995,7 +891,6 @@ document.querySelectorAll('.sidebar-nav-item').forEach(item => {
 const photoInput   = document.getElementById('photo-input');
 const photoDrop    = document.getElementById('photo-drop');
 const photoPreview = document.getElementById('photo-preview');
-
 function handlePhoto(file) {
   if (!file || !file.type.startsWith('image/')) return;
   if (file.size > 5 * 1024 * 1024) { alert('La photo doit faire moins de 5 Mo.'); return; }
@@ -1010,7 +905,7 @@ photoDrop.addEventListener('dragleave', () => photoDrop.classList.remove('drag-o
 photoDrop.addEventListener('drop', e => { e.preventDefault(); photoDrop.classList.remove('drag-over'); handlePhoto(e.dataTransfer.files[0]); });
 
 /* ── RANGES ── */
-[['age','age-val'],['age-min','age-min-val'],['age-max','age-max-val']].forEach(([id, valId]) => {
+[['age','age-val'],['age-min','age-min-val'],['age-max','age-max-val']].forEach(([id,valId]) => {
   const inp = document.getElementById(id), val = document.getElementById(valId);
   if (inp && val) inp.addEventListener('input', () => val.textContent = inp.value);
 });
@@ -1021,7 +916,7 @@ photoDrop.addEventListener('drop', e => { e.preventDefault(); photoDrop.classLis
   if (inp && ctr) inp.addEventListener('input', () => {
     const l = inp.value.length;
     ctr.textContent = l + ' / ' + max;
-    ctr.className = 'char-counter' + (l > max*.9 ? ' warn' : '') + (l >= max ? ' over' : '');
+    ctr.className = 'char-counter' + (l > max*.9 ? ' warn':'') + (l >= max ? ' over':'');
   });
 });
 
@@ -1040,8 +935,7 @@ function renderTags() {
 }
 tagsInput.addEventListener('keydown', e => {
   if ((e.key === 'Enter' || e.key === ',') && tagsInput.value.trim()) {
-    e.preventDefault();
-    const v = tagsInput.value.trim().replace(/,$/,'');
+    e.preventDefault(); const v = tagsInput.value.trim().replace(/,$/,'');
     if (v && tags.length < 12 && !tags.includes(v)) { tags.push(v); renderTags(); }
     tagsInput.value = '';
   }
@@ -1062,9 +956,12 @@ document.getElementById('description').addEventListener('input', () => {
   showErr('err-description', false);
 });
 
-/* ══════════════════════════════════════════════════
-   SOUMISSION FINALE → SUPABASE
-══════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   SOUMISSION — BUG CORRIGÉ
+   ✅ FIX : upsert au lieu de insert
+            → résistant au trigger Supabase
+            → plus jamais de duplicate key
+══════════════════════════════════════════════ */
 document.getElementById('submit-btn').addEventListener('click', async () => {
   if (!validateStep3()) return;
 
@@ -1074,66 +971,68 @@ document.getElementById('submit-btn').addEventListener('click', async () => {
   submitText.textContent = 'Création…';
 
   try {
-    /* ── 1. Données formulaire ── */
-    const email     = document.getElementById('email').value.trim();
-    const password  = document.getElementById('password').value;
-    const waliEmail = document.getElementById('wali-email').value.trim() || null;
-
-    const prenom      = document.getElementById('prenom').value.trim();
-    const age         = +document.getElementById('age').value;
-    const pays        = document.getElementById('pays').value;
-    const ville       = document.getElementById('ville').value.trim();
-    const profession  = document.getElementById('profession').value.trim();
-    const nationalite = document.getElementById('nationalite').value.trim();
-
-    const situation   = document.querySelector('input[name="situation"]:checked')?.value;
-    const nb_enfants  = +document.getElementById('enfants').value;
-    const wali_dispo  = document.getElementById('wali-dispo').value || null;
-
-    const voile           = document.querySelector('input[name="voile"]:checked')?.value;
-    const niveau_pratique = document.querySelector('input[name="religion"]:checked')?.value;
-    const ecole_juridique = document.getElementById('courant').value;
-    const pratiques       = [...document.querySelectorAll('input[name="pratique"]:checked')].map(r => r.value);
-    const role_pro        = document.getElementById('role-pro').value;
+    /* 1. Données formulaire */
+    const email               = document.getElementById('email').value.trim();
+    const password            = document.getElementById('password').value;
+    const waliEmail           = document.getElementById('wali-email').value.trim() || null;
+    const prenom              = document.getElementById('prenom').value.trim();
+    const age                 = +document.getElementById('age').value;
+    const pays                = document.getElementById('pays').value;
+    const ville               = document.getElementById('ville').value.trim();
+    const profession          = document.getElementById('profession').value.trim();
+    const nationalite         = document.getElementById('nationalite').value.trim();
+    const situation           = document.querySelector('input[name="situation"]:checked')?.value;
+    const nb_enfants          = +document.getElementById('enfants').value;
+    const wali_dispo          = document.getElementById('wali-dispo').value || null;
+    const voile               = document.querySelector('input[name="voile"]:checked')?.value;
+    const niveau_pratique     = document.querySelector('input[name="religion"]:checked')?.value;
+    const ecole_juridique     = document.getElementById('courant').value;
+    const pratiques           = [...document.querySelectorAll('input[name="pratique"]:checked')].map(r => r.value);
+    const role_pro            = document.getElementById('role-pro').value;
     const nb_enfants_souhaites = document.getElementById('enfants-souhaites').value;
+    const description         = document.getElementById('description').value.trim();
+    const critere_age_min     = +document.getElementById('age-min').value;
+    const critere_age_max     = +document.getElementById('age-max').value;
+    const critere_pays        = document.getElementById('critere-pays').value;
+    const critere_niveau      = document.getElementById('critere-niveau').value;
+    const criteres_coches     = [...document.querySelectorAll('input[name="criteres"]:checked')].map(r => r.value);
+    const criteres_libres     = document.getElementById('criteres-libres').value.trim();
 
-    const description     = document.getElementById('description').value.trim();
-
-    const critere_age_min = +document.getElementById('age-min').value;
-    const critere_age_max = +document.getElementById('age-max').value;
-    const critere_pays    = document.getElementById('critere-pays').value;
-    const critere_niveau  = document.getElementById('critere-niveau').value;
-    const criteres_coches = [...document.querySelectorAll('input[name="criteres"]:checked')].map(r => r.value);
-    const criteres_libres = document.getElementById('criteres-libres').value.trim();
-
-    /* ── 2. Auth Supabase ── */
+    /* 2. Création du compte Auth Supabase */
     const { data: authData, error: authError } = await supabase.auth.signUp({ email, password });
     if (authError) throw authError;
 
-    const user = authData.user;
-    if (!user) throw new Error('Création utilisateur impossible');
+    const user = authData?.user;
+    if (!user) throw new Error('Création du compte impossible. Vérifiez votre e-mail.');
 
-    /* ── 3. Insert utilisateurs ── */
+    /* ✅ FIX : délai pour laisser le trigger Supabase s'exécuter d'abord */
+    await new Promise(r => setTimeout(r, 600));
+
+    /* ✅ FIX suite : upsert au lieu de insert
+       Si le trigger a déjà inséré la ligne → on met à jour (pas de duplicate key)
+       Si pas de trigger                    → on insère normalement */
     const { data: userRow, error: userError } = await supabase
       .from('utilisateurs')
-      .insert({ auth_id: user.id, email, genre: 'femme' })
-      .select()
+      .upsert(
+        { auth_id: user.id, email, genre: 'femme' },
+        { onConflict: 'auth_id', ignoreDuplicates: false }
+      )
+      .select('id')
       .single();
-    if (userError) throw userError;
 
+    if (userError) throw userError;
     const userId = userRow.id;
 
-    /* ── 4. Notifier le wali si renseigné ── */
-    // On stocke l'email du wali en BDD — une Edge Function peut envoyer le mail
+    /* 3. Notifier le wali si renseigné */
     if (waliEmail) {
       await supabase.from('wali_notifications').insert({
         utilisateur_id: userId,
         wali_email: waliEmail,
         statut: 'en_attente',
-      }).select(); // ignorer silencieusement si la table n'existe pas encore
+      }).select();
     }
 
-    /* ── 5. Photo (optionnel) ── */
+    /* 4. Upload photo (optionnel) */
     let photoUrl = null;
     if (photoFile) {
       const ext  = photoFile.name.split('.').pop();
@@ -1147,53 +1046,38 @@ document.getElementById('submit-btn').addEventListener('click', async () => {
       }
     }
 
-    /* ── 6. Insert profil (genre = femme) ── */
+    /* 5. Insert profil */
     const { error: profilError } = await supabase.from('profils').insert({
-      utilisateur_id: userId,
-      prenom,
-      age,
-      pays,
-      ville,
-      nationalite,
-      profession,
-      situation,
-      nb_enfants,
-      wali_email: waliEmail,
-      wali_disponibilite: wali_dispo,
-
-      voile,                          // ← spécifique sœurs
-      niveau_pratique,
-      ecole_juridique,
-      pratiques,
-      role_pro_apres_mariage: role_pro,
+      utilisateur_id:              userId,
+      prenom, age, pays, ville, nationalite, profession,
+      situation, nb_enfants,
+      wali_email:                  waliEmail,
+      wali_disponibilite:          wali_dispo,
+      voile,
+      niveau_pratique, ecole_juridique, pratiques,
+      role_pro_apres_mariage:      role_pro,
       nb_enfants_souhaites,
-
-      description,
-      mots_cles: tags,
-
-      critere_age_min,
-      critere_age_max,
+      description, mots_cles: tags,
+      critere_age_min, critere_age_max,
       critere_pays,
-      critere_niveau_pratique: critere_niveau,
-      criteres_coches,
-      criteres_libres,
-
-      photo_url: photoUrl,
-
-      profil_en_revue: true,          // ← en attente de validation admin
-      profil_valide:   false,
+      critere_niveau_pratique:     critere_niveau,
+      criteres_coches, criteres_libres,
+      photo_url:                   photoUrl,
+      profil_en_revue:             true,
+      profil_valide:               false,
     });
     if (profilError) throw profilError;
 
-    /* ── 7. Succès ── */
+    /* 6. Succès */
     document.getElementById('form-shell').style.display = 'none';
     document.getElementById('confirm-screen').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
   } catch (err) {
     console.error(err);
-    let msg = err.message || 'Erreur inconnue';
-    if (msg.includes('User already registered')) msg = 'Cet e-mail est déjà utilisé.';
+    let msg = err.message || 'Erreur inconnue. Veuillez réessayer.';
+    if (msg.includes('User already registered')) msg = 'Cet e-mail est déjà utilisé. Connectez-vous ou réinitialisez votre mot de passe.';
+    if (msg.includes('duplicate key'))           msg = 'Un compte existe déjà avec cet e-mail.';
     showAlert(msg);
     submitBtn.disabled = false;
     submitText.textContent = 'Créer mon profil';

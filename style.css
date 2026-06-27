@@ -1,0 +1,451 @@
+SS
+
+/* ==========================================
+   NOUR AL ZAWWAJ
+   STYLE.CSS - PARTIE 1
+========================================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+font-family:'Jost',sans-serif;
+
+background:#0F4C5C;
+
+min-height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+color:#222;
+
+overflow-x:hidden;
+
+}
+
+/* Fond */
+
+.background{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:
+radial-gradient(circle at top right,#c9a22722,transparent 30%),
+radial-gradient(circle at bottom left,#ffffff10,transparent 35%),
+linear-gradient(135deg,#0F4C5C,#083643);
+
+z-index:-1;
+
+}
+
+/* Conteneur */
+
+.container{
+
+width:1200px;
+
+max-width:95%;
+
+display:flex;
+
+background:white;
+
+border-radius:24px;
+
+overflow:hidden;
+
+box-shadow:
+0 20px 60px rgba(0,0,0,.30);
+
+animation:fadeUp .7s ease;
+
+}
+
+/* Partie gauche */
+
+.left{
+
+width:45%;
+
+background:linear-gradient(160deg,#0F4C5C,#072B36);
+
+padding:60px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.left::before{
+
+content:"";
+
+position:absolute;
+
+width:450px;
+
+height:450px;
+
+border-radius:50%;
+
+background:#C9A22715;
+
+top:-160px;
+
+right:-160px;
+
+}
+
+.left::after{
+
+content:"";
+
+position:absolute;
+
+width:280px;
+
+height:280px;
+
+border-radius:50%;
+
+background:#ffffff08;
+
+bottom:-120px;
+
+left:-120px;
+
+}
+
+.logo{
+
+position:relative;
+
+z-index:2;
+
+text-align:center;
+
+color:white;
+
+}
+
+.logo h1{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:54px;
+
+color:#C9A227;
+
+margin-bottom:18px;
+
+}
+
+.logo p{
+
+font-size:18px;
+
+line-height:1.8;
+
+opacity:.9;
+
+}
+
+/* Partie droite */
+
+.right{
+
+flex:1;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:70px;
+
+background:white;
+
+}
+
+.card{
+
+width:100%;
+
+max-width:430px;
+
+}
+
+.card h2{
+
+font-family:'Cormorant Garamond',serif;
+
+font-size:48px;
+
+color:#0F4C5C;
+
+margin-bottom:10px;
+
+}
+
+.subtitle{
+
+color:#666;
+
+margin-bottom:35px;
+
+font-size:15px;
+
+line-height:1.7;
+
+}
+
+/* Champs */
+
+.field{
+
+margin-bottom:22px;
+
+}
+
+.field label{
+
+display:block;
+
+font-size:13px;
+
+font-weight:600;
+
+margin-bottom:8px;
+
+text-transform:uppercase;
+
+letter-spacing:1px;
+
+color:#0F4C5C;
+
+}
+
+.field input{
+
+width:100%;
+
+padding:16px;
+
+border:2px solid #e7e7e7;
+
+border-radius:10px;
+
+font-size:15px;
+
+transition:.25s;
+
+outline:none;
+
+}
+
+.field input:focus{
+
+border-color:#C9A227;
+
+box-shadow:0 0 0 4px rgba(201,162,39,.15);
+
+}
+
+/* ==========================
+   PARTIE 2 - ELEMENTS FORM
+========================== */
+
+button{
+border:none;
+cursor:pointer;
+font-family:inherit;
+}
+
+.password-box{
+display:flex;
+align-items:center;
+position:relative;
+}
+
+.password-box input{
+padding-right:45px;
+}
+
+.password-box button{
+position:absolute;
+right:10px;
+background:none;
+font-size:18px;
+color:#666;
+}
+
+.password-box button:hover{
+color:#0F4C5C;
+}
+
+/* Bouton principal */
+
+.btn{
+
+width:100%;
+
+padding:16px;
+
+margin-top:10px;
+
+background:linear-gradient(135deg,#C9A227,#e0b93a);
+
+color:#0F4C5C;
+
+font-weight:700;
+
+text-transform:uppercase;
+
+letter-spacing:1px;
+
+border-radius:10px;
+
+transition:.25s;
+
+box-shadow:0 10px 25px rgba(201,162,39,.25);
+
+}
+
+.btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:0 15px 30px rgba(201,162,39,.35);
+
+}
+
+/* Message */
+
+.message{
+
+margin-bottom:15px;
+
+font-size:14px;
+
+text-align:center;
+
+}
+
+/* Liens */
+
+.links{
+
+margin-top:20px;
+
+display:flex;
+
+justify-content:space-between;
+
+font-size:13px;
+
+}
+
+.links a{
+
+color:#0F4C5C;
+
+text-decoration:none;
+
+transition:.2s;
+
+}
+
+.links a:hover{
+
+color:#C9A227;
+
+}
+
+/* Animation */
+
+@keyframes fadeUp{
+
+from{
+opacity:0;
+transform:translateY(30px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+/* ==========================
+   PARTIE 3 - RESPONSIVE
+========================== */
+
+@media (max-width: 900px){
+
+.container{
+flex-direction:column;
+}
+
+.left{
+width:100%;
+padding:40px;
+}
+
+.right{
+padding:40px;
+}
+
+.logo h1{
+font-size:40px;
+}
+
+.card h2{
+font-size:36px;
+}
+
+}
+
+/* petit écran */
+
+@media (max-width: 500px){
+
+.links{
+flex-direction:column;
+gap:10px;
+text-align:center;
+}
+
+.password-box button{
+right:5px;
+}
+
+}
